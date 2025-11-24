@@ -16,8 +16,8 @@ import BookDetailsPage from './pages/BookDetailsPage';
 import LoginPage from './pages/LoginPage';
 
 // Missing Pages (Commented out until you create them)
-// import CategoriesPage from './pages/CategoriesPage';
-// import BooksPage from './pages/BooksPage';
+import CategoriesPage from './pages/CategoriesPage';
+import BooksPage from './pages/BooksPage';
 // import ContactPage from './pages/ContactPage';
 // import CheckoutPage from './pages/CheckoutPage';
 
@@ -48,7 +48,7 @@ function App() {
               
               {/* These are commented out to prevent crashing */}
               {/* <Route path="/categories" element={<CategoriesPage />} /> */}
-              {/* <Route path="/books" element={<BooksPage />} /> */}
+              <Route path="/categories" element={<BooksPage />} />
               {/* <Route path="/checkout" element={<CheckoutPage />} /> */}
               {/* <Route path="/contact" element={<ContactPage />} /> */}
             </Route>
