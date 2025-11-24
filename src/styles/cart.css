@@ -1,0 +1,181 @@
+/* centerh1
+new card design */
+.btn {
+    width: 100% !important;
+}
+
+.page nav {
+    border-bottom: 1.5px solid rgba(128, 128, 128, 0.2);
+}
+
+.card-prop {
+    background: #FFFFFFFF;
+    border-radius: 4px;
+    box-shadow: 0px 0px 2px #171a1f14;
+    padding: 20px;
+
+}
+
+.page main {
+    width: 100%;
+    padding: 5%;
+    margin-top: 51px;
+
+}
+
+.page main h2 {
+    font-family: "Playfair";
+    font-size: 48px;
+    font-weight: 700;
+    color: #006A8AFF;
+    margin-bottom: 30px;
+}
+
+.page main .main-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.page main .main-container .products {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.page main .main-container .products .cart-book {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.page main .main-container .products .cart-book .cover {
+    width: 90px;
+    border-radius: 4px;
+}
+
+.page main .main-container .products .cart-book .cover img {
+    width: 90px;
+    border-radius: 4px;
+}
+
+.page main .main-container .products .details {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.page main .main-container .products .details .name-of-book {
+    font-family: "Merri";
+
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 500;
+    color: #171A1FFF;
+
+
+}
+
+.page main .main-container .products .details .author {
+    font-family: "Merri";
+    margin-block: 10px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #565D6DFF;
+}
+
+.page main .main-container .products .details div.seprate {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.page main .main-container .products .details div.seprate .quantity {
+    font-size: 18px;
+    align-items: center;
+}
+
+.page main .main-container .products .details div.seprate .quantity .number {
+    display: inline-block;
+    margin-inline: 6px;
+    font-family: "Merri";
+}
+
+.page main .main-container .products .details div.seprate .quantity .more,
+.page main .main-container .products .details div.seprate .quantity .less {
+    cursor: pointer;
+    color: #565D6DFF;
+    font-size: 14px;
+
+}
+
+.page main .main-container .products .details div.seprate .price {
+    font-weight: 700;
+    color: #006A8AFF;
+    font-size: 18px;
+    font-family: "Merri";
+}
+
+.page main .main-container .products .remove-container i {
+    color: #565D6DFF;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.page main .main-container .summary-container {
+    width: 30%;
+}
+
+.page main .main-container .summary-container .summary h4 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #171A1FFF;
+    margin-bottom: 24px;
+}
+
+.page main .main-container .summary-container .summary .row-item {
+    display: flex;
+    justify-content: space-between;
+    margin-block: 12px;
+    font-size: 16px;
+    font-family: "Merri";
+    font-weight: 400;
+    color: #565D6DFF;
+}
+
+.page main .main-container .summary-container .summary div:last-of-type {
+    font-size: 18px;
+    font-family: "Merri";
+
+    font-weight: 700;
+    color: #171A1FFF;
+    margin-block: 30px;
+}
+
+.page main .main-container .summary-container .summary hr {
+    color: #565D6DFF;
+
+}
+
+.page footer {
+    border-top: 1.5px solid rgba(128, 128, 128, 0.2);
+}
+
+@media screen and (max-width:615px) {
+    .page main .main-container {
+        flex-wrap: wrap;
+    }
+
+    .page main .main-container .products {
+        width: 100%;
+    }
+
+    .page main .main-container .summary-container {
+        width: 100%;
+    }
+}
+
+/* cart shap in mobil remaining lab and tablet hadeld */

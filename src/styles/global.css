@@ -1,0 +1,227 @@
+@font-face {
+    font-family: "Playfair";
+    /* Note: In Vite, /fonts/ points to public/fonts/ */
+    src: url("/fonts/PlayfairDisplay-VariableFont_wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Playfair";
+    src: url("/fonts/PlayfairDisplay-Italic-VariableFont_wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Merri";
+    src: url("/fonts/Merriweather-VariableFont_opsz,wdth,wght.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 100 900;
+}
+
+@font-face {
+    font-family: "Merri";
+    src: url("/fonts/Merriweather-Italic-VariableFont_opsz,wdth,wght.ttf") format("truetype");
+    font-style: italic;
+    font-weight: 100 900;
+}
+
+@font-face {
+    font-family: "alata";
+    src: url("/fonts/Alata-Regular.ttf") format("truetype");
+    font-weight: 100 900;
+}
+
+:root {
+    --background-color: #fafafbff;
+    --primary-color: #006A8AFF;
+    --elegant-black: #171A1FFF;
+    --z-index-nav: 1000;
+}
+
+.btn {
+    display: block;
+    margin-inline: auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Merri";
+    font-size: 18px;
+    font-weight: 500;
+    color: #FFFFFFFF;
+    background-color: #006A8AFF;
+    border: none;
+    border-radius: 4px;
+    height: 44px;
+    cursor: pointer;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.page {
+    width: 100%;
+    background-color: #fafafbff !important;
+    font-family: "Playfair", serif;
+
+}
+
+.page nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 1.25rem;
+}
+
+.page nav .logo-container {
+    height: 50px;
+}
+
+.page nav .logo-container img {
+    height: 50px;
+}
+
+.page nav .bars {
+    display: none;
+
+}
+
+.page nav .menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+
+.page nav .menu li {
+    padding-inline: 0.75rem;
+}
+
+.page nav .menu li a {
+    text-decoration: none;
+    font-family: "Merri";
+    color: #171A1FFF;
+    font-size: 12px;
+}
+
+.page nav .menu li a:hover {
+    color: #006989FF;
+    /* font-weight: 700; */
+
+}
+
+.page nav .right {
+    display: flex;
+    align-items: center;
+
+}
+
+.page nav .right form {
+    border: 1px solid #DEE1E6FF;
+    border-radius: 3px;
+    padding: 0.125rem 0.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline: 4px;
+    padding: 2px 12px;
+}
+
+.page nav .right form input {
+    outline: 0;
+    border: 0;
+    color: #171A1FFF;
+    font-family: 'Merri';
+    font-size: 10px;
+    background-color: inherit;
+    /* background-color: #FFFFFFFF; */
+    padding-left: 3px;
+
+
+
+}
+
+.page nav .right form label {
+    color: rgb(29, 33, 39);
+    font-size: 13px;
+    font-weight: 100;
+
+
+}
+
+.page nav .right .cart-container {
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin-left: 10px;
+
+
+}
+
+.page nav .right a img {
+    display: block;
+    width: 16px;
+    height: 16px;
+}
+
+.page footer {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+
+
+.page footer ul {
+    display: flex;
+    list-style: none;
+}
+
+.page footer ul li {
+    padding: 10px
+}
+
+.page footer ul li a {
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    color: #171A1FFF;
+    font-family: "Merri";
+
+}
+
+.page footer ul li a img {
+    display: block;
+    width: 16px;
+}
+
+@media screen and (min-width: 674px) and (max-width: 716px) {
+    .page nav .menu li {
+        padding-inline: 0.25rem;
+    }
+
+    .page nav .right .cart-container {
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 674px) {
+    .page nav .menu {
+        display: none;
+    }
+
+    .page nav .right {
+        display: none;
+    }
+
+    .page nav .bars {
+        display: block;
+        color: #171A1FFF;
+    }
+}

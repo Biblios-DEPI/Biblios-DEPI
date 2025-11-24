@@ -1,0 +1,802 @@
+[
+  {
+    "id": 1,
+    "title": "The Odyssey",
+    "author": "Homer",
+    "price": 18.99,
+    "image": "/images/osyssey.png",
+    "rating": 5,
+    "category": "Classics",
+    "description": "The epic journey of Odysseus as he tries to return home after the Trojan War."
+  },
+  {
+    "id": 2,
+    "title": "The Iliad",
+    "author": "Homer",
+    "price": 20.50,
+    "image": "/images/lilliad.png",
+    "rating": 5,
+    "category": "Classics",
+    "description": "Set during the Trojan War, the ten-year siege of the city of Troy."
+  },
+  {
+    "id": 3,
+    "title": "The Republic",
+    "author": "Plato",
+    "price": 16.00,
+    "image": "/images/PLATO.png",
+    "rating": 5,
+    "category": "Philosophy",
+    "description": "A Socratic dialogue concerning justice and the order of the city-state."
+  },
+  {
+    "id": 4,
+    "title": "Meditations",
+    "author": "Marcus Aurelius",
+    "price": 12.75,
+    "image": "/images/meditation.png",
+    "rating": 4,
+    "category": "Philosophy",
+    "description": "Personal writings by the Roman Emperor on Stoic philosophy."
+  },
+  {
+    "id": 5,
+    "title": "No Longer Human",
+    "author": "Osamu Dazai",
+    "price": 14.50,
+    "image": "/images/book1.jpg",
+    "rating": 5,
+    "category": "Fiction",
+    "description": "A poignant novel about a man who feels incapable of understanding human beings."
+  },
+  {
+    "id": 6,
+    "title": "The Hunger Games",
+    "author": "Suzanne Collins",
+    "price": 15.99,
+    "image": "/images/book2.jpg",
+    "rating": 5,
+    "category": "Dystopian",
+    "description": "In a future North America, teens fight to the death on live TV."
+  },
+  {
+    "id": 7,
+    "title": "1984",
+    "author": "George Orwell",
+    "price": 13.99,
+    "image": "/images/book3.jpg",
+    "rating": 5,
+    "category": "Dystopian",
+    "description": "A chilling prophecy about the future of automated bureaucracy."
+  },
+  {
+    "id": 8,
+    "title": "Inferno",
+    "author": "Dan Brown",
+    "price": 19.99,
+    "image": "/images/book4.jpg",
+    "rating": 4,
+    "category": "Mystery",
+    "description": "Robert Langdon wakes up in a hospital in Florence with no memory of the last 36 hours."
+  },
+  {
+    "id": 9,
+    "title": "Meditations (New Edition)",
+    "author": "Marcus Aurelius",
+    "price": 14.00,
+    "image": "/images/medit.png",
+    "rating": 5,
+    "category": "Philosophy",
+    "description": "A modern translation of the Stoic classic."
+  },
+  {
+    "id": 10,
+    "title": "Plato: Complete Works",
+    "author": "Plato",
+    "price": 25.00,
+    "image": "/images/republic.png",
+    "rating": 5,
+    "category": "Philosophy",
+    "description": "The collected dialogues of the ancient Greek philosopher."
+  },
+  {
+    "id": 11,
+    "title": "Crime and Punishment",
+    "author": "Fyodor Dostoevsky",
+    "price": 13.50,
+    "image": "/images/book1.jpg",
+    "rating": 5,
+    "category": "Classics",
+    "description": "A mental anguish and moral dilemmas of an impoverished ex-student."
+  },
+  {
+    "id": 12,
+    "title": "Catching Fire",
+    "author": "Suzanne Collins",
+    "price": 16.50,
+    "image": "/images/book2.jpg",
+    "rating": 4,
+    "category": "Dystopian",
+    "description": "The second book in the Hunger Games trilogy."
+  },
+  {
+    "id": 13,
+    "title": "Animal Farm",
+    "author": "George Orwell",
+    "price": 11.99,
+    "image": "/images/book3.jpg",
+    "rating": 5,
+    "category": "Dystopian",
+    "description": "A satirical allegorical novella reflecting on the Russian Revolution."
+  },
+  {
+    "id": 14,
+    "title": "The Da Vinci Code",
+    "author": "Dan Brown",
+    "price": 18.50,
+    "image": "/images/book4.jpg",
+    "rating": 4,
+    "category": "Mystery",
+    "description": "A murder in the Louvre reveals a sinister plot."
+  },
+  {
+    "id": 15,
+    "title": "The Symposium",
+    "author": "Plato",
+    "price": 10.99,
+    "image": "/images/PLATO.png",
+    "rating": 4,
+    "category": "Philosophy",
+    "description": "A philosophical text by Plato concerning the genesis, purpose and nature of love."
+  },
+  {
+    "id": 16,
+    "title": "The Aeneid",
+    "author": "Virgil",
+    "price": 15.50,
+    "image": "/images/osyssey.png",
+    "rating": 4,
+    "category": "Classics",
+    "description": "The legendary story of Aeneas, a Trojan who travelled to Italy."
+  },
+  {
+    "id": 17,
+    "title": "Metamorphosis",
+    "author": "Franz Kafka",
+    "price": 9.99,
+    "image": "/images/book1.jpg",
+    "rating": 5,
+    "category": "Fiction",
+    "description": "Gregor Samsa wakes up one morning to find himself transformed into a giant insect."
+  },
+  {
+    "id": 18,
+    "title": "Mockingjay",
+    "author": "Suzanne Collins",
+    "price": 16.99,
+    "image": "/images/book2.jpg",
+    "rating": 4,
+    "category": "Dystopian",
+    "description": "The final book in the Hunger Games trilogy."
+  },
+  {
+    "id": 19,
+    "title": "Brave New World",
+    "author": "Aldous Huxley",
+    "price": 14.00,
+    "image": "/images/book3.jpg",
+    "rating": 5,
+    "category": "Dystopian",
+    "description": "A futuristic society where citizens are genetically bred and socially indoctrinated."
+  },
+  {
+    "id": 20,
+    "title": "Angels & Demons",
+    "author": "Dan Brown",
+    "price": 17.99,
+    "image": "/images/book4.jpg",
+    "rating": 4,
+    "category": "Mystery",
+    "description": "Robert Langdon is called to a Swiss research facility to analyze a mysterious symbol."
+  },
+  {
+    "id": 21,
+    "title": "Greek Mythology",
+    "author": "Edith Hamilton",
+    "price": 19.00,
+    "image": "/images/lilliad.png",
+    "rating": 5,
+    "category": "Classics",
+    "description": "Timeless tales of gods and heroes."
+  },
+  {
+    "id": 22,
+    "title": "Beyond Good and Evil",
+    "author": "Friedrich Nietzsche",
+    "price": 13.50,
+    "image": "/images/medit.png",
+    "rating": 5,
+    "category": "Philosophy",
+    "description": "Nietzsche accuses past philosophers of lacking critical sense and blindly accepting dogmatic premises."
+  },
+  {
+    "id": 23,
+    "title": "Letters from a Stoic",
+    "author": "Seneca",
+    "price": 11.50,
+    "image": "/images/meditation.png",
+    "rating": 5,
+    "category": "Philosophy",
+    "description": " timeless wisdom on how to live a good life."
+  },
+  {
+    "id": 24,
+    "title": "The Stranger",
+    "author": "Albert Camus",
+    "price": 10.00,
+    "image": "/images/book1.jpg",
+    "rating": 4,
+    "category": "Fiction",
+    "description": "An ordinary man is unwittingly drawn into a senseless murder."
+  },
+  {
+    "id": 25,
+    "title": "Divergent",
+    "author": "Veronica Roth",
+    "price": 12.99,
+    "image": "/images/book2.jpg",
+    "rating": 3,
+    "category": "Dystopian",
+    "description": "In a world divided by factions based on virtues, Tris learns she's Divergent."
+  },
+  {
+    "id": 26,
+    "title": "Fahrenheit 451",
+    "author": "Ray Bradbury",
+    "price": 13.99,
+    "image": "/images/book3.jpg",
+    "rating": 5,
+    "category": "Dystopian",
+    "description": "A future American society where books are outlawed and 'firemen' burn any that are found."
+  },
+  {
+    "id": 27,
+    "title": "The Lost Symbol",
+    "author": "Dan Brown",
+    "price": 18.99,
+    "image": "/images/book4.jpg",
+    "rating": 3,
+    "category": "Mystery",
+    "description": "A master of the hidden history and symbols of Washington, D.C."
+  },
+  {
+    "id": 28,
+    "title": "Apology",
+    "author": "Plato",
+    "price": 8.99,
+    "image": "/images/republic.png",
+    "rating": 5,
+    "category": "Philosophy",
+    "description": "Plato's version of the speech given by Socrates as he defended himself in 399 BC."
+  },
+  {
+    "id": 29,
+    "title": "War and Peace",
+    "author": "Leo Tolstoy",
+    "price": 22.00,
+    "image": "/images/lilliad.png",
+    "rating": 5,
+    "category": "Classics",
+    "description": "Broadly focuses on Napoleon's invasion of Russia in 1812."
+  },
+  {
+    "id": 30,
+    "title": "Thus Spoke Zarathustra",
+    "author": "Friedrich Nietzsche",
+    "price": 16.00,
+    "image": "/images/PLATO.png",
+    "rating": 4,
+    "category": "Philosophy",
+    "description": "A philosophical novel by German philosopher Friedrich Nietzsche."
+  },
+  {
+    "id": 31,
+    "title": "The Setting Sun",
+    "author": "Osamu Dazai",
+    "price": 13.00,
+    "image": "/images/book1.jpg",
+    "rating": 4,
+    "category": "Fiction",
+    "description": "A novel about the decline of an aristocratic family in post-war Japan."
+  },
+  {
+    "id": 32,
+    "title": "Insurgent",
+    "author": "Veronica Roth",
+    "price": 12.99,
+    "image": "/images/book2.jpg",
+    "rating": 3,
+    "category": "Dystopian",
+    "description": "Tris Prior must continue to save those she loves."
+  },
+  {
+    "id": 33,
+    "title": "Lord of the Flies",
+    "author": "William Golding",
+    "price": 11.50,
+    "image": "/images/book3.jpg",
+    "rating": 4,
+    "category": "Classics",
+    "description": "A group of British boys stranded on an uninhabited island."
+  },
+  {
+    "id": 34,
+    "title": "Deception Point",
+    "author": "Dan Brown",
+    "price": 15.99,
+    "image": "/images/book4.jpg",
+    "rating": 4,
+    "category": "Mystery",
+    "description": "A shocking scientific discovery in the Arctic Ocean."
+  },
+  {
+    "id": 35,
+    "title": "Phaedo",
+    "author": "Plato",
+    "price": 9.50,
+    "image": "/images/PLATO.png",
+    "rating": 5,
+    "category": "Philosophy",
+    "description": "Depicts the death of Socrates."
+  },
+  {
+    "id": 36,
+    "title": "The Brothers Karamazov",
+    "author": "Fyodor Dostoevsky",
+    "price": 18.00,
+    "image": "/images/lilliad.png",
+    "rating": 5,
+    "category": "Classics",
+    "description": "A passionate philosophical novel that enters deeply into the ethical debates of God, free will, and morality."
+  },
+  {
+    "id": 37,
+    "title": "Nicomachean Ethics",
+    "author": "Aristotle",
+    "price": 14.00,
+    "image": "/images/medit.png",
+    "rating": 5,
+    "category": "Philosophy",
+    "description": "Aristotle's most important work on ethics."
+  },
+  {
+    "id": 38,
+    "title": "Norwegian Wood",
+    "author": "Haruki Murakami",
+    "price": 15.00,
+    "image": "/images/book1.jpg",
+    "rating": 4,
+    "category": "Fiction",
+    "description": "A nostalgic story of loss and burgeoning sexuality."
+  },
+  {
+    "id": 39,
+    "title": "Maze Runner",
+    "author": "James Dashner",
+    "price": 11.00,
+    "image": "/images/book2.jpg",
+    "rating": 4,
+    "category": "Dystopian",
+    "description": "Thomas wakes up in a lift with no memory, only to find himself in a maze."
+  },
+  {
+    "id": 40,
+    "title": "The Handmaid's Tale",
+    "author": "Margaret Atwood",
+    "price": 14.99,
+    "image": "/images/book3.jpg",
+    "rating": 5,
+    "category": "Dystopian",
+    "description": "Set in a near-future New England, in a totalitarian state."
+  },
+  {
+    "id": 41,
+    "title": "Digital Fortress",
+    "author": "Dan Brown",
+    "price": 16.50,
+    "image": "/images/book4.jpg",
+    "rating": 3,
+    "category": "Mystery",
+    "description": "The NSA's invincible code-breaking machine encounters a mysterious code."
+  },
+  {
+    "id": 42,
+    "title": "Critique of Pure Reason",
+    "author": "Immanuel Kant",
+    "price": 22.00,
+    "image": "/images/republic.png",
+    "rating": 5,
+    "category": "Philosophy",
+    "description": "Investigating the limits and scope of human metaphysics."
+  },
+  {
+    "id": 43,
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "price": 10.00,
+    "image": "/images/lilliad.png",
+    "rating": 5,
+    "category": "Romance",
+    "description": "A romantic novel of manners."
+  },
+  {
+    "id": 44,
+    "title": "Tao Te Ching",
+    "author": "Lao Tzu",
+    "price": 9.00,
+    "image": "/images/meditation.png",
+    "rating": 5,
+    "category": "Philosophy",
+    "description": "A fundamental text for both philosophical and religious Taoism."
+  },
+  {
+    "id": 45,
+    "title": "Kafka on the Shore",
+    "author": "Haruki Murakami",
+    "price": 16.00,
+    "image": "/images/book1.jpg",
+    "rating": 5,
+    "category": "Fiction",
+    "description": "A metaphysical novel with cats that talk and fish that fall from the sky."
+  },
+  {
+    "id": 46,
+    "title": "The Giver",
+    "author": "Lois Lowry",
+    "price": 9.50,
+    "image": "/images/book2.jpg",
+    "rating": 4,
+    "category": "Dystopian",
+    "description": "Jonas lives in a seemingly ideal, if colorless, world of conformity and contentment."
+  },
+  {
+    "id": 47,
+    "title": "A Clockwork Orange",
+    "author": "Anthony Burgess",
+    "price": 12.00,
+    "image": "/images/book3.jpg",
+    "rating": 4,
+    "category": "Dystopian",
+    "description": "Set in a near-future society that has a youth subculture of extreme violence."
+  },
+  {
+    "id": 48,
+    "title": "Origin",
+    "author": "Dan Brown",
+    "price": 21.00,
+    "image": "/images/book4.jpg",
+    "rating": 4,
+    "category": "Mystery",
+    "description": "Langdon navigates a trail of clues to unlock a scientific breakthrough."
+  },
+  {
+    "id": 49,
+    "title": "Euthyphro",
+    "author": "Plato",
+    "price": 7.50,
+    "image": "/images/PLATO.png",
+    "rating": 4,
+    "category": "Philosophy",
+    "description": "A dialogue by Plato, in which Socrates and Euthyphro discuss the nature of piety."
+  },
+  {
+    "id": 50,
+    "title": "Great Expectations",
+    "author": "Charles Dickens",
+    "price": 11.00,
+    "image": "/images/lilliad.png",
+    "rating": 4,
+    "category": "Classics",
+    "description": "The story of the orphan Pip."
+  },
+  {
+    "id": 51,
+    "title": "The Art of War",
+    "author": "Sun Tzu",
+    "price": 8.00,
+    "image": "/images/medit.png",
+    "rating": 5,
+    "category": "Philosophy",
+    "description": "An ancient Chinese military treatise dating from the Late Spring and Autumn Period."
+  },
+  {
+    "id": 52,
+    "title": "1Q84",
+    "author": "Haruki Murakami",
+    "price": 19.00,
+    "image": "/images/book1.jpg",
+    "rating": 4,
+    "category": "Fiction",
+    "description": "A story of how a woman enters a parallel existence."
+  },
+  {
+    "id": 53,
+    "title": "Ready Player One",
+    "author": "Ernest Cline",
+    "price": 14.00,
+    "image": "/images/book2.jpg",
+    "rating": 5,
+    "category": "Science Fiction",
+    "description": "A dystopian science fiction novel set in the year 2045."
+  },
+  {
+    "id": 54,
+    "title": "Slaughterhouse-Five",
+    "author": "Kurt Vonnegut",
+    "price": 13.00,
+    "image": "/images/book3.jpg",
+    "rating": 5,
+    "category": "Science Fiction",
+    "description": "An anti-war novel centered on the firebombing of Dresden."
+  },
+  {
+    "id": 55,
+    "title": "The Girl with the Dragon Tattoo",
+    "author": "Stieg Larsson",
+    "price": 15.00,
+    "image": "/images/book4.jpg",
+    "rating": 5,
+    "category": "Mystery",
+    "description": "Disappearance of a wealthy patriarch's niece."
+  },
+  {
+    "id": 56,
+    "title": "Discourse on Method",
+    "author": "René Descartes",
+    "price": 10.00,
+    "image": "/images/republic.png",
+    "rating": 4,
+    "category": "Philosophy",
+    "description": "I think, therefore I am."
+  },
+  {
+    "id": 57,
+    "title": "Jane Eyre",
+    "author": "Charlotte Brontë",
+    "price": 10.50,
+    "image": "/images/lilliad.png",
+    "rating": 5,
+    "category": "Classics",
+    "description": "The experiences of its eponymous heroine, including her growth to adulthood."
+  },
+  {
+    "id": 58,
+    "title": "Being and Time",
+    "author": "Martin Heidegger",
+    "price": 23.00,
+    "image": "/images/meditation.png",
+    "rating": 5,
+    "category": "Philosophy",
+    "description": "One of the most significant texts of 20th-century Continental philosophy."
+  },
+  {
+    "id": 59,
+    "title": "Beloved",
+    "author": "Toni Morrison",
+    "price": 14.00,
+    "image": "/images/book1.jpg",
+    "rating": 5,
+    "category": "Fiction",
+    "description": "Set after the American Civil War, it tells the story of a family of former slaves."
+  },
+  {
+    "id": 60,
+    "title": "The Road",
+    "author": "Cormac McCarthy",
+    "price": 13.50,
+    "image": "/images/book2.jpg",
+    "rating": 4,
+    "category": "Dystopian",
+    "description": "A post-apocalyptic tale of a journey of a father and his young son."
+  },
+  {
+    "id": 61,
+    "title": "Atlas Shrugged",
+    "author": "Ayn Rand",
+    "price": 20.00,
+    "image": "/images/book3.jpg",
+    "rating": 3,
+    "category": "Fiction",
+    "description": "Depicts a dystopian United States where private businesses suffer under increasingly burdensome laws."
+  },
+  {
+    "id": 62,
+    "title": "Gone Girl",
+    "author": "Gillian Flynn",
+    "price": 12.50,
+    "image": "/images/book4.jpg",
+    "rating": 4,
+    "category": "Mystery",
+    "description": "A thriller that unearths the secrets at the heart of a modern marriage."
+  },
+  {
+    "id": 63,
+    "title": "Leviathan",
+    "author": "Thomas Hobbes",
+    "price": 11.00,
+    "image": "/images/PLATO.png",
+    "rating": 4,
+    "category": "Philosophy",
+    "description": "Concerns the structure of society and legitimate government."
+  },
+  {
+    "id": 64,
+    "title": "Wuthering Heights",
+    "author": "Emily Brontë",
+    "price": 10.00,
+    "image": "/images/lilliad.png",
+    "rating": 5,
+    "category": "Classics",
+    "description": "A tale of passion and revenge on the Yorkshire moors."
+  },
+  {
+    "id": 65,
+    "title": "Ethics",
+    "author": "Baruch Spinoza",
+    "price": 13.00,
+    "image": "/images/medit.png",
+    "rating": 5,
+    "category": "Philosophy",
+    "description": "A philosophical treatise written in Latin."
+  },
+  {
+    "id": 66,
+    "title": "The Catcher in the Rye",
+    "author": "J.D. Salinger",
+    "price": 11.00,
+    "image": "/images/book1.jpg",
+    "rating": 4,
+    "category": "Fiction",
+    "description": "A story about teenage angst and alienation."
+  },
+  {
+    "id": 67,
+    "title": "Neuromancer",
+    "author": "William Gibson",
+    "price": 14.50,
+    "image": "/images/book2.jpg",
+    "rating": 5,
+    "category": "Science Fiction",
+    "description": "One of the earliest and best-known works in the cyberpunk genre."
+  },
+  {
+    "id": 68,
+    "title": "Dune",
+    "author": "Frank Herbert",
+    "price": 18.00,
+    "image": "/images/book3.jpg",
+    "rating": 5,
+    "category": "Science Fiction",
+    "description": "Set on the desert planet Arrakis."
+  },
+  {
+    "id": 69,
+    "title": "The Silence of the Lambs",
+    "author": "Thomas Harris",
+    "price": 13.00,
+    "image": "/images/book4.jpg",
+    "rating": 5,
+    "category": "Mystery",
+    "description": "A young FBI trainee must confide in an incarcerated and manipulative killer."
+  },
+  {
+    "id": 70,
+    "title": "Confessions",
+    "author": "Saint Augustine",
+    "price": 9.00,
+    "image": "/images/republic.png",
+    "rating": 5,
+    "category": "Philosophy",
+    "description": "An autobiographical work, consisting of 13 books."
+  },
+  {
+    "id": 71,
+    "title": "Moby Dick",
+    "author": "Herman Melville",
+    "price": 12.00,
+    "image": "/images/osyssey.png",
+    "rating": 3,
+    "category": "Classics",
+    "description": "The narrative of the sailor Ishmael and the obsession of Captain Ahab."
+  },
+  {
+    "id": 72,
+    "title": "Simulacra and Simulation",
+    "author": "Jean Baudrillard",
+    "price": 15.00,
+    "image": "/images/meditation.png",
+    "rating": 4,
+    "category": "Philosophy",
+    "description": "A philosophical treatise that examines the relationships between reality, symbols, and society."
+  },
+  {
+    "id": 73,
+    "title": "Life of Pi",
+    "author": "Yann Martel",
+    "price": 13.50,
+    "image": "/images/book1.jpg",
+    "rating": 4,
+    "category": "Fiction",
+    "description": "An Indian Tamil boy from Pondicherry explores issues of spirituality and practicality."
+  },
+  {
+    "id": 74,
+    "title": "Snow Crash",
+    "author": "Neal Stephenson",
+    "price": 14.00,
+    "image": "/images/book2.jpg",
+    "rating": 5,
+    "category": "Science Fiction",
+    "description": "Hiro Protagonist delivers pizza in the real world, but in the Metaverse, he's a warrior prince."
+  },
+  {
+    "id": 75,
+    "title": "The Martian",
+    "author": "Andy Weir",
+    "price": 15.00,
+    "image": "/images/book3.jpg",
+    "rating": 5,
+    "category": "Science Fiction",
+    "description": "An astronaut becomes stranded on Mars after his team assumes him dead."
+  },
+  {
+    "id": 76,
+    "title": "Big Little Lies",
+    "author": "Liane Moriarty",
+    "price": 14.00,
+    "image": "/images/book4.jpg",
+    "rating": 4,
+    "category": "Mystery",
+    "description": "A murder mystery set in a tranquil beachfront town."
+  },
+  {
+    "id": 77,
+    "title": "Summa Theologica",
+    "author": "Thomas Aquinas",
+    "price": 30.00,
+    "image": "/images/PLATO.png",
+    "rating": 5,
+    "category": "Philosophy",
+    "description": "The best-known work of Thomas Aquinas."
+  },
+  {
+    "id": 78,
+    "title": "Frankenstein",
+    "author": "Mary Shelley",
+    "price": 9.00,
+    "image": "/images/lilliad.png",
+    "rating": 5,
+    "category": "Classics",
+    "description": "Tells the story of Victor Frankenstein, a young scientist who creates a sapient creature."
+  },
+  {
+    "id": 79,
+    "title": "Candide",
+    "author": "Voltaire",
+    "price": 8.00,
+    "image": "/images/medit.png",
+    "rating": 4,
+    "category": "Philosophy",
+    "description": "A French satire first published in 1759."
+  },
+  {
+    "id": 80,
+    "title": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "price": 12.00,
+    "image": "/images/book1.jpg",
+    "rating": 5,
+    "category": "Classics",
+    "description": "A novel about the serious issues of rape and racial inequality."
+  }
+]
