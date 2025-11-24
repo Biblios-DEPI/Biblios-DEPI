@@ -1,12 +1,13 @@
 * {
-    margin: 0 ;
-    padding: 0 ;
-    box-sizing: border-box ;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     scrollbar-width: none !important;
 }
 
 .page main {
     padding: 0 !important;
+    margin: 0 !important;
 }
 
 html {
@@ -44,17 +45,16 @@ nav {
     top: 0;
     left: 0;
     width: 100%;
-    /* background-color: var(--background-color); */
     background-color: transparent !important;
     z-index: var(--z-index-nav);
-    transition: box-shadow 0.5s, background-color 0.5s;
-    -webkit-transition: box-shadow 0.5s, background-color 0.5s;
-    -moz-transition: box-shadow 0.5s, background-color 0.5s;
-    -ms-transition: box-shadow 0.5s, background-color 0.5s;
-    -o-transition: box-shadow 0.5s, background-color 0.5s;
+    transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
 }
 
-nav .menu li a{
+nav .menu li a {
     color: var(--background-color) !important;
 }
 
@@ -75,7 +75,8 @@ nav .menu li a{
 }
 
 /* Cart icon -> turn white */
-.cart-container img, .logo-container img {
+.cart-container img,
+.logo-container img {
     filter: brightness(0) invert(1);
 }
 
@@ -83,27 +84,33 @@ nav .menu li a{
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     background-color: #FFF !important;
 }
-.shadow-header .menu li a{
+
+.shadow-header .menu li a {
     color: #000 !important;
 }
+
 .shadow-header .right form input[type="search"] {
     color: #000;
 }
+
 .shadow-header .right form input::placeholder {
     color: #000;
     opacity: 0.7;
 }
+
 .shadow-header .right form label i {
     color: #000;
 }
-.shadow-header .cart-container img, .shadow-header .logo-container img {
+
+.shadow-header .cart-container img,
+.shadow-header .logo-container img {
     filter: none;
 }
 
 .hero-container {
     /* margin: 75px 100px; */
     /* border-radius: 20px; */
-    /* margin-top: 50px;  space for the nav */
+    /* margin-top: 50px; space for the nav */
     padding: 15px;
     padding-top: 61px;
     background: #FFF url('../images/background.png') no-repeat center/cover;
@@ -130,7 +137,7 @@ nav .menu li a{
     color: var(--background-color);
 }
 
-.hero .text h2{
+.hero .text h2 {
     color: var(--background-color) !important;
 }
 
