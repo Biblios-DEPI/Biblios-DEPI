@@ -10,7 +10,7 @@ const AboutPage = () => {
         </div>
       </header>
 
-      <main>
+      <main className='aboutmain'>
         {/* STORY SECTION */}
         <div className="story template">
             <h2>Our Story</h2>

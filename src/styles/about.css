@@ -21,14 +21,14 @@ header {
     color: #FFFFFFFF;
 }
 
-.page main {
+.page .aboutmain {
     padding-top: 23px !important;
     padding-inline: 8% !important;
 
 }
 
 
-.page main .template h2 {
+.page .aboutmain .template h2 {
     color: var(--primary-color);
     font-family: "Playfair";
     font-size: 40px;
@@ -39,7 +39,7 @@ header {
 }
 
 
-.page main .template h4 {
+.page .aboutmain .template h4 {
     padding-block: 3px;
     color: #4b4e52;
     font-family: "Playfair";
@@ -50,7 +50,7 @@ header {
 
 }
 
-.page main .template hr {
+.page .aboutmain .template hr {
     display: block;
     background-color: var(--primary-color);
     width: 8%;
@@ -78,7 +78,7 @@ header {
     border-radius: 5px;
 }
 
-.page main .story .equal-parts .image img {
+.page .aboutmain .story .equal-parts .image img {
     object-fit: cover;
     width: 100%;
     height: 100%;
@@ -86,7 +86,7 @@ header {
 
 }
 
-.page main .story .equal-parts .text {
+.page .aboutmain .story .equal-parts .text {
     font-size: 18px;
     font-family: "Merri";
     font-weight: 400;
@@ -94,22 +94,22 @@ header {
 
 }
 
-.page main .story .equal-parts .text p {
+.page .aboutmain .story .equal-parts .text p {
     margin-block: 4%;
 }
 
-.page main .phiso {
+.page .aboutmain .phiso {
     margin-top: 3%;
     margin-bottom: 10%;
 }
 
-.page main .phiso .phcards {
+.page .aboutmain .phiso .phcards {
     display: flex;
     justify-content: space-between;
     gap: 5%;
 }
 
-.page main .phiso .phcards .phcard {
+.page .aboutmain .phiso .phcards .phcard {
     border-radius: 4px;
     box-shadow: 0px 0px 2px #171a1f14;
     background-color: white;
@@ -117,13 +117,13 @@ header {
     text-align: center;
 }
 
-.page main .phiso .phcards .phcard h5 {
+.page .aboutmain .phiso .phcards .phcard h5 {
     font-size: 40px;
     color: var(--primary-color);
     margin-bottom: 1%;
 }
 
-.page main .phiso .phcards .phcard h6 {
+.page .aboutmain .phiso .phcards .phcard h6 {
     color: var(--elegant-black);
     font-family: "Playfair";
     font-size: 21px;
@@ -132,7 +132,7 @@ header {
 
 }
 
-.page main .phiso .phcards .phcard p {
+.page .aboutmain .phiso .phcards .phcard p {
     font-family: "Merri";
     font-size: 13px;
     line-height: 24px;
@@ -140,12 +140,12 @@ header {
     color: #565D6DFF;
 }
 
-.page main .exp .equal-parts .text {
+.page .aboutmain .exp .equal-parts .text {
     padding-right: 2%;
     height: fit-content;
 }
 
-.page main .exp .equal-parts .text h5 {
+.page .aboutmain .exp .equal-parts .text h5 {
     color: var(--primary-color);
     font-family: "Playfair";
     font-size: 28px;
@@ -155,7 +155,7 @@ header {
 
 }
 
-.page main .exp .equal-parts .text p {
+.page .aboutmain .exp .equal-parts .text p {
     font-family: "Merri";
     font-weight: 400;
     color: var(--elegant-black);
@@ -163,7 +163,7 @@ header {
 
 }
 
-.page main .exp .equal-parts .image {
+.page .aboutmain .exp .equal-parts .image {
     width: 50%;
     height: 100%;
     padding-left: 0;
@@ -172,7 +172,7 @@ header {
 
 }
 
-.page main .exp .equal-parts .image img {
+.page .aboutmain .exp .equal-parts .image img {
     display: block;
     object-fit: cover;
     width: 100%;
@@ -181,13 +181,13 @@ header {
 
 }
 
-.page main .journey {
+.page .aboutmain .journey {
     margin-top: 10%;
 
 
 }
 
-.page main .jr-button {
+.page .aboutmain .jr-button {
     width: 200px !important;
     text-decoration: none;
     font-size: 16px;

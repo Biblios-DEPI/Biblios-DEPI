@@ -2,9 +2,7 @@ import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { useEffect } from 'react';
-
 import { useState } from 'react';
-import '../styles/global.css';
 
 // Import Styles
 import 'swiper/css';
@@ -68,7 +66,6 @@ const HomePage = () => {
       </nav>
     </header>
     <main>
-    
       {/* HERO SECTION */}
       <div className="hero-container">
         <div className="hero" id="hero">
