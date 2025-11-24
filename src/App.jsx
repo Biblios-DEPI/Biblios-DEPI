@@ -14,6 +14,8 @@ import CartPage from './pages/CartPage';
 import HomePage from './pages/HomePage';             // <--- Real File
 import BookDetailsPage from './pages/BookDetailsPage'; // <--- Real File
 import LoginPage from './pages/LoginPage';
+import CategoriesPage from './pages/CategoriesPage';
+import BooksPage from './pages/BooksPage';
 
 function App() {
   return (
@@ -27,8 +29,10 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/book-details" element={<BookDetailsPage />} />
           <Route path="/book-details/:id" element={<BookDetailsPage />} />
-
+          <Route path="categories" element={<CategoriesPage />} />
+          <Route path="/books/:id" element={<BookDetailsPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/books" element={<BooksPage />} />
           
         </Routes>
 
