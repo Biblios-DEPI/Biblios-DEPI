@@ -3,11 +3,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import { useEffect } from 'react';
 
+import { useState } from 'react';
+import '../styles/global.css';
+
 // Import Styles
 import 'swiper/css';
 import '../styles/home.css';
 
 const HomePage = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // ========== SHADOW HEADER EFFECT ==========
   useEffect(() => {
@@ -27,7 +31,44 @@ const HomePage = () => {
   }, []);
 
   return (
+    <>
+    <header id="header">
+      <nav id="navbar" className='homenav'>
+        <div className="logo-container-home">
+          <Link to="/">
+            <img src="/images/logo2.png" alt="Biblios Logo" />
+          </Link>
+        </div>
+        
+        {/* Menu Links with Mobile Toggle Logic */}
+        <ul className={`menu ${isMenuOpen ? 'active' : ''}`}>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/categories">Categories</Link></li>
+          <li><Link to="/about">About Biblios</Link></li>
+        </ul>
+
+        <div className="right-home">
+          <form action="">
+            <label htmlFor="search-book">
+                <i className="fa-solid fa-magnifying-glass"></i>
+            </label>
+            <input type="search" placeholder="Search for books..." id="search-book" />
+          </form>
+          <Link className="cart-container-home" to="/cart">
+            <img src="/images/shopping-cart.png" alt="cart" />
+          </Link>
+        </div>
+        
+        {/* Mobile Menu Button */}
+        <i 
+            className="fa-solid fa-bars bars" 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            style={{cursor: 'pointer'}}
+        ></i>
+      </nav>
+    </header>
     <main>
+    
       {/* HERO SECTION */}
       <div className="hero-container">
         <div className="hero" id="hero">
@@ -136,6 +177,21 @@ const HomePage = () => {
         </form>
       </div>
     </main>
+    <footer className='homefooter'>
+      <ul>
+        <li><Link to="#">Explore</Link></li>
+        <li><Link to="#">Company</Link></li>
+        <li><Link to="#">Legal</Link></li>
+      </ul>
+      <ul className="social-home">
+        {/* Ensure these exist in public/images/ */}
+        <li><a href="#"><img src="/images/facebook.png" alt="facebook" /></a></li>
+        <li><a href="#"><img src="/images/twitter.png" alt="x" /></a></li>
+        <li><a href="#"><img src="/images/instagram.png" alt="instagram" /></a></li>
+        <li><a href="#"><img src="/images/linkedin2.png" alt="linkedin" /></a></li>
+      </ul>
+    </footer>
+    </>
   );
 };
 

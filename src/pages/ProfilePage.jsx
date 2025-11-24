@@ -1,73 +1,146 @@
-import React, { useEffect, useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import React from 'react';
+import './ProfilePage.css';
 
-export const ProfilePage = () => {
-  const { user, readBooks } = useAuth();
-  const [books, setBooks] = useState([]);
-
-  // Load all books
-  useEffect(() => {
-    fetch("/books.json")
-      .then((res) => res.json())
-      .then((data) => setBooks(data))
-      .catch((err) => console.error("Failed to load books:", err));
-  }, []);
-
-  // Filter only read books
-  const readBooksList = books.filter((book) =>
-    readBooks.some((rb) => rb.bookId === book.id.toString())
-  );
-
-  if (!user) {
-    return (
-      <p className="p-4 text-center text-red-500">
-        You must be logged in to view your profile.
-      </p>
-    );
-  }
+export default function ProfilePage() {
+  const favoriteBooks = [
+    {
+      id: 1,
+      title: "1984",
+      author: "George Orwell",
+      cover: "https://covers.openlibrary.org/b/id/7222246-L.jpg"
+    },
+    {
+      id: 2,
+      title: "The Great Gatsby",
+      author: "F. Scott Fitzgerald",
+      cover: "https://covers.openlibrary.org/b/id/7885607-L.jpg"
+    },
+    {
+      id: 3,
+      title: "To Kill a Mockingbird",
+      author: "Harper Lee",
+      cover: "https://covers.openlibrary.org/b/id/8228691-L.jpg"
+    },
+    {
+      id: 4,
+      title: "Pride and Prejudice",
+      author: "Jane Austen",
+      cover: "https://covers.openlibrary.org/b/id/8235657-L.jpg"
+    }
+  ];
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Profile</h1>
+    <div className="profile-page">
+      {/* Header */}
+      <header className="header">
+        <div className="header-content">
+          <div className="logo">
+            <i className="fas fa-book-open"></i>
+            <span>Biblios</span>
+          </div>
+        </div>
+      </header>
 
-      <div className="mb-8 border-b pb-4">
-        <p>
-          <strong>Name:</strong> {user.name}
-        </p>
-        <p>
-          <strong>Email:</strong> {user.email}
-        </p>
-        <p>
-          <strong>Books Read:</strong> {readBooksList.length}
-        </p>
-      </div>
+      {/* Profile Content */}
+      <div className="profile-container">
+        {/* Profile Card */}
+        <div className="profile-card">
+          {/* Cover Banner */}
+          <div className="cover-banner"></div>
 
-      <h2 className="text-2xl font-semibold mb-4">Your Read Books</h2>
-      {readBooksList.length === 0 ? (
-        <p className="text-gray-600">
-          You haven't marked any books as read yet.
-        </p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {readBooksList.map((book) => (
-            <div
-              key={book.id}
-              className="border rounded-lg shadow hover:shadow-lg transition overflow-hidden"
-            >
-              <img
-                src={book.image}
-                alt={book.title}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="font-bold text-lg">{book.title}</h3>
-                <p className="text-gray-600 text-sm mb-2">by {book.author}</p>
-                <p className="text-sm">{book.description}</p>
+          {/* Profile Info */}
+          <div className="profile-content">
+            {/* Profile Picture */}
+            <div className="profile-header">
+              <div className="profile-picture-wrapper">
+                <div className="profile-picture">
+                  <img 
+                    src="https://api.dicebear.com/7.x/initials/svg?seed=Beshoy&backgroundColor=006A8A&textColor=ffffff" 
+                    alt="Profile"
+                  />
+                </div>
+              </div>
+              
+              <div className="profile-info">
+                <div className="profile-name-section">
+                  <div className="name-bio">
+                    <h1 className="display-name">Beshoy</h1>
+                    <p className="username">@beshoy-13</p>
+                  </div>
+                  <button className="edit-button">
+                    Edit Profile
+                  </button>
+                </div>
               </div>
             </div>
-          ))}
+
+            {/* Bio */}
+            <div className="bio">
+              <p>"I think therefore I am"</p>
+            </div>
+
+            {/* Contact Info */}
+            <div className="contact-info">
+              <div className="info-item">
+                <i className="fas fa-envelope"></i>
+                <span>beshoyfomail@biblios.com</span>
+              </div>
+              <div className="info-item">
+                <i className="fas fa-calendar"></i>
+                <span>Joined November 2024</span>
+              </div>
+              <div className="info-item">
+                <i className="fas fa-map-marker-alt"></i>
+                <span>Alexandria, Egypt</span>
+              </div>
+            </div>
+
+            {/* Stats */}
+            <div className="stats">
+              <div className="stat-item">
+                <div className="stat-number">42</div>
+                <div className="stat-label">Books Read</div>
+              </div>
+              <div className="stat-item">
+                <div className="stat-number">18</div>
+                <div className="stat-label">Reviews</div>
+              </div>
+              <div className="stat-item">
+                <div className="stat-number">127</div>
+                <div className="stat-label">Following</div>
+              </div>
+              <div className="stat-item">
+                <div className="stat-number">89</div>
+                <div className="stat-label">Followers</div>
+              </div>
+            </div>
+          </div>
         </div>
-      )}
+
+        {/* Favorites Section */}
+        <div className="favorites-section">
+          <div className="favorites-header">
+            <h2>
+              <i className="fas fa-heart"></i>
+              Favorite Books
+            </h2>
+          </div>
+          
+          <div className="favorites-grid">
+            {favoriteBooks.map(book => (
+              <div key={book.id} className="book-card">
+                <div className="book-cover">
+                  <img src={book.cover} alt={book.title} />
+                </div>
+                <div className="book-info">
+                  <h3 className="book-title">{book.title}</h3>
+                  <p className="book-author">{book.author}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
-};
+}

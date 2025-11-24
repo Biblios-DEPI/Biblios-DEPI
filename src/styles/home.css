@@ -5,13 +5,8 @@
     scrollbar-width: none !important;
 }
 
-.page main {
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
 html {
-    font-size: 16px;
+    font-size: 14px;
     scroll-behavior: smooth;
 }
 
@@ -26,12 +21,12 @@ body::-webkit-scrollbar {
 }
 
 h1 {
-    font-size: 56px;
+    font-size: 45px;
     font-family: "Playfair";
 }
 
 h2 {
-    font-size: 40px;
+    font-size: 25px;
     font-family: "Playfair";
 }
 
@@ -45,7 +40,7 @@ nav {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: transparent !important;
+    background-color: var(--background-color);
     z-index: var(--z-index-nav);
     transition: all 0.5s ease-in-out;
     -webkit-transition: all 0.5s ease-in-out;
@@ -54,29 +49,119 @@ nav {
     -o-transition: all 0.5s ease-in-out;
 }
 
-nav .menu li a {
+.homenav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 1.25rem;
+    background-color: transparent !important;
+}
+
+.homenav .logo-container-home {
+    height: 50px;
+}
+
+.homenav .logo-container-home img {
+    height: 50px;
+}
+
+.homenav .bars {
+    display: none;
+}
+
+.homenav .menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+
+.homenav .menu li {
+    padding-inline: 0.75rem;
+}
+
+.homenav .menu li a {
+    text-decoration: none;
+    font-family: "Merri";
+    color: #171A1FFF;
+    font-size: 12px;
+}
+
+.homenav .menu li a:hover {
+    color: #006989FF;
+    /* font-weight: 700; */
+}
+
+.homenav .right-home {
+    display: flex;
+    align-items: center;
+
+}
+
+.homenav .right-home form {
+    border: 1px solid #DEE1E6FF;
+    border-radius: 3px;
+    padding: 0.125rem 0.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline: 4px;
+    padding: 2px 12px;
+}
+
+.homenav .right-home form input {
+    outline: 0;
+    border: 0;
+    color: #171A1FFF;
+    font-family: 'Merri';
+    font-size: 10px;
+    background-color: inherit;
+    /* background-color: #FFFFFFFF; */
+    padding-left: 3px;
+}
+
+.homenav .right-home form label {
+    color: rgb(29, 33, 39);
+    font-size: 13px;
+    font-weight: 100;
+}
+
+.homenav .right-home .cart-container {
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin-left: 10px;
+}
+
+.homenav .right-home a img {
+    display: block;
+    width: 16px;
+    height: 16px;
+}
+
+.homenav .menu li a {
     color: var(--background-color) !important;
 }
 
 /* Search bar input text */
-.right form input[type="search"] {
-    color: white;
+.right-home form input[type="search"] {
+    color: var(--background-color);
 }
 
 /* Search bar placeholder */
-.right form input::placeholder {
-    color: white;
+.right-home form input::placeholder {
+    color: var(--background-color);
     opacity: 0.7;
 }
 
 /* Search icon (Font Awesome) */
-.right form label i {
-    color: white;
+.right-home form label i {
+    color: var(--background-color);
 }
 
 /* Cart icon -> turn white */
-.cart-container img,
-.logo-container img {
+.cart-container-home img,
+.logo-container-home img {
     filter: brightness(0) invert(1);
 }
 
@@ -86,24 +171,24 @@ nav .menu li a {
 }
 
 .shadow-header .menu li a {
-    color: #000 !important;
+    color: var(--elegant-black) !important;
 }
 
-.shadow-header .right form input[type="search"] {
-    color: #000;
+.shadow-header .right-home form input[type="search"] {
+    color: var(--elegant-black);
 }
 
-.shadow-header .right form input::placeholder {
-    color: #000;
+.shadow-header .righthome form input::placeholder {
+    color: var(--elegant-black);
     opacity: 0.7;
 }
 
-.shadow-header .right form label i {
-    color: #000;
+.shadow-header .right-home form label i {
+    color: var(--elegant-black);
 }
 
-.shadow-header .cart-container img,
-.shadow-header .logo-container img {
+.shadow-header .cart-container-home img,
+.shadow-header .logo-container-home img {
     filter: none;
 }
 
@@ -111,8 +196,7 @@ nav .menu li a {
     /* margin: 75px 100px; */
     /* border-radius: 20px; */
     /* margin-top: 50px; space for the nav */
-    padding: 15px;
-    padding-top: 61px;
+    padding: 40px 15px 15px;
     background: #FFF url('../images/background.png') no-repeat center/cover;
 }
 
@@ -139,6 +223,7 @@ nav .menu li a {
 
 .hero .text h2 {
     color: var(--background-color) !important;
+    font-size: 24px;
 }
 
 .books {
@@ -147,19 +232,19 @@ nav .menu li a {
 
 .home-swiper {
     margin: initial;
-    width: 480px;
+    width: 320px;
 }
 
 .home-article,
 .home-img {
-    width: 350px;
+    width: 250px;
     height: auto;
     filter: drop-shadow(0px 8.5px 13.75px #171a1f38);
-    transition: scale 0.5s;
-    -webkit-transition: scale 0.5s;
-    -moz-transition: scale 0.5s;
-    -ms-transition: scale 0.5s;
-    -o-transition: scale 0.5s;
+    transition: scale 0.3s;
+    -webkit-transition: scale 0.3s;
+    -moz-transition: scale 0.3s;
+    -ms-transition: scale 0.3s;
+    -o-transition: scale 0.3s;
     scale: 0.8;
     -webkit-filter: drop-shadow(0px 8.5px 13.75px #171a1f38);
 }
@@ -174,9 +259,8 @@ nav .menu li a {
     background-color: var(--primary-color);
     color: #FFF;
     border: none;
-    font-size: 20px;
-    padding: 10px 30px;
-    margin-top: 20px;
+    font-size: 18px;
+    padding: 8px 20px;
     border-radius: 6px;
     font-family: 'Playfair';
 }
@@ -185,9 +269,9 @@ nav .menu li a {
     display: flex;
     flex-direction: column;
     text-align: center;
-    padding: 200px;
+    padding: 120px;
     /* color: var(--primary-color); */
-    gap: 6rem;
+    gap: 5rem;
 }
 
 .category-container {
@@ -199,17 +283,17 @@ nav .menu li a {
 
 .category {
     text-align: center;
-    color: #000;
+    color: var(--elegant-black);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    gap: 12px;
-    padding: 55px 25px;
+    gap: 8px;
+    padding: 35px 25px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     border-radius: 5px;
     transition: all 0.5s ease-in-out;
-    width: 450px;
+    width: 400px;
 }
 
 .category:hover {
@@ -244,14 +328,14 @@ nav .menu li a {
     display: flex;
     flex-direction: column;
     text-align: center;
-    padding: 60px 60px;
+    padding: 70px 60px;
     gap: 6rem;
     background-color: var(--primary-color);
-    position: relative;
 }
 
 .pros h2 {
     color: #FFF !important;
+    font-size: 40px !important;
 }
 
 .advantage-container {
@@ -267,13 +351,17 @@ nav .menu li a {
     justify-content: space-evenly;
     text-align: start;
     gap: 0.7rem;
-    width: 320px;
-    padding: 30px 30px;
+    width: 290px;
+    padding: 25px;
     box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
     border-radius: 5px;
-    background-color: #FFF;
-    color: #000;
-    transition: all 0.5s ease-in-out;
+    background-color: var(--background-color);
+    color: var(--elegant-black);
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
 }
 
 .advantage:hover {
@@ -282,7 +370,7 @@ nav .menu li a {
 }
 
 .advantage i {
-    font-size: 25px;
+    font-size: 20px;
     display: inline;
     font-weight: 600;
     color: var(--primary-color);
@@ -296,9 +384,9 @@ nav .menu li a {
 .advantage .icon-container {
     background-color: #006A8A1A;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    padding: 35px;
+    width: 30px;
+    height: 30px;
+    padding: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -307,19 +395,19 @@ nav .menu li a {
 .help {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
     gap: 2rem;
-    padding: 4rem 10vw;
+    padding: 120px 100px;
 }
 
 .help .text {
-    width: clamp(250px, 30%, 28rem);
-    font-size: 1.2rem;
+    font-size: 20px;
+    width: 380px;
 }
 
 .help .text h2 {
-    padding: 2rem 0;
+    /* padding: 2rem 0; */
     color: var(--primary-color);
+    font-size: 30px;
 }
 
 .home-form {
@@ -373,4 +461,67 @@ nav .menu li a {
     border-radius: 0.1rem;
     cursor: pointer;
     font-family: 'Playfair';
+}
+
+.homefooter {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+}
+
+
+
+.homefooter ul {
+    display: flex;
+    list-style: none;
+}
+
+.homefooter ul li {
+    padding: 5px
+}
+
+.homefooter ul li a {
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 10px;
+    font-weight: 500;
+    color: #171A1FFF;
+    font-family: "Merri";
+
+}
+
+.homefooter ul li a img {
+    display: block;
+    width: 12px;
+}
+
+@media screen and (min-width: 674px) and (max-width: 716px) {
+    .homenav .menu li {
+        padding-inline: 0.25rem;
+    }
+
+    .homenav .right-home .cart-container-home {
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 674px) {
+    .homenav .menu {
+        display: none;
+    }
+
+    .homenav .right-home {
+        display: none;
+    }
+
+    .homenav .bars {
+        display: block;
+        color: #171A1FFF;
+    }
+}
+
+.page main {
+    padding: 0 !important;
+    margin: 0 !important;
 }
