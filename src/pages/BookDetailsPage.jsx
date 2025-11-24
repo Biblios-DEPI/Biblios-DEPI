@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom'; // 1. Import useParams
+import booksData from '../data/books.json'; // 2. Import the data source
 import '../styles/book-details.css';
 
 const BookDetailsPage = () => {
@@ -9,9 +10,27 @@ const BookDetailsPage = () => {
   const [rating, setRating] = useState(0); 
   const [hover, setHover] = useState(0);
 
+  // --- TASK A: Make Dynamic ---
+  const { id } = useParams();
+  // Use .find() to get the book, converting id from string to number
+  const book = booksData.find((b) => b.id === parseInt(id)); 
+
+  // Handle case where book is not found
+  if (!book) {
+    return (
+      <div className="container" style={{ textAlign: 'center', padding: '50px' }}>
+        <h2 className="main-title">Book Not Found 😢</h2>
+        <p className="sub-text">The book ID `{id}` does not match any entry in our catalog.</p>
+        <Link to="/books" className="btn sub-text" style={{ marginTop: '20px' }}>
+          Browse All Books
+        </Link>
+      </div>
+    );
+  }
+  // --- END TASK A ---
+
   const MIN_QUANTITY = 1;
   const PRIMARY_COLOR = '#006A8A'; 
-  const BLUE_COLOR = '#006A8A'
   const NUMBER_COLOR = 'black'; 
   const DISABLED_COLOR = '#ccc';
 
@@ -27,14 +46,17 @@ const BookDetailsPage = () => {
     <div className="container">
       <section className="book-detail">
         <div className="book-img">
-          <img src="/images/Odyssey.png" alt="Odyssey Book Cover" />
+          {/* Use book.image dynamically */}
+          <img src={book.image} alt={`${book.title} Book Cover`} /> 
         </div>
         
         <div className="book-info">
-          <h2 className="main-title">The Odyssey: A New Translation</h2>
-          <p className="sub-text"><strong>By Homer</strong>, Translated by Emily Wilson</p>
+          {/* Dynamic Content */}
+          <h2 className="main-title">{book.title}</h2> 
+          <p className="sub-text"><strong>By {book.author}</strong></p>
           
           {/* --- FIXED INTERACTIVE RATING --- */}
+          {/* Note: In a real app, the default rating would be loaded from book.rating */}
           <div className="rating-wrapper" style={{ display: 'flex', gap: '5px', marginBottom: '10px' }}>
             {[...Array(5)].map((star, index) => {
               const ratingValue = index + 1;
@@ -59,11 +81,10 @@ const BookDetailsPage = () => {
                     width="24" 
                     height="24" 
                     viewBox="0 0 24 24"
-                    stroke={PRIMARY_COLOR} // Outline is always Teal
+                    stroke={PRIMARY_COLOR}
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    // If active, Fill is Teal. If inactive, Fill is White.
                     fill={isActive ? PRIMARY_COLOR : "white"} 
                     style={{ transition: 'fill 0.2s ease, transform 0.1s' }}
                   >
@@ -72,12 +93,17 @@ const BookDetailsPage = () => {
                 </button>
               );
             })}
+            <span style={{ marginLeft: '10px', color: PRIMARY_COLOR, fontWeight: 'bold' }}>
+                ({book.rating.toFixed(1)} Avg) 
+            </span>
           </div>
           {/* --- END RATING --- */}
 
-          <p className="sub-text">Experience the timeless epic of Homer's "The Odyssey" through Emily Wilson's acclaimed translation. This vibrant and authoritative rendition captures the essence of Odysseus's perilous journey home after the Trojan War. Faced with gods, monsters, and temptations, his courage and cunning are tested at every turn. Wilson’s poetic precision and accessible language breathe new life into this ancient tale of heroism, love, and the human condition.</p>
+          {/* Dynamic Description */}
+          <p className="sub-text">{book.description}</p>
           
-          <div className="price main-title">$18.99</div>
+          {/* Dynamic Price */}
+          <div className="price main-title">${book.price.toFixed(2)}</div> 
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
@@ -106,34 +132,23 @@ const BookDetailsPage = () => {
         </div>
       </section>
 
+      {/* Note: Related Books section is still hardcoded. This could be made dynamic later */}
       <section className="related-books">
-        <h3 className="main-title" style={{ fontSize: '36px' }}>Related Books</h3>
+        <h3 className="main-title" style={{ fontSize: '36px' }}>Related Books in {book.category}</h3>
         <hr className="gradient-hr" />
         <div className="related-grid">
-          <div className="related-item">
-            <img src="/images/lilliad.png" alt="The Iliad" />
-            <h4 className="main-title">The Iliad: A New Translation</h4>
-            <p className="book-auth">Homer, Translated by Caroline Alexander</p>
-            <p className="book-price">$20.50</p>
-          </div>
-          <div className="related-item">
-            <img src="/images/PLATO.png" alt="Plato" />
-            <h4 className="main-title">Plato: The Republic</h4>
-            <p className="book-auth">Plato, Translated by Robin Waterfield</p>
-            <p className="book-price">$16.00</p>
-          </div>
-          <div className="related-item">
-            <img src="/images/meditation.png" alt="Meditations" />
-            <h4 className="main-title">Meditations</h4>
-            <p className="book-auth">Marcus Aurelius, Translated by Gregory Hays</p>
-            <p className="book-price">$12.75</p>
-          </div>
-          <div className="related-item">
-            <img src="/images/Aeneid.png" alt="Aeneid" />
-            <h4 className="main-title">Aeneid</h4>
-            <p className="book-auth">Virgil, Translated by Shadi Bartsch</p>
-            <p className="book-price">$15.50</p>
-          </div>
+          {/* A simple filter to show related books from the same category */}
+          {booksData
+            .filter(b => b.category === book.category && b.id !== book.id)
+            .slice(0, 4) // Show only up to 4 related books
+            .map(relatedBook => (
+              <Link to={`/books/${relatedBook.id}`} key={relatedBook.id} className="related-item">
+                <img src={relatedBook.image} alt={relatedBook.title} />
+                <h4 className="main-title">{relatedBook.title}</h4>
+                <p className="book-auth">{relatedBook.author}</p>
+                <p className="book-price">${relatedBook.price.toFixed(2)}</p>
+              </Link>
+          ))}
         </div>
       </section>
     </div>
