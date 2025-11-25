@@ -73,13 +73,21 @@ header h1 {
   gap: 2rem;
   background: #fff;
   padding: 2rem;
-  /* border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1); */
+  /* CRITICAL FIX: Force vertical centering of content in the two columns */
+  align-items: center !important; 
 }
-
 .book-detail img {
   width: 100%;
   border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.book-detail .book-img {
+    margin: 10%;
+
 }
 
 .book-detail img,
@@ -91,6 +99,10 @@ header h1 {
 .related-item img:hover {
   transform: scale(1.05); /* Makes the image 5% bigger */
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Adds a more prominent shadow */
+}
+
+.book-info {
+  margin-bottom: 10%;
 }
 
 .book-info h2 {
