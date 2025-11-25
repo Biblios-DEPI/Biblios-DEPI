@@ -17,6 +17,7 @@ import LoginPage from './pages/LoginPage';
 
 // Missing Pages (Commented out until you create them)
 import CategoriesPage from './pages/CategoriesPage';
+
 import BooksPage from './pages/BooksPage';
 import RegisterPage from './pages/RegisterPage';
 // import ContactPage from './pages/ContactPage';
@@ -52,6 +53,11 @@ function App() {
               <Route path="/categories" element={<BooksPage />} />
               {/* <Route path="/checkout" element={<CheckoutPage />} /> */}
               {/* <Route path="/contact" element={<ContactPage />} /> */}
+                <Route path="/books/:id" element={<BookDetailsPage />} />  
+                {/* <Route path="/categories" element={<CategoriesPage />} /> */}
+                <Route path="/books" element={<BooksPage />} />
+
+
             </Route>
 
             {/* GROUP 2: Pages WITHOUT Header & Footer (Clean) */}
