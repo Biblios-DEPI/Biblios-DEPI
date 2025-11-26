@@ -125,13 +125,18 @@ const Header = () => {
             {cartCount > 0 && (
               <span style={{
                 position: 'absolute',
-                top: '-8px',
-                right: '-8px',
+                top: '7px',
+                right: '4px',
                 backgroundColor: '#e74c3c',
                 color: 'white',
                 borderRadius: '50%',
-                padding: '2px 6px',
-                fontSize: '12px',
+                width: '16px', 
+                height: '16px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                fontSize: '11px',
+                fontFamily: 'Arial, Helvetica, sans-serif',
                 fontWeight: 'bold'
               }}>
                 {cartCount}
