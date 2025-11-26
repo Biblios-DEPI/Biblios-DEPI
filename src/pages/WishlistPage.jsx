@@ -1,8 +1,11 @@
-// WishlistPage.jsx
 import React, { useState } from "react";
+import toast from 'react-hot-toast'; // 1. Import Toast
+import { useCart } from '../context/CartContext'; // 2. Import Cart Hook
 import "../styles/WishlistPage.css";
 
 export default function WishlistPage() {
+    const { addToCart } = useCart(); // 3. Get the add function
+
     const [wishlistItems, setWishlistItems] = useState([
         {
             id: 1,
@@ -10,7 +13,7 @@ export default function WishlistPage() {
             author: "Matt Haig",
             price: 16.99,
             originalPrice: 24.99,
-            cover: "../../public/images/TheMidnightLibrary.jpg",
+            cover: "/images/TheMidnightLibrary.jpg",
             addedDate: "2024-11-20",
             inStock: true,
         },
@@ -20,7 +23,7 @@ export default function WishlistPage() {
             author: "Homer",
             price: 14.99,
             originalPrice: 19.99,
-            cover: "../../public/images/TheIliad.jpg",
+            cover: "/images/TheIliad.jpg",
             addedDate: "2024-11-18",
             inStock: true,
         },
@@ -30,7 +33,7 @@ export default function WishlistPage() {
             author: "Homer",
             price: 18.99,
             originalPrice: 28.99,
-            cover: "../../public/images/TheOdyssey.jpg",
+            cover: "/images/TheOdyssey.jpg",
             addedDate: "2024-11-15",
             inStock: false,
         },
@@ -40,7 +43,7 @@ export default function WishlistPage() {
             author: "Victor Hugo",
             price: 13.99,
             originalPrice: 17.99,
-            cover: "../../public/images/LesMisrables.jpg",
+            cover: "/images/LesMisrables.jpg",
             addedDate: "2024-11-10",
             inStock: true,
         },
@@ -53,17 +56,36 @@ export default function WishlistPage() {
         setTimeout(() => {
             setWishlistItems(wishlistItems.filter((item) => item.id !== id));
             setRemovingId(null);
+            toast.error("Removed from wishlist", { position: 'bottom-center' });
         }, 500);
     };
 
     const moveToCart = (id) => {
         const item = wishlistItems.find((item) => item.id === id);
+        
         if (item && item.inStock) {
+            // 1. Actually add to the global cart
+            addToCart(item, 1);
+
+            // 2. Start animation to remove from wishlist
             setRemovingId(id);
+            
             setTimeout(() => {
                 setWishlistItems(wishlistItems.filter((item) => item.id !== id));
                 setRemovingId(null);
-                alert(`"${item.title}" added to cart!`);
+                
+                // 3. Show Success Toast
+                toast.success(`"${item.title}" moved to cart!`, {
+                    style: {
+                      border: '1px solid #006A8A',
+                      padding: '16px',
+                      color: '#006A8A',
+                    },
+                    iconTheme: {
+                      primary: '#006A8A',
+                      secondary: '#FFFAEE',
+                    },
+                });
             }, 600);
         }
     };
@@ -82,7 +104,7 @@ export default function WishlistPage() {
 
     return (
         <div className="wishlist-page">
-            {/* Header */}
+            {/* --- RESTORED HEADER (As requested) --- */}
             <header className="header">
                 <div className="header-content">
                     <div className="logo">
@@ -99,6 +121,7 @@ export default function WishlistPage() {
                     </nav>
                 </div>
             </header>
+            {/* -------------------------------------- */}
 
             {/* Main Content */}
             <div className="wishlist-container">
@@ -129,7 +152,7 @@ export default function WishlistPage() {
                         </div>
                         <h2>Your wishlist is empty</h2>
                         <p>Start adding books you love and build your dream library!</p>
-                        <button className="browse-button">
+                        <button className="browse-button" onClick={() => window.location.href='/books'}>
                             <i className="fas fa-book"></i>
                             Browse Books
                         </button>
@@ -164,7 +187,7 @@ export default function WishlistPage() {
                                         <div className="cover-overlay">
                                             <button
                                                 className="quick-view-btn"
-                                                onClick={() => alert(`Viewing ${item.title}`)}
+                                                onClick={() => toast('Quick View coming soon!', { icon: '👀' })}
                                             >
                                                 <i className="fas fa-eye"></i>
                                                 Quick View
@@ -207,7 +230,7 @@ export default function WishlistPage() {
                                             disabled={!item.inStock}
                                         >
                                             <i className="fas fa-shopping-cart"></i>
-                                            {item.inStock ? "Add to Cart" : "Out of Stock"}
+                                            {item.inStock ? "Move to Cart" : "Out of Stock"}
                                         </button>
                                     </div>
                                 </div>
@@ -231,7 +254,10 @@ export default function WishlistPage() {
                                         ${calculateSavings()}
                                     </span>
                                 </div>
-                                <button className="add-all-btn">
+                                <button 
+                                    className="add-all-btn"
+                                    onClick={() => toast.success("Feature coming soon!")}
+                                >
                                     <i className="fas fa-cart-plus"></i>
                                     Add All to Cart
                                 </button>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom'; // 1. Import useParams
+import toast from 'react-hot-toast';
 import booksData from '../data/books.json'; // 2. Import the data source
 import { useCart } from '../context/CartContext';
 import '../styles/book-details.css';
@@ -15,6 +16,13 @@ const BookDetailsPage = () => {
   const { id } = useParams();
   // Use .find() to get the book, converting id from string to number
   const book = booksData.find((b) => b.id === parseInt(id)); 
+const [prevId, setPrevId] = useState(id);
+  
+    if (id !== prevId) {
+      setPrevId(id);   // Update the tracker
+      setQuantity(1);  // Reset quantity immediately
+      setRating(0);    // Reset rating immediately
+    }
 
   // Handle case where book is not found
   if (!book) {
@@ -39,8 +47,19 @@ const BookDetailsPage = () => {
     addToCart(book, quantity);
     // Optional: Navigate to cart immediately, or just show an alert
     // navigate('/cart'); 
-    alert(`${quantity} copy of "${book.title}" added to cart!`);
+    toast.success(`${quantity} copy of "${book.title}" added to cart!`, {
+      style: {
+        border: '1px solid #006A8A',
+        padding: '16px',
+        color: '#006A8A',
+      },
+      iconTheme: {
+        primary: '#006A8A',
+        secondary: '#FFFAEE',
+      },
+    });
   };
+  
 
 
   const decrementQuantity = () => {
