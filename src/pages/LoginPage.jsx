@@ -1,18 +1,38 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { auth } from '../firebase'; // Import auth
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import '../styles/login.css';
-// Ensure Font Awesome is available in your project, e.g., via CDN in index.html
-// <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
+  const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
-  // Just for testing the look
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Login button clicked! (Logic coming soon)");
+    setError('');
+
+    try {
+      // 1. Attempt to Sign In
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log("Logged in:", userCredential.user);
+
+      // 2. Redirect to Home on success
+      navigate('/'); 
+
+    } catch (err) {
+      console.error(err.code);
+      // 3. Handle Login Errors
+      if (err.code === 'auth/invalid-credential') { 
+        // Note: Firebase recently changed generic errors to 'invalid-credential' for security
+        setError("Incorrect email or password.");
+      } else {
+        setError("Failed to login. Please try again.");
+      }
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -25,6 +45,9 @@ const LoginPage = () => {
         <h2>Welcome Back</h2>
         <p>Please login to continue your journey</p>
         
+        {/* Error Message Display */}
+        {error && <div style={{color: 'red', marginBottom: '10px', fontSize: '14px', textAlign: 'center'}}>{error}</div>}
+
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Email Address</label>
@@ -46,7 +69,7 @@ const LoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required 
-                style={{ paddingRight: '40px', width: '100%' }} // Add padding for the icon
+                style={{ paddingRight: '40px', width: '100%' }}
               />
               <button
                 type="button"
@@ -67,19 +90,16 @@ const LoginPage = () => {
             </div>
           </div>
 
-          {/* Forgot Password Link */}
           <div className="forgot-pass" style={{ textAlign: 'right', marginBottom: '15px' }}>
             <Link to="#" style={{ color: '#006A8A', fontSize: '14px', textDecoration: 'none' }}>Forgot Password?</Link>
           </div>
 
           <button type="submit" className="btn login-btn">Login</button>
           
-          {/* Create Account Link */}
           <div style={{ marginTop: '20px', fontSize: '14px', color: '#333' }}>
             Don't have an account? <Link to="/register" style={{ color: '#006A8A', fontWeight: 'bold', textDecoration: 'none' }}>Create new account</Link>
           </div>
 
-          {/* Back to Home Link */}
           <p style={{marginTop: '20px'}}>
             <Link to="/" style={{color: '#006A8A', textDecoration: 'none'}}>Back to Home</Link>
           </p>

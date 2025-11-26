@@ -1,5 +1,8 @@
+// src/App.jsx
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
-// import { AuthProvider } from './context/AuthContext';
+
+// 1. IMPORT THE PROVIDER (Double check this path!)
+import { CartProvider } from './context/CartContext'; 
 
 // Styles
 import './styles/global.css';
@@ -14,17 +17,11 @@ import AboutPage from './pages/AboutPage';
 import CartPage from './pages/CartPage';
 import BookDetailsPage from './pages/BookDetailsPage';
 import LoginPage from './pages/LoginPage';
-
-// Missing Pages (Commented out until you create them)
 import CategoriesPage from './pages/CategoriesPage';
-
 import BooksPage from './pages/BooksPage';
 import RegisterPage from './pages/RegisterPage';
-// import ContactPage from './pages/ContactPage';
-// import CheckoutPage from './pages/CheckoutPage';
 
-
-// 1. Layout Component
+// Layout Component
 const MainLayout = () => {
   return (
     <>
@@ -37,30 +34,23 @@ const MainLayout = () => {
 
 function App() {
   return (
-    /* <AuthProvider>  <-- REMOVED: Because you don't have the context yet */
+    // 2. WRAP THE ENTIRE ROUTER WITH CARTPROVIDER
+    <CartProvider>
       <Router>
         <div className="page">
           <Routes>
             
-            {/* GROUP 1: Pages WITH Header & Footer */}
+            {/* Pages with Header/Footer (These were crashing) */}
             <Route element={<MainLayout />}>
               <Route path="/about" element={<AboutPage />} />
-              <Route path="/book-details/:id" element={<BookDetailsPage />} />
               <Route path="/cart" element={<CartPage />} />
-              
-              {/* These are commented out to prevent crashing */}
-              {/* <Route path="/categories" element={<CategoriesPage />} /> */}
+              <Route path="/book-details/:id" element={<BookDetailsPage />} />
+              <Route path="/books/:id" element={<BookDetailsPage />} />  
+              <Route path="/books" element={<BooksPage />} />
               <Route path="/categories" element={<BooksPage />} />
-              {/* <Route path="/checkout" element={<CheckoutPage />} /> */}
-              {/* <Route path="/contact" element={<ContactPage />} /> */}
-                <Route path="/books/:id" element={<BookDetailsPage />} />  
-                {/* <Route path="/categories" element={<CategoriesPage />} /> */}
-                <Route path="/books" element={<BooksPage />} />
-
-
             </Route>
 
-            {/* GROUP 2: Pages WITHOUT Header & Footer (Clean) */}
+            {/* Pages without Header/Footer (These were working) */}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} /> 
             <Route path="/" element={<HomePage />} />
@@ -68,7 +58,7 @@ function App() {
           </Routes>
         </div>
       </Router>
-    /* </AuthProvider> <-- REMOVED */
+    </CartProvider>
   );
 }
 

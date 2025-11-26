@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
+import { useCart } from '../context/CartContext';
 import booksData from '../data/books.json'; // ⚠️ CRITICAL: Import the book data!
 import '../styles/global.css';
 
 const Header = () => {
+  const { cartCount } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState(''); 
   // State to hold suggested books
@@ -120,6 +122,21 @@ const Header = () => {
           
           <Link className="cart-container" to="/cart">
             <img src="/images/shopping-cart.png" alt="cart" />
+            {cartCount > 0 && (
+              <span style={{
+                position: 'absolute',
+                top: '-8px',
+                right: '-8px',
+                backgroundColor: '#e74c3c',
+                color: 'white',
+                borderRadius: '50%',
+                padding: '2px 6px',
+                fontSize: '12px',
+                fontWeight: 'bold'
+              }}>
+                {cartCount}
+              </span>
+            )}
           </Link>
         </div>
         

@@ -1,80 +1,72 @@
-// // src/context/CartContext.jsx
-// import React, { createContext, useState, useContext } from 'react';
+// src/context/CartContext.jsx
+import { createContext, useState, useContext, useEffect } from 'react';
 
-// // Create the context object
-// export const CartContext = createContext();
+const CartContext = createContext();
 
-// // Create a custom hook for easier consumption
-// export const useCart = () => {
-//     return useContext(CartContext);
-// };
+export const useCart = () => useContext(CartContext);
 
-// // Create the Provider component
-// export const CartProvider = ({ children }) => {
-//     // State to hold the array of items in the cart
-//     const [cartItems, setCartItems] = useState([]);
+export const CartProvider = ({ children }) => {
+  // Load cart from localStorage if available, otherwise empty array
+  const [cartItems, setCartItems] = useState(() => {
+    const localData = localStorage.getItem('biblios_cart');
+    return localData ? JSON.parse(localData) : [];
+  });
 
-//     // Function to add or increment an item
-//     const addToCart = (book) => {
-//         setCartItems(prevItems => {
-//             const existingItem = prevItems.find(item => item.id === book.id);
+  // Save to localStorage whenever cart changes
+  useEffect(() => {
+    localStorage.setItem('biblios_cart', JSON.stringify(cartItems));
+  }, [cartItems]);
 
-//             if (existingItem) {
-//                 // If the item exists, increment its quantity
-//                 return prevItems.map(item =>
-//                     item.id === book.id
-//                         ? { ...item, quantity: item.quantity + 1 }
-//                         : item
-//                 );
-//             } else {
-//                 // If it's a new item, add it with quantity 1
-//                 return [...prevItems, { ...book, quantity: 1 }];
-//             }
-//         });
-//     };
+  // 1. Add to Cart
+  const addToCart = (book, quantity) => {
+    setCartItems(prevItems => {
+      const existingItem = prevItems.find(item => item.id === book.id);
+      
+      if (existingItem) {
+        // If book exists, just update quantity
+        return prevItems.map(item =>
+          item.id === book.id 
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
+      } else {
+        // Add new book with selected quantity
+        return [...prevItems, { ...book, quantity }];
+      }
+    });
+  };
 
-//     // Function to remove an item completely
-//     const removeItem = (id) => {
-//         setCartItems(prevItems => prevItems.filter(item => item.id !== id));
-//     };
+  // 2. Remove from Cart
+  const removeFromCart = (id) => {
+    setCartItems(prevItems => prevItems.filter(item => item.id !== id));
+  };
 
-//     // Function to change item quantity
-//     const updateQuantity = (id, newQuantity) => {
-//         if (newQuantity < 1) {
-//             removeItem(id);
-//             return;
-//         }
+  // 3. Update Quantity (Increment/Decrement in Cart Page)
+  const updateQuantity = (id, type) => {
+    setCartItems(prevItems => prevItems.map(item => {
+      if (item.id === id) {
+        const newQuantity = type === 'increase' ? item.quantity + 1 : item.quantity - 1;
+        // Prevent going below 1
+        return { ...item, quantity: Math.max(1, newQuantity) };
+      }
+      return item;
+    }));
+  };
 
-//         setCartItems(prevItems => {
-//             return prevItems.map(item =>
-//                 item.id === id
-//                     ? { ...item, quantity: newQuantity }
-//                     : item
-//             );
-//         });
-//     };
+  // 4. Calculate Totals
+  const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  const cartSubtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
-//     // Calculate total values (simplified here)
-//     const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-//     const taxRate = 0.08;
-//     const tax = subtotal * taxRate;
-//     const total = subtotal + tax;
-    
-//     // Provide the state and functions to consumers
-//     const value = {
-//         cartItems,
-//         addToCart,
-//         removeItem,
-//         updateQuantity,
-//         subtotal,
-//         tax,
-//         total,
-//         taxRate
-//     };
-
-//     return (
-//         <CartContext.Provider value={value}>
-//             {children}
-//         </CartContext.Provider>
-//     );
-// };
+  return (
+    <CartContext.Provider value={{ 
+      cartItems, 
+      addToCart, 
+      removeFromCart, 
+      updateQuantity, 
+      cartCount,
+      cartSubtotal
+    }}>
+      {children}
+    </CartContext.Provider>
+  );
+};

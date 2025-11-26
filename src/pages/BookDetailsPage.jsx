@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom'; // 1. Import useParams
 import booksData from '../data/books.json'; // 2. Import the data source
+import { useCart } from '../context/CartContext';
 import '../styles/book-details.css';
 
 const BookDetailsPage = () => {
   const [quantity, setQuantity] = useState(1);
-  
+  const { addToCart } = useCart();
   // --- STATE FOR RATING ---
   const [rating, setRating] = useState(0); 
   const [hover, setHover] = useState(0);
@@ -29,10 +30,18 @@ const BookDetailsPage = () => {
   }
   // --- END TASK A ---
 
+
   const MIN_QUANTITY = 1;
   const PRIMARY_COLOR = '#006A8A'; 
   const NUMBER_COLOR = 'black'; 
   const DISABLED_COLOR = '#ccc';
+  const handleAddToCart = () => {
+    addToCart(book, quantity);
+    // Optional: Navigate to cart immediately, or just show an alert
+    // navigate('/cart'); 
+    alert(`${quantity} copy of "${book.title}" added to cart!`);
+  };
+
 
   const decrementQuantity = () => {
     setQuantity(prevQuantity => Math.max(MIN_QUANTITY, prevQuantity - 1));
@@ -127,7 +136,13 @@ const BookDetailsPage = () => {
               </button>
             </div>
             
-            <Link to="/cart" className="btn sub-text">Add to Cart</Link>
+            <button 
+                onClick={handleAddToCart}
+                className="btn sub-text"
+                style={{ cursor: 'pointer', border: 'none' }}
+            >
+                Add to Cart
+            </button>
           </div>
         </div>
       </section>
