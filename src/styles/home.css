@@ -259,7 +259,7 @@ nav {
 }
 
 .categories h2 {
-    font-size: 15px;
+    font-size: 36px;
 }
 
 .category-container {
@@ -489,6 +489,22 @@ nav {
 
 .shadow-header .wishlist-link i {
     color: var(--elegant-black);
+}
+
+.profile-pic {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+.profile-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media screen and (min-width: 674px) and (max-width: 716px) {

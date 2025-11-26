@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { useEffect } from "react";
 import { useState } from "react";
+import { auth } from "../firebase";
 
 // Import Styles
 import "swiper/css";
@@ -73,8 +74,19 @@ const HomePage = () => {
             </Link>
 
             {/* Profile Picture Link */}
-            <Link to="/profile" className="profile-link">
-              <i class="fa-regular fa-user"></i>
+            <Link
+              to={auth.currentUser ? "/profile" : "/login"}
+              className="profile-link"
+            >
+              {auth.currentUser ? (
+                <img
+                  src={auth.currentUser.photoURL || "/images/profile.jpg"}
+                  alt="Profile"
+                  className="profile-pic"
+                />
+              ) : (
+                <i className="fa-regular fa-user"></i>
+              )}
             </Link>
           </div>
 
