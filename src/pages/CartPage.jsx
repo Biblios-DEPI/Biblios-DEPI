@@ -2,7 +2,7 @@ import '../styles/cart.css';
 
 const CartPage = () => {
   return (
-    <main>
+    <main className='main-cart'>
         <h2>Your Cart</h2>
         <div className="main-container">
             <div className="products">

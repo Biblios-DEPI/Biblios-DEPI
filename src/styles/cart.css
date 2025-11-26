@@ -1,6 +1,6 @@
 /* centerh1
 new card design */
-.btn {
+.main-cart .btn {
     width: 100% !important;
 }
 
@@ -16,14 +16,15 @@ new card design */
 
 }
 
-.page main {
+.page .main-cart {
     width: 100%;
-    padding: 5%;
-    margin-top: 51px;
+    padding: 5% !important;
+
+
 
 }
 
-.page main h2 {
+.page .main-cart h2 {
     font-family: "Playfair";
     font-size: 48px;
     font-weight: 700;
@@ -31,44 +32,44 @@ new card design */
     margin-bottom: 30px;
 }
 
-.page main .main-container {
+.page .main-cart .main-container {
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
 
-.page main .main-container .products {
+.page .main-cart .main-container .products {
     width: 65%;
     display: flex;
     flex-direction: column;
 
 }
 
-.page main .main-container .products .cart-book {
+.page .main-cart .main-container .products .cart-book {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
 
-.page main .main-container .products .cart-book .cover {
+.page .main-cart .main-container .products .cart-book .cover {
     width: 90px;
     border-radius: 4px;
 }
 
-.page main .main-container .products .cart-book .cover img {
+.page .main-cart .main-container .products .cart-book .cover img {
     width: 90px;
     border-radius: 4px;
 }
 
-.page main .main-container .products .details {
+.page .main-cart .main-container .products .details {
     width: 75%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
 
-.page main .main-container .products .details .name-of-book {
+.page .main-cart .main-container .products .details .name-of-book {
     font-family: "Merri";
 
     font-size: 14px;
@@ -79,7 +80,7 @@ new card design */
 
 }
 
-.page main .main-container .products .details .author {
+.page .main-cart .main-container .products .details .author {
     font-family: "Merri";
     margin-block: 10px;
     font-size: 13px;
@@ -87,45 +88,45 @@ new card design */
     color: #565D6DFF;
 }
 
-.page main .main-container .products .details div.seprate {
+.page .main-cart .main-container .products .details div.seprate {
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
 
-.page main .main-container .products .details div.seprate .quantity {
+.page .main-cart .main-container .products .details div.seprate .quantity {
     font-size: 18px;
     align-items: center;
 }
 
-.page main .main-container .products .details div.seprate .quantity .number {
+.page .main-cart .main-container .products .details div.seprate .quantity .number {
     display: inline-block;
     margin-inline: 6px;
     font-family: "Merri";
 }
 
-.page main .main-container .products .details div.seprate .quantity .more,
-.page main .main-container .products .details div.seprate .quantity .less {
+.page .main-cart .main-container .products .details div.seprate .quantity .more,
+.page .main-cart .main-container .products .details div.seprate .quantity .less {
     cursor: pointer;
     color: #565D6DFF;
     font-size: 14px;
 
 }
 
-.page main .main-container .products .details div.seprate .price {
+.page .main-cart .main-container .products .details div.seprate .price {
     font-weight: 700;
     color: #006A8AFF;
     font-size: 18px;
     font-family: "Merri";
 }
 
-.page main .main-container .products .remove-container i {
+.page .main-cart .main-container .products .remove-container i {
     color: #565D6DFF;
     cursor: pointer;
     font-size: 14px;
 }
 
-.page main .main-container .summary-container {
+.page .main-cart .main-container .summary-container {
     width: 30%;
 }
 
@@ -136,7 +137,7 @@ new card design */
     margin-bottom: 24px;
 }
 
-.page main .main-container .summary-container .summary .row-item {
+.page .main-cart .main-container .summary-container .summary .row-item {
     display: flex;
     justify-content: space-between;
     margin-block: 12px;
@@ -146,7 +147,7 @@ new card design */
     color: #565D6DFF;
 }
 
-.page main .main-container .summary-container .summary div:last-of-type {
+.page .main-cart .main-container .summary-container .summary div:last-of-type {
     font-size: 18px;
     font-family: "Merri";
 
@@ -155,7 +156,7 @@ new card design */
     margin-block: 30px;
 }
 
-.page main .main-container .summary-container .summary hr {
+.page .main-cart .main-container .summary-container .summary hr {
     color: #565D6DFF;
 
 }
