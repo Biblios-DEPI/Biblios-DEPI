@@ -482,6 +482,15 @@ nav {
     color: var(--elegant-black);
 }
 
+.wishlist-link i {
+    font-size: 15px;
+    color: var(--background-color);
+}
+
+.shadow-header .wishlist-link i {
+    color: var(--elegant-black);
+}
+
 @media screen and (min-width: 674px) and (max-width: 716px) {
     .homenav .menu li {
         padding-inline: 0.25rem;
