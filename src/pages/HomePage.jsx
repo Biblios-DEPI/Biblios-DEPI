@@ -54,6 +54,12 @@ const HomePage = () => {
           </form>
           <Link className="cart-container-home" to="/cart">
             <img src="/images/shopping-cart.png" alt="cart" />
+            {/* <i class="fa-solid fa-cart-shopping"></i> */}
+          </Link>
+          
+          {/* Profile Picture Link */}
+          <Link to="/profile" className="profile-link">
+            <i class="fa-regular fa-user"></i>
           </Link>
         </div>
         
