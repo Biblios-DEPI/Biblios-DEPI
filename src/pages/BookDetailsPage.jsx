@@ -143,7 +143,7 @@ const BookDetailsPage = () => {
             .slice(0, 4) // Show only up to 4 related books
             .map(relatedBook => (
               <Link to={`/books/${relatedBook.id}`} key={relatedBook.id} className="related-item">
-                <img src={relatedBook.image} alt={relatedBook.title} />
+                <img src={relatedBook.image}  alt={relatedBook.title} />
                 <h4 className="main-title">{relatedBook.title}</h4>
                 <p className="book-auth">{relatedBook.author}</p>
                 <p className="book-price">${relatedBook.price.toFixed(2)}</p>

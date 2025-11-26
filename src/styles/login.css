@@ -1,21 +1,24 @@
 /* src/styles/login.css */
 
 .login-container {
-    margin-top: 70px;
+    /* margin-top: 70px; */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 80vh;
-    /* Centers vertically */
     background-color: #fafafbff;
     padding: 20px;
+    /* background:
+        url('/images/greek_patern.png') repeat-x fixed center top / 25%,
+        url('/images/greek_patern.png') repeat-x fixed center bottom / 25%; */
+    min-height: 100vh;
 }
 
 .login-form-card {
     background: white;
     padding: 40px;
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
     text-align: center;
@@ -25,7 +28,6 @@
 .login-form-card h2 {
     font-family: "Playfair Display", serif;
     color: var(--primary-color);
-    /* Uses your global variable */
     margin-bottom: 10px;
     font-size: 32px;
 }
@@ -77,21 +79,20 @@
     border-radius: 4px;
 }
 
-/* Reusing your button style but ensuring width */
+/* Login Button */
 .login-btn {
     width: 100%;
     margin-top: 10px;
 }
 
+/* Forgot Password Link */
 .forgot-pass {
     text-align: left;
-    /* Or 'right' if you prefer it on the other side */
     margin-bottom: 20px;
 }
 
 .forgot-pass a {
     color: #565D6D;
-    /* A nice grey for secondary text */
     font-family: "Merriweather", serif;
     font-size: 13px;
     text-decoration: none;
@@ -103,7 +104,7 @@
     text-decoration: underline;
 }
 
-/* 2. Register Section (Don't have an account?) */
+/* Register Section */
 .register-link {
     margin-top: 25px;
     font-family: "Merriweather", serif;
@@ -113,13 +114,42 @@
 
 .register-link a {
     color: var(--primary-color);
-    /* Uses your Teal color */
     font-weight: 700;
-    /* Bold to make it pop */
     text-decoration: none;
     margin-left: 5px;
 }
 
 .register-link a:hover {
     text-decoration: underline;
+}
+
+/* --- Password Toggle Styles (Shared) --- */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 40px;
+    /* Make room for the icon */
+}
+
+.password-toggle-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    font-size: 14px;
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+
+.password-toggle-icon:hover {
+    color: var(--primary-color);
 }
