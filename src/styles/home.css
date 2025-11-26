@@ -184,6 +184,11 @@ nav {
     filter: none;
 }
 
+.shadow-header .right-home form input::placeholder {
+    color: var(--elegant-black);
+    opacity: 0.7;
+}
+
 .hero-container {
     padding: 35px 18px 13px;
     background: #FFF url('../images/background.png') no-repeat center/cover;
