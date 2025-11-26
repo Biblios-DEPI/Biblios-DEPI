@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom
 
 // 1. IMPORT THE PROVIDER (Double check this path!)
 import { CartProvider } from './context/CartContext'; 
+import { Toaster } from 'react-hot-toast';
 
 // Styles
 import './styles/global.css';
@@ -40,9 +41,11 @@ function App() {
   return (
     // 2. WRAP THE ENTIRE ROUTER WITH CARTPROVIDER
     <CartProvider>
+       <Toaster position="top-center" reverseOrder={false} />
       <Router>
         <div className="page">
           <Routes>
+           
             
             {/* Pages with Header/Footer (These were crashing) */}
             <Route element={<MainLayout />}>
