@@ -17,6 +17,10 @@ import AboutPage from './pages/AboutPage';
 import CartPage from './pages/CartPage';
 import BookDetailsPage from './pages/BookDetailsPage';
 import LoginPage from './pages/LoginPage';
+import ProfilePage from './pages/ProfilePage';
+import WishlistPage from './pages/WishlistPage';
+
+// Missing Pages (Commented out until you create them)
 import CategoriesPage from './pages/CategoriesPage';
 import BooksPage from './pages/BooksPage';
 import RegisterPage from './pages/RegisterPage';
@@ -48,6 +52,15 @@ function App() {
               <Route path="/books/:id" element={<BookDetailsPage />} />  
               <Route path="/books" element={<BooksPage />} />
               <Route path="/categories" element={<BooksPage />} />
+              {/* <Route path="/checkout" element={<CheckoutPage />} /> */}
+              {/* <Route path="/contact" element={<ContactPage />} /> */}
+                <Route path="/books/:id" element={<BookDetailsPage />} />  
+                {/* <Route path="/categories" element={<CategoriesPage />} /> */}
+                <Route path="/books" element={<BooksPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/wishlist" element={<WishlistPage />} />
+
+
             </Route>
 
             {/* Pages without Header/Footer (These were working) */}

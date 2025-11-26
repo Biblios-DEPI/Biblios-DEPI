@@ -1,31 +1,37 @@
 import React from 'react';
-import './ProfilePage.css';
+import '../styles/ProfilePage.css';
 
 export default function ProfilePage() {
   const favoriteBooks = [
     {
       id: 1,
-      title: "1984",
-      author: "George Orwell",
-      cover: "https://covers.openlibrary.org/b/id/7222246-L.jpg"
+      title: "Metamorphosis",
+      author: "Franz Kafka",
+      cover: "../../public/images/metamorphosis.jpg"
     },
     {
       id: 2,
-      title: "The Great Gatsby",
-      author: "F. Scott Fitzgerald",
-      cover: "https://covers.openlibrary.org/b/id/7885607-L.jpg"
+      title: "Harry Potter and the prisoner of Azkaban",
+      author: "J.K. Rowling",
+      cover: "../../public/images/harryPotter.jpg"
     },
     {
       id: 3,
-      title: "To Kill a Mockingbird",
-      author: "Harper Lee",
-      cover: "https://covers.openlibrary.org/b/id/8228691-L.jpg"
+      title: "A Clockwork Orange",
+      author: "Anthony Burgess",
+      cover: "../../public/images/AClockworkOrange.jpg"
     },
     {
       id: 4,
-      title: "Pride and Prejudice",
-      author: "Jane Austen",
-      cover: "https://covers.openlibrary.org/b/id/8235657-L.jpg"
+      title: "Hunger Games",
+      author: "Suzanne Collins",
+      cover: "../../public/images/hungerGames.jpg"
+    },
+    {
+      id: 5,
+      title: "1984",
+      author: "george orwell",
+      cover: "../../public/images/1984.jpg"
     }
   ];
 
@@ -55,7 +61,7 @@ export default function ProfilePage() {
               <div className="profile-picture-wrapper">
                 <div className="profile-picture">
                   <img 
-                    src="https://api.dicebear.com/7.x/initials/svg?seed=Beshoy&backgroundColor=006A8A&textColor=ffffff" 
+                    src="../../public/images/profile.jpg" 
                     alt="Profile"
                   />
                 </div>
@@ -64,7 +70,7 @@ export default function ProfilePage() {
               <div className="profile-info">
                 <div className="profile-name-section">
                   <div className="name-bio">
-                    <h1 className="display-name">Beshoy</h1>
+                    <h1 className="display-name">Beshoy Fomail</h1>
                     <p className="username">@beshoy-13</p>
                   </div>
                   <button className="edit-button">
@@ -91,7 +97,7 @@ export default function ProfilePage() {
               </div>
               <div className="info-item">
                 <i className="fas fa-map-marker-alt"></i>
-                <span>Alexandria, Egypt</span>
+                <span>Cairo, Egypt</span>
               </div>
             </div>
 

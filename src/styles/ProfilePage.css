@@ -24,6 +24,7 @@
     background-color: var(--primary-color);
     border-bottom: 1px solid #005770;
     padding: 1rem 0;
+    margin-top: 10px;
 }
 
 .header-content {
@@ -131,6 +132,7 @@
     font-weight: 500;
     cursor: pointer;
     transition: opacity 0.2s;
+    margin-top: 5px;
 }
 
 .edit-button:hover {
@@ -260,6 +262,7 @@
     color: var(--elegant-black);
     margin-bottom: 0.25rem;
     overflow: hidden;
+    /* white-space: wrap; */
     text-overflow: ellipsis;
     white-space: nowrap;
 }

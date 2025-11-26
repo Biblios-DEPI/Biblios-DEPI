@@ -95,6 +95,7 @@ nav {
 .homenav .right-home {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
 .homenav .right-home form {
@@ -124,15 +125,17 @@ nav {
 
 .homenav .right-home .cart-container {
     display: block;
-    width: 14px;
-    height: 14px;
-    margin-left: 9px;
+    width: 20px;
+    height: 20px;
+    margin: 0px 18px;
+
 }
 
 .homenav .right-home a img {
     display: block;
-    width: 14px;
-    height: 14px;
+    width: 18px;
+    height: 18px;
+    margin-bottom: 2px;
 }
 
 .homenav .menu li a {
@@ -182,6 +185,11 @@ nav {
 .shadow-header .cart-container-home img,
 .shadow-header .logo-container-home img {
     filter: none;
+}
+
+.shadow-header .right-home form input::placeholder {
+    color: var(--elegant-black);
+    opacity: 0.7;
 }
 
 .hero-container {
@@ -459,6 +467,30 @@ nav {
     width: 11px;
 }
 
+/* Profile Picture in Navigation */
+.profile-link {
+    display: flex;
+    align-items: center;
+}
+
+.profile-link i {
+    font-size: 15px;
+    color: var(--background-color);
+}
+
+.shadow-header .profile-link i {
+    color: var(--elegant-black);
+}
+
+.wishlist-link i {
+    font-size: 15px;
+    color: var(--background-color);
+}
+
+.shadow-header .wishlist-link i {
+    color: var(--elegant-black);
+}
+
 @media screen and (min-width: 674px) and (max-width: 716px) {
     .homenav .menu li {
         padding-inline: 0.25rem;
@@ -481,5 +513,17 @@ nav {
     .homenav .bars {
         display: block;
         color: #171A1FFF;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .profile-link {
+        margin-left: 0.5rem;
+    }
+
+    .profile-pic-nav {
+        width: 35px;
+        height: 35px;
     }
 }
