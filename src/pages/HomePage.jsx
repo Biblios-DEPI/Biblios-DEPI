@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
 
 // Import Styles
 import "swiper/css";
@@ -11,23 +11,46 @@ import "../styles/home.css";
 
 const HomePage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   // ========== SHADOW HEADER EFFECT ==========
   useEffect(() => {
     const handleShadow = () => {
       const header = document.querySelector("#navbar");
       if (!header) return;
-
       if (window.scrollY >= 50) {
         header.classList.add("shadow-header");
       } else {
         header.classList.remove("shadow-header");
       }
     };
-
     window.addEventListener("scroll", handleShadow);
     return () => window.removeEventListener("scroll", handleShadow);
   }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsProfileDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setIsProfileDropdownOpen(false);
+      navigate("/login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   return (
     <>
@@ -39,7 +62,6 @@ const HomePage = () => {
             </Link>
           </div>
 
-          {/* Menu Links with Mobile Toggle Logic */}
           <ul className={`menu ${isMenuOpen ? "active" : ""}`}>
             <li>
               <Link to="/">Home</Link>
@@ -63,34 +85,56 @@ const HomePage = () => {
                 id="search-book"
               />
             </form>
+
             <Link className="cart-container-home" to="/cart">
               <img src="/images/shopping-cart.png" alt="cart" />
-              {/* <i class="fa-solid fa-cart-shopping"></i> */}
             </Link>
 
-            {/* Wishlist Link */}
             <Link to="/wishlist" className="wishlist-link">
-              <i class="fa-regular fa-heart"></i>
+              <i className="fa-regular fa-heart"></i>
             </Link>
 
-            {/* Profile Picture Link */}
-            <Link
-              to={auth.currentUser ? "/profile" : "/login"}
-              className="profile-link"
-            >
+            {/* Profile Picture with Dropdown */}
+            <div className="profile-dropdown-container" ref={dropdownRef}>
               {auth.currentUser ? (
-                <img
-                  src={auth.currentUser.photoURL || "/images/profile.jpg"}
-                  alt="Profile"
-                  className="profile-pic"
-                />
+                <>
+                  <div
+                    className="profile-link"
+                    onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                  >
+                    <img
+                      src={auth.currentUser.photoURL || "/images/profile.jpg"}
+                      alt="Profile"
+                      className="profile-pic"
+                    />
+                  </div>
+
+                  {isProfileDropdownOpen && (
+                    <div className="profile-dropdown">
+                      <Link
+                        to="/profile"
+                        className="dropdown-item profile-button"
+                        onClick={() => setIsProfileDropdownOpen(false)}
+                      >
+                        <i className="fa-solid fa-user"></i> Profile
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="dropdown-item logout-btn"
+                      >
+                        <i className="fa-solid fa-right-from-bracket"></i> Logout
+                      </button>
+                    </div>
+                  )}
+                </>
               ) : (
-                <i className="fa-regular fa-user"></i>
+                <Link to="/login" className="profile-link">
+                  <i className="fa-regular fa-user"></i>
+                </Link>
               )}
-            </Link>
+            </div>
           </div>
 
-          {/* Mobile Menu Button */}
           <i
             className="fa-solid fa-bars bars"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -123,32 +167,32 @@ const HomePage = () => {
               >
                 <SwiperSlide className="home-article">
                   <img
-                    src="/images/book1.jpg"
-                    alt="book1"
+                    src="../../public/images/NotesFromUnderground.jpeg"
+                    alt="notes from underground"
                     className="home-img"
                   />
                 </SwiperSlide>
 
                 <SwiperSlide className="home-article">
                   <img
-                    src="/images/book2.jpg"
-                    alt="book2"
+                    src="../../public/images/CrimeAndPunishment.jpeg"
+                    alt="crime and punishment"
                     className="home-img"
                   />
                 </SwiperSlide>
 
                 <SwiperSlide className="home-article">
                   <img
-                    src="/images/book3.jpg"
-                    alt="book3"
+                    src="../../public/images/TheIdiot.jpeg"
+                    alt="the myth of sisyphus"
                     className="home-img"
                   />
                 </SwiperSlide>
 
                 <SwiperSlide className="home-article">
                   <img
-                    src="/images/book4.jpg"
-                    alt="book4"
+                    src="../../public/images/TheDoubleAndTheGambler.jpeg"
+                    alt="the fall"
                     className="home-img"
                   />
                 </SwiperSlide>
