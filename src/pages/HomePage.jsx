@@ -5,7 +5,6 @@ import { useEffect, useState, useRef } from "react";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useCart } from '../context/CartContext';
-
 // Import Styles
 import "swiper/css";
 import "../styles/home.css";
@@ -16,7 +15,6 @@ const HomePage = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const { cartCount } = useCart();
-  // const badge = document.querySelector('.cart-badge-home');
 
   // ========== SHADOW HEADER EFFECT ==========
   useEffect(() => {
@@ -25,9 +23,6 @@ const HomePage = () => {
       if (!header) return;
       if (window.scrollY >= 50) {
         header.classList.add("shadow-header");
-        
-
-
       } else {
         header.classList.remove("shadow-header");
       }
@@ -43,7 +38,6 @@ const HomePage = () => {
         setIsProfileDropdownOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -83,6 +77,109 @@ const HomePage = () => {
 
   return (
     <>
+      {/* Mobile Menu Overlay */}
+      <div
+        className={`mobile-menu-overlay ${isMenuOpen ? "active" : ""}`}
+        onClick={() => setIsMenuOpen(false)}
+      ></div>
+
+      {/* Mobile Menu */}
+      <div className={`mobile-menu ${isMenuOpen ? "active" : ""}`}>
+        <button className="mobile-menu-close" onClick={() => setIsMenuOpen(false)}>
+          <i className="fa-solid fa-times"></i>
+        </button>
+
+        <ul>
+          <li>
+            <Link to="/" onClick={() => setIsMenuOpen(false)}>
+              <i className="fa-solid fa-home"></i>
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/categories" onClick={() => setIsMenuOpen(false)}>
+              <i className="fa-solid fa-th"></i>
+              Categories
+            </Link>
+          </li>
+          <li>
+            <Link to="/about" onClick={() => setIsMenuOpen(false)}>
+              <i className="fa-solid fa-info-circle"></i>
+              About Biblios
+            </Link>
+          </li>
+        </ul>
+
+        <div className="mobile-menu-search">
+          <form action="" onSubmit={(e) => e.preventDefault()}>
+            <label htmlFor="mobile-search">
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </label>
+            <input
+              type="search"
+              placeholder="Search for books..."
+              id="mobile-search"
+            />
+          </form>
+        </div>
+
+        <div className="mobile-menu-actions">
+          <Link
+            to="/cart"
+            className="mobile-menu-action-btn"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <i className="fa-solid fa-shopping-cart"></i>
+            Cart
+            {cartCount > 0 && (
+              <span className="cart-badge-mobile">{cartCount}</span>
+            )}
+          </Link>
+
+          <Link
+            to="/wishlist"
+            className="mobile-menu-action-btn"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <i className="fa-regular fa-heart"></i>
+            Wishlist
+          </Link>
+
+          {auth.currentUser ? (
+            <>
+              <Link
+                to="/profile"
+                className="mobile-menu-action-btn"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <i className="fa-solid fa-user"></i>
+                Profile
+              </Link>
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setIsMenuOpen(false);
+                }}
+                className="mobile-menu-action-btn"
+                style={{ border: '1px solid #d32f2f', color: '#d32f2f' }}
+              >
+                <i className="fa-solid fa-right-from-bracket"></i>
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link
+              to="/login"
+              className="mobile-menu-action-btn"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <i className="fa-regular fa-user"></i>
+              Login
+            </Link>
+          )}
+        </div>
+      </div>
+
       <header id="header">
         <nav id="navbar" className="homenav">
           <div className="logo-container-home">
@@ -90,7 +187,6 @@ const HomePage = () => {
               <img src="/images/logo2.png" alt="Biblios Logo" />
             </Link>
           </div>
-
           <ul className={`menu ${isMenuOpen ? "active" : ""}`}>
             <li>
               <Link to="/"><span className="floating-shine">Home</span></Link>
@@ -102,7 +198,6 @@ const HomePage = () => {
               <Link to="/about">About Biblios</Link>
             </li>
           </ul>
-
           <div className="right-home">
             <form action="">
               <label htmlFor="search-book">
@@ -114,20 +209,17 @@ const HomePage = () => {
                 id="search-book"
               />
             </form>
-
             <Link className="cart-container-home" to="/cart">
               <img src="/images/shopping-cart.png" alt="cart" />
               {cartCount > 0 && (
-                <span  className="cart-badge-home">
+                <span className="cart-badge-home">
                   {cartCount}
                 </span>
               )}
             </Link>
-
             <Link to="/wishlist" className="wishlist-link">
               <i className="fa-regular fa-heart"></i>
             </Link>
-
             {/* Profile Picture with Dropdown */}
             <div className="profile-dropdown-container" ref={dropdownRef}>
               {auth.currentUser ? (
@@ -142,7 +234,6 @@ const HomePage = () => {
                       className="profile-pic"
                     />
                   </div>
-
                   {isProfileDropdownOpen && (
                     <div className="profile-dropdown">
                       <Link
@@ -168,7 +259,6 @@ const HomePage = () => {
               )}
             </div>
           </div>
-
           <i
             className="fa-solid fa-bars bars"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -185,7 +275,6 @@ const HomePage = () => {
               <h2>Stories in Every Form.</h2>
               <button className="cta-btn">Explore Books</button>
             </div>
-
             <div className="books">
               {/* ========== REACT SWIPER ========== */}
               <Swiper
@@ -206,7 +295,6 @@ const HomePage = () => {
                     className="home-img"
                   />
                 </SwiperSlide>
-
                 <SwiperSlide className="home-article">
                   <img
                     src="../../public/images/CrimeAndPunishment.jpeg"
@@ -214,7 +302,6 @@ const HomePage = () => {
                     className="home-img"
                   />
                 </SwiperSlide>
-
                 <SwiperSlide className="home-article">
                   <img
                     src="../../public/images/TheIdiot.jpeg"
@@ -222,7 +309,6 @@ const HomePage = () => {
                     className="home-img"
                   />
                 </SwiperSlide>
-
                 <SwiperSlide className="home-article">
                   <img
                     src="../../public/images/TheDoubleAndTheGambler.jpeg"
@@ -234,7 +320,6 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-
         {/* CATEGORIES SECTION */}
         <div className="categories">
           <h2>Featured Categories</h2>
@@ -269,7 +354,6 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-
         {/* PROS SECTION */}
         <div className="pros">
           <div className="pattern-container">
@@ -300,7 +384,6 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-
         {/* HELP FORM */}
         <div className="help">
           <div className="text">

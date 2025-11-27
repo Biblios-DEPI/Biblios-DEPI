@@ -60,19 +60,37 @@ header h1 {
   color: #444;
 }
 
-.container {
+/* .container {
   max-width: 1100px;
   margin: 2rem auto;
   padding: 0 1rem;
+} */
+
+.container {
+  transform: scale(0.9);
+  max-width: 75% !important;
+  max-height: fit-content;
+  margin: 2rem auto;
+  padding: 0 0.4rem;
+  -webkit-transform: scale(0.9);
+  -moz-transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  -o-transform: scale(0.9);
 }
 
 .book-detail {
+  margin-top: 65px;
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 2rem;
   background: #fff;
   padding: 2rem;
-  align-items: center !important; 
+  align-items: center !important;
+  
+  /* --- NEW SHADOW STYLES --- */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Soft drop shadow */
+  border-radius: 16px; /* Rounded corners for the card look */
+  /* ------------------------- */
 }
 .book-detail img {
   width: 100%;
@@ -80,7 +98,7 @@ header h1 {
 }
 
 .book-detail .book-img {
-    margin: 10%;
+    /* margin: 10%; */
 }
 
 .book-detail img,
@@ -890,13 +908,16 @@ footer {
     justify-content: center;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    
-    /* Animation Properties */
-    opacity: 0; 
-    transform: translateX(10px); /* Start slightly to the right */
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy effect */
-    z-index: 5; /* Sit on top of overlay */
-    color: #ff6b6b; /* Default Heart Color */
+    /*AnimationProperties*/opacity: 0;
+    transform: translateX(10px);
+    /*Startslightlytotheright*/transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /*Bouncyeffect*/z-index: 5;
+    /*Sitontopofoverlay*/color: #ff6b6b;
+     /* Default Heart Color */:;
+    -webkit-transform: translateX(10px);
+    -moz-transform: translateX(10px);
+    -ms-transform: translateX(10px);
+    -o-transform: translateX(10px);
 }
 
 /* Show on Hover */
@@ -909,14 +930,55 @@ footer {
 .wishlist-icon-btn:hover {
     background-color: #ff6b6b;
     color: #ffffff;
-    transform: scale(1.1); /* Grow slightly */
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
 }
 
 .wishlist-icon-btn svg {
     transition: fill 0.2s ease;
+    -webkit-transition: fill 0.2s ease;
+    -moz-transition: fill 0.2s ease;
+    -ms-transition: fill 0.2s ease;
+    -o-transition: fill 0.2s ease;
 }
 
 .wishlist-icon-btn:hover svg {
     fill: #ffffff; /* Fill heart on hover */
 }
 
+@media (max-width: 768px) {
+  .container {
+    max-width: 95% !important;
+  }
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS: 2 CARDS PER ROW
+   ========================================= */
+
+@media (max-width: 768px) {
+  .related-grid {
+    /* Force exactly 2 columns */
+    grid-template-columns: repeat(2, 1fr) !important;
+    
+    /* Reduce gap to 10px so they fit on small screens */
+    gap: 10px !important; 
+  }
+
+  /* Optional: Make the card content slightly smaller to fit the 2-column layout */
+  .wishlist-card {
+    padding: 0.5rem !important;
+  }
+
+  .book-title {
+    font-size: 0.8rem !important; /* Smaller font for title */
+  }
+
+  .move-to-cart-btn {
+    font-size: 0.7rem !important;
+    padding: 0.5rem !important;
+  }
+}
