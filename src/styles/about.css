@@ -191,3 +191,144 @@ header {
     height: 40px;
     /* Adjusted height if needed */
 }
+
+@media screen and (max-width: 850px) {
+
+    /* Shrink the huge header text */
+    .page header .header h2 {
+        font-size: 80px;
+        padding-top: 15%;
+    }
+
+    .page .aboutmain {
+        padding-inline: 5% !important;
+    }
+
+    .equal-parts .image {
+        width: 100%;
+        padding-left: 0 !important;
+        margin-top: 20px;
+    }
+
+    .page .aboutmain .story .equal-parts .image img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+        object-fit: cover;
+    }
+
+    .page .aboutmain .exp .equal-parts .image {
+        width: 100%;
+        padding: 0;
+    }
+
+    .page .aboutmain .exp .equal-parts .image img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4/5;
+        /* Optional: Makes it taller/larger */
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+    /* --- FIX: Stack "Our Story" & "Experience" Sections Vertically --- */
+    .equal-parts {
+        flex-direction: column;
+        /* This forces them to stack */
+        gap: 30px;
+        /* Add space between the text and image */
+    }
+
+    .equal-parts .text,
+    .equal-parts .image {
+        width: 100%;
+        /* Make them take full width */
+        padding: 0 !important;
+        /* Remove horizontal padding */
+        height: auto;
+        /* Let height adjust automatically */
+    }
+
+    /* Fix Image Aspect Ratio */
+    .page .aboutmain .exp .equal-parts .image img,
+    .page .aboutmain .story .equal-parts .image img {
+        width: 100%;
+        height: auto;
+        /* Maintains original image ratio */
+        aspect-ratio: 16/9;
+        /* Optional: Enforces a nice standard rectangle */
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    /* --- FIX: Stack Philosophy Cards (The 3 Cards) --- */
+    .page .aboutmain .phiso .phcards {
+        flex-direction: column;
+        /* Stack them vertically */
+        gap: 20px;
+        /* Space between cards */
+    }
+
+    .page .aboutmain .phiso .phcards .phcard {
+        width: 100%;
+        /* Full width */
+        padding: 30px;
+        /* More breathing room */
+        margin-bottom: 10px;
+    }
+
+    /* Wider separator line */
+    .page .aboutmain .template hr {
+        width: 15%;
+    }
+}
+
+/* 2. Mobile View (Max Width 480px) */
+@media screen and (max-width: 480px) {
+
+    /* Further shrink header */
+    .page header .header h2 {
+        font-size: 48px;
+        padding-top: 20%;
+        text-align: center;
+    }
+
+    .page .aboutmain .template h2 {
+        font-size: 28px;
+        text-align: center;
+    }
+
+    .page .aboutmain .template h4 {
+        font-size: 14px;
+        line-height: 1.4;
+        text-align: center;
+    }
+
+    /* Adjust font sizes for readability */
+    .page .aboutmain .story .equal-parts .text,
+    .page .aboutmain .exp .equal-parts .text p {
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .page .aboutmain .exp .equal-parts .text h5 {
+        font-size: 22px;
+        text-align: center;
+    }
+
+    /* Philosophy Cards adjustments */
+    .page .aboutmain .phiso .phcards .phcard h5 {
+        font-size: 32px;
+        text-align: center;
+    }
+
+    .page .aboutmain .phiso .phcards .phcard h6 {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    /* Full width button */
+    .page .aboutmain .jr-button {
+        width: 100% !important;
+    }
+}
