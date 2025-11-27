@@ -67,7 +67,11 @@ nav {
 }
 
 .homenav .bars {
-    display: none;
+    color: var(--background-color) !important;
+}
+
+.shadow-header .bars {
+    color: var(--elegant-black) !important;
 }
 
 .homenav .menu {
@@ -606,7 +610,6 @@ nav {
 
     .homenav .bars {
         display: block;
-        color: #171A1FFF;
     }
 }
 
@@ -1453,13 +1456,8 @@ nav {
 
     .homenav .bars {
         display: block;
-        color: var(--background-color);
         font-size: 18px;
         cursor: pointer;
-    }
-
-    .shadow-header .bars {
-        color: var(--elegant-black);
     }
 }
 
