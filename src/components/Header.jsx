@@ -159,7 +159,7 @@ const Header = () => {
           <Link className="cart-container" to="/cart">
             <img src="/images/shopping-cart.png" alt="cart" />
             {cartCount > 0 && (
-              <span style={{ position: 'absolute', top: '-8px', right: '-10px', backgroundColor: '#e74c3c', color: 'white', borderRadius: '50%', width: '16px', height: '16px', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '11px', fontWeight: 'bold' }}>{cartCount}</span>
+              <span style={{ position: 'absolute', top: '-8px', right: '-10px', backgroundColor: '#e74c3c', color: 'white', borderRadius: '50%', width: '16px', height: '16px', display: 'flex', justifyContent: 'center', alignItems: 'center',fontFamily: 'Arial, sans-serif', fontSize: '11px', fontWeight: 'bold' }}>{cartCount}</span>
             )}
           </Link>
           <Link to="/wishlist" className="wishlist-link-global"><i className="fa-regular fa-heart"></i></Link>
