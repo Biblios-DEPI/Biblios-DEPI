@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-// 1. Add useSearchParams to imports
-import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom'; // 1. useSearchParams imported
 
 import { auth } from '../firebase'; 
 import { signOut } from 'firebase/auth';
@@ -16,6 +15,7 @@ const Header = () => {
   
   const location = useLocation();
   const navigate = useNavigate();
+  
   // 2. Initialize search params to control the URL
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -32,10 +32,10 @@ const Header = () => {
     setSearchQuery(urlQuery || '');
   }, [searchParams]);
 
-
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
+      // If pressing Enter, force navigation to /books
       navigate(`/books?query=${searchQuery.trim()}`);
       setSuggestions([]); 
     }
@@ -46,8 +46,11 @@ const Header = () => {
     setSearchQuery(query);
 
     // --- LIVE SEARCH LOGIC START ---
-    // If we are currently on the '/books' page, update the URL immediately
-    if (location.pathname === '/books') {
+    // ⚠️ CRITICAL FIX: Allow live search on BOTH '/books' AND '/categories'
+    // We use .includes() to match '/books', '/books/', '/categories', etc.
+    const isSearchablePage = location.pathname.includes('/books') || location.pathname.includes('/categories');
+
+    if (isSearchablePage) {
         const newParams = {};
         
         // Preserve current category if it exists
@@ -59,11 +62,12 @@ const Header = () => {
             newParams.query = query;
         }
 
+        // This updates the URL, which triggers the page to filter
         setSearchParams(newParams);
     }
     // --- LIVE SEARCH LOGIC END ---
 
-    // Suggestions Logic
+    // Suggestions Logic (Dropdown)
     if (query.trim().length > 0) {
       const lowerCaseQuery = query.toLowerCase();
       const matchingBooks = booksData.filter(book => 
