@@ -1,78 +1,84 @@
 import React from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import booksData from '../data/books.json'; // The Mock Database
-import '../styles/book-details.css'; // Reusing the styles for layout
+import toast from 'react-hot-toast'; // Import toast for feedback
+import booksData from '../data/books.json'; 
+import { useCart } from '../context/CartContext'; // Import Cart Hook
+import '../styles/book-details.css'; // Reusing the shared styles
 
 // Helper component for rendering a single book card
+// Now matches the exact "Wishlist/Related" card style
 const BookCard = ({ book }) => {
-    const PRIMARY_COLOR = '#006A8A';
-    
+    const { addToCart } = useCart();
+
+    const handleAddToCart = () => {
+        addToCart(book, 1);
+        toast.success(`"${book.title}" added to cart!`);
+    };
+
+    // Fake logic to match the visual style of the reference image
+    // (creating a fake original price and discount)
+    const currentPrice = book.price;
+    const originalPrice = (currentPrice / 0.68).toFixed(2); 
+    const discountPercent = 32;
+
     return (
-        // Link container: Use flexbox to center content vertically
-        <Link 
-            to={`/books/${book.id}`} 
-            className="related-item" 
-            style={{ 
-                textDecoration: 'none', 
-                // Set the link container to display flex and align items centrally 
-                display: 'flex', 
-                flexDirection: 'column', 
-                alignItems: 'center',
-                textAlign: 'center', // Center text elements
-                padding: '10px'
-            }}
-        >
-            <img 
-                src={book.image} 
-                alt={book.title} 
-                style={{ 
-                    // 📐 Style Adjustment for Aspect Ratio and Size
-                    width: '200px', // Fixed width for a typical book cover
-                    height: '300px', // Fixed height for a portrait ratio
-                    objectFit: 'cover', // Ensures the image fills the box without stretching
-                    borderRadius: '4px',
-                    marginBottom: '10px',
-                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' // Added a subtle shadow
-                }} 
-            />
-            <h4 className="main-title" style={{ fontSize: '18px', color: '#333', marginTop: '5px' }}>
-                {book.title}
-            </h4>
-            <p className="book-auth" style={{ fontSize: '14px', color: '#666', margin: '3px 0' }}>
-                {book.author}
-            </p>
-            <p className="book-price" style={{ fontSize: '16px', fontWeight: 'bold', color: PRIMARY_COLOR }}>
-                ${book.price.toFixed(2)}
-            </p>
-        </Link>
+        <div className="wishlist-card">
+            {/* Image Container & Quick View */}
+            <div className="book-cover-container">
+                <img 
+                    src={book.image} 
+                    alt={book.title} 
+                    className="book-cover"
+                />
+                <div className="cover-overlay">
+                     <Link to={`/books/${book.id}`} className="quick-view-btn">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                         Quick View
+                     </Link>
+                </div>
+            </div>
+            
+            <div className="book-details">
+                <h4 className="book-title">{book.title}</h4>
+                <p className="book-author">by {book.author}</p>
+                
+                <div className="price-section">
+                    <span className="current-price">${currentPrice.toFixed(2)}</span>
+                    <span className="original-price">${originalPrice}</span>
+                    <span className="discount-badge">{discountPercent}% OFF</span>
+                </div>
+
+                <button 
+                    className="move-to-cart-btn"
+                    onClick={handleAddToCart}
+                >
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                     Move to Cart
+                </button>
+            </div>
+        </div>
     );
 };
 
 
 const BooksPage = () => {
-    // 1. Setup State & Params: Read and set URL search parameters
+    // 1. Setup State & Params
     const [searchParams, setSearchParams] = useSearchParams();
     
-    // Get the category from the URL, default to 'All' if none is set
     const currentCategory = searchParams.get('category') || 'All';
-    // Get the search query from the URL
     const searchQuery = searchParams.get('query') || '';
     
     const categories = ["All", "Classics", "Philosophy", "Dystopian", "Fiction", "Mystery"];
     const PRIMARY_COLOR = '#006A8A'; 
     const lowerCaseQuery = searchQuery.toLowerCase();
 
-    // 2. The Filter Logic: Determine which books to display
-    // First, filter by Category
+    // 2. The Filter Logic
     const filteredByCategory = currentCategory === 'All'
         ? booksData
         : booksData.filter((book) => book.category === currentCategory);
 
-    // Second, apply Search query filter to the category-filtered results
     const displayedBooks = filteredByCategory.filter((book) => {
         if (!searchQuery) return true;
-        
-        // Search logic: Check if query matches title or author (case-insensitive and includes)
         return book.title.toLowerCase().includes(lowerCaseQuery) || 
                book.author.toLowerCase().includes(lowerCaseQuery);
     });
@@ -80,24 +86,14 @@ const BooksPage = () => {
     // Function to handle filter button click
     const handleCategoryChange = (category) => {
         const newParams = {};
-        
-        // Preserve the search query if it exists
-        if (searchQuery) {
-            newParams.query = searchQuery;
-        }
-
-        if (category !== 'All') {
-            newParams.category = category;
-        } 
-        
+        if (searchQuery) newParams.query = searchQuery;
+        if (category !== 'All') newParams.category = category;
         setSearchParams(newParams);
     };
 
-    // Construct the display string for the current view
+    // Construct the display string
     let viewingText = `Currently viewing: **${currentCategory}** books`;
-    if (searchQuery) {
-        viewingText += ` matching search: **"${searchQuery}"**`;
-    }
+    if (searchQuery) viewingText += ` matching search: **"${searchQuery}"**`;
     viewingText += `. (${displayedBooks.length} results)`;
 
 
@@ -135,14 +131,8 @@ const BooksPage = () => {
             </div>
 
             {/* 4. The Grid: Render the filtered books */}
-            <div 
-                className="related-grid" 
-                style={{ 
-                    // Keeping this at 250px min-width is appropriate for the new 200px image size
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
-                    gap: '30px' 
-                }}
-            >
+            {/* We use the "related-grid" class to inherit the exact grid layout from CSS */}
+            <div className="related-grid">
                 {displayedBooks.map((book) => (
                     <BookCard key={book.id} book={book} />
                 ))}
