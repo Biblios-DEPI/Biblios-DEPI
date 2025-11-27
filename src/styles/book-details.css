@@ -109,6 +109,10 @@ header h1 {
 .book-detail img:hover {
   transform: scale(1.05);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  -o-transform: scale(1.05);
 }
 
 .book-info {
@@ -960,7 +964,14 @@ footer {
    ========================================= */
 
 @media (max-width: 768px) {
-  .related-grid {
+  .book-detail img:hover {
+  transform: scale(0.5);
+  .related-grid:;
+  -webkit-transform: scale(0.5);
+  -moz-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  -o-transform: scale(0.5);
+{
     /* Force exactly 2 columns */
     grid-template-columns: repeat(2, 1fr) !important;
     
