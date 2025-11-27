@@ -16,7 +16,7 @@ const HomePage = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const { cartCount } = useCart();
-  const badge = document.querySelector('.cart-badge-home');
+  // const badge = document.querySelector('.cart-badge-home');
 
   // ========== SHADOW HEADER EFFECT ==========
   useEffect(() => {

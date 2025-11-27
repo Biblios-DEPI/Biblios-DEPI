@@ -5,31 +5,35 @@ new card design */
 }
 
 .page nav {
-    border-bottom: 1.5px solid rgba(128, 128, 128, 0.2);
+    /* Reduced from 1.5px */
+    border-bottom: 1.2px solid rgba(128, 128, 128, 0.2);
 }
 
 .card-prop {
     background: #FFFFFFFF;
-    border-radius: 4px;
-    box-shadow: 0px 0px 2px #171a1f14;
-    padding: 20px;
-
+    /* Reduced from 4px */
+    border-radius: 3.2px;
+    /* Reduced shadow blur */
+    box-shadow: 0px 0px 1.6px #171a1f14;
+    /* Reduced from 20px */
+    padding: 16px;
 }
 
 .page .main-cart {
     width: 100%;
-    padding: 5% !important;
-
-
-
+    /* Reduced from 5% */
+    padding-block: 6% !important;
+    padding-inline: 8% !important;
 }
 
 .page .main-cart h2 {
     font-family: "Playfair";
-    font-size: 48px;
+    /* Reduced from 48px */
+    font-size: 38px;
     font-weight: 700;
     color: #006A8AFF;
-    margin-bottom: 30px;
+    /* Reduced from 30px */
+    margin-bottom: 24px;
 }
 
 .page .main-cart .main-container {
@@ -42,24 +46,26 @@ new card design */
     width: 65%;
     display: flex;
     flex-direction: column;
-
 }
 
 .page .main-cart .main-container .products .cart-book {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    /* Reduced from 20px */
+    margin-bottom: 16px;
 }
 
 .page .main-cart .main-container .products .cart-book .cover {
-    width: 90px;
-    border-radius: 4px;
+    /* Reduced from 90px */
+    width: 72px;
+    border-radius: 3.2px;
 }
 
 .page .main-cart .main-container .products .cart-book .cover img {
-    width: 90px;
-    border-radius: 4px;
+    /* Reduced from 90px */
+    width: 72px;
+    border-radius: 3.2px;
 }
 
 .page .main-cart .main-container .products .details {
@@ -71,19 +77,20 @@ new card design */
 
 .page .main-cart .main-container .products .details .name-of-book {
     font-family: "Merri";
-
-    font-size: 14px;
-    line-height: 22px;
+    /* Reduced from 14px */
+    font-size: 11px;
+    /* Reduced from 22px */
+    line-height: 18px;
     font-weight: 500;
     color: #171A1FFF;
-
-
 }
 
 .page .main-cart .main-container .products .details .author {
     font-family: "Merri";
-    margin-block: 10px;
-    font-size: 13px;
+    /* Reduced from 10px */
+    margin-block: 8px;
+    /* Reduced from 13px */
+    font-size: 10.5px;
     font-weight: 400;
     color: #565D6DFF;
 }
@@ -95,13 +102,15 @@ new card design */
 }
 
 .page .main-cart .main-container .products .details div.seprate .quantity {
-    font-size: 18px;
+    /* Reduced from 18px */
+    font-size: 14.5px;
     align-items: center;
 }
 
 .page .main-cart .main-container .products .details div.seprate .quantity .number {
     display: inline-block;
-    margin-inline: 6px;
+    /* Reduced from 6px */
+    margin-inline: 5px;
     font-family: "Merri";
 }
 
@@ -109,21 +118,23 @@ new card design */
 .page .main-cart .main-container .products .details div.seprate .quantity .less {
     cursor: pointer;
     color: #565D6DFF;
-    font-size: 14px;
-
+    /* Reduced from 14px */
+    font-size: 11px;
 }
 
 .page .main-cart .main-container .products .details div.seprate .price {
     font-weight: 700;
     color: #006A8AFF;
-    font-size: 18px;
+    /* Reduced from 18px */
+    font-size: 14.5px;
     font-family: "Merri";
 }
 
 .page .main-cart .main-container .products .remove-container i {
     color: #565D6DFF;
     cursor: pointer;
-    font-size: 14px;
+    /* Reduced from 14px */
+    font-size: 11px;
 }
 
 .page .main-cart .main-container .summary-container {
@@ -131,52 +142,109 @@ new card design */
 }
 
 .page main .main-container .summary-container .summary h4 {
-    font-size: 24px;
+    /* Reduced from 24px */
+    font-size: 19px;
     font-weight: 700;
     color: #171A1FFF;
-    margin-bottom: 24px;
+    /* Reduced from 24px */
+    margin-bottom: 19px;
 }
 
 .page .main-cart .main-container .summary-container .summary .row-item {
     display: flex;
     justify-content: space-between;
-    margin-block: 12px;
-    font-size: 16px;
+    /* Reduced from 12px */
+    margin-block: 10px;
+    /* Reduced from 16px */
+    font-size: 13px;
     font-family: "Merri";
     font-weight: 400;
     color: #565D6DFF;
 }
 
 .page .main-cart .main-container .summary-container .summary div:last-of-type {
-    font-size: 18px;
+    /* Reduced from 18px */
+    font-size: 14.5px;
     font-family: "Merri";
-
     font-weight: 700;
     color: #171A1FFF;
-    margin-block: 30px;
+    /* Reduced from 30px */
+    margin-block: 24px;
 }
 
 .page .main-cart .main-container .summary-container .summary hr {
     color: #565D6DFF;
-
 }
 
 .page footer {
-    border-top: 1.5px solid rgba(128, 128, 128, 0.2);
+    border-top: 1.2px solid rgba(128, 128, 128, 0.2);
 }
 
-@media screen and (max-width:615px) {
-    .page main .main-container {
-        flex-wrap: wrap;
+@media screen and (max-width: 850px) {
+    .page .main-cart .main-container {
+        flex-direction: column;
+        /* Stack vertically */
     }
 
-    .page main .main-container .products {
+    .page .main-cart .main-container .products {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .page .main-cart .main-container .summary-container {
         width: 100%;
     }
 
-    .page main .main-container .summary-container {
-        width: 100%;
+    .page .main-cart h2 {
+        font-size: 32px;
+        text-align: center;
     }
 }
 
-/* cart shap in mobil remaining lab and tablet hadeld */
+/* 2. Mobile View (Compact Items) - Max Width 480px */
+@media screen and (max-width: 480px) {
+    .page .main-cart {
+        padding: 5% !important;
+    }
+
+    .page .main-cart h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    /* Stack the book content vertically on very small screens */
+    .page .main-cart .main-container .products .cart-book {
+        align-items: flex-start;
+    }
+
+    .page .main-cart .main-container .products .cart-book .cover {
+        width: 60px;
+        /* Smaller image */
+    }
+
+    .page .main-cart .main-container .products .cart-book .cover img {
+        width: 60px;
+    }
+
+    .page .main-cart .main-container .products .details {
+        padding-left: 12px;
+        width: 100%;
+    }
+
+    .page .main-cart .main-container .products .details .name-of-book {
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+    /* Adjust quantity controls for touch targets */
+    .page .main-cart .main-container .products .details div.seprate .quantity {
+        padding: 4px 10px;
+    }
+
+    .page .main-cart .main-container .products .details div.seprate .quantity .more,
+    .page .main-cart .main-container .products .details div.seprate .quantity .less {
+        font-size: 14px;
+        /* Larger icons for fingers */
+        padding: 0 5px;
+    }
+}
