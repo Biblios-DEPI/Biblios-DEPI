@@ -6,60 +6,57 @@ header {
     width: 100%;
     margin-top: 51px;
     background: scroll no-repeat center/cover;
-
     background-image: linear-gradient(rgb(0 0 0/0.55), rgb(0 0 0/0.55)), url('/images/teamcropped.jpg');
-
-    padding-top: 10%;
-    padding-bottom: 2%;
+    /* Reduced padding by ~10% */
+    padding-top: 11%;
+    padding-bottom: 1.8%;
 }
 
 .page header .header h2 {
     font-family: "alata";
     text-align: center;
-    font-size: 165px;
+    /* Reduced from 165px to 148px */
+    font-size: 148px;
     font-weight: 400;
     color: #FFFFFFFF;
 }
 
 .page .aboutmain {
-    padding-top: 23px !important;
+    padding-top: 20px !important;
     padding-inline: 8% !important;
-
 }
-
 
 .page .aboutmain .template h2 {
     color: var(--primary-color);
     font-family: "Playfair";
-    font-size: 40px;
+    /* Reduced from 40px to 36px */
+    font-size: 36px;
     font-weight: 700;
     text-align: center;
-    padding-block: px;
-
 }
 
-
 .page .aboutmain .template h4 {
-    padding-block: 3px;
+    padding-block: 2px;
     color: #4b4e52;
     font-family: "Playfair";
-    font-size: 18px;
+    /* Reduced from 18px to 16px */
+    font-size: 16px;
     font-weight: 400;
     text-align: center;
-    margin-bottom: 5px;
-
+    margin-bottom: 4px;
 }
 
 .page .aboutmain .template hr {
     display: block;
     background-color: var(--primary-color);
-    width: 8%;
+    width: 7.2%;
+    /* Reduced width slightly */
     margin: auto;
-    height: 3.5px;
+    height: 3px;
     border: 0;
-    margin-top: 2%;
-    margin-bottom: 3.2%;
-
+    /* Reduced margins */
+    margin-top: 1.8%;
+    margin-bottom: 2.8%;
 }
 
 .equal-parts {
@@ -69,12 +66,12 @@ header {
 
 .equal-parts .text {
     width: 50%;
-
 }
 
 .equal-parts .image {
     width: 50%;
-    padding-left: 8%;
+    padding-left: 7.2%;
+    /* Reduced spacing */
     border-radius: 5px;
 }
 
@@ -83,42 +80,42 @@ header {
     width: 100%;
     height: 100%;
     border-radius: 3px;
-
 }
 
 .page .aboutmain .story .equal-parts .text {
-    font-size: 18px;
+    /* Reduced from 18px to 16px */
+    font-size: 16px;
     font-family: "Merri";
     font-weight: 400;
     color: #171A1FFF;
-
 }
 
 .page .aboutmain .story .equal-parts .text p {
-    margin-block: 4%;
+    margin-block: 3.5%;
 }
 
 .page .aboutmain .phiso {
-    margin-top: 3%;
-    margin-bottom: 10%;
+    margin-top: 2.7%;
+    margin-bottom: 9%;
 }
 
 .page .aboutmain .phiso .phcards {
     display: flex;
     justify-content: space-between;
-    gap: 5%;
+    gap: 4.5%;
 }
 
 .page .aboutmain .phiso .phcards .phcard {
     border-radius: 4px;
     box-shadow: 0px 0px 2px #171a1f14;
     background-color: white;
-    padding: 2%;
+    padding: 1.8%;
     text-align: center;
 }
 
 .page .aboutmain .phiso .phcards .phcard h5 {
-    font-size: 40px;
+    /* Reduced from 40px to 36px */
+    font-size: 36px;
     color: var(--primary-color);
     margin-bottom: 1%;
 }
@@ -126,50 +123,48 @@ header {
 .page .aboutmain .phiso .phcards .phcard h6 {
     color: var(--elegant-black);
     font-family: "Playfair";
-    font-size: 21px;
+    /* Reduced from 21px to 19px */
+    font-size: 19px;
     font-weight: 600;
     margin-bottom: 1%;
-
 }
 
 .page .aboutmain .phiso .phcards .phcard p {
     font-family: "Merri";
-    font-size: 13px;
-    line-height: 24px;
+    /* Reduced from 13px to 12px */
+    font-size: 12px;
+    line-height: 22px;
     font-weight: 400;
     color: #565D6DFF;
 }
 
 .page .aboutmain .exp .equal-parts .text {
-    padding-right: 2%;
+    padding-right: 1.8%;
     height: fit-content;
 }
 
 .page .aboutmain .exp .equal-parts .text h5 {
     color: var(--primary-color);
     font-family: "Playfair";
-    font-size: 28px;
-
+    /* Reduced from 28px to 25px */
+    font-size: 25px;
     font-weight: 600;
-    margin-bottom: 3%;
-
+    margin-bottom: 2.7%;
 }
 
 .page .aboutmain .exp .equal-parts .text p {
     font-family: "Merri";
     font-weight: 400;
     color: var(--elegant-black);
-
-
+    /* Added explicit font size for consistency */
+    font-size: 14px;
 }
 
 .page .aboutmain .exp .equal-parts .image {
     width: 50%;
     height: 100%;
     padding-left: 0;
-    height: 100%;
-    padding-inline: 2%;
-
+    padding-inline: 1.8%;
 }
 
 .page .aboutmain .exp .equal-parts .image img {
@@ -178,20 +173,21 @@ header {
     width: 100%;
     height: 100%;
     border-radius: 3px;
-
 }
 
 .page .aboutmain .journey {
-    margin-top: 10%;
-
-
+    margin-top: 9%;
 }
 
 .page .aboutmain .jr-button {
-    width: 200px !important;
+    width: 180px !important;
+    /* Reduced width */
     text-decoration: none;
-    font-size: 16px;
+    font-size: 15px;
+    /* Reduced font size */
     font-weight: 500;
     display: flex;
-    margin: auto
+    margin: auto;
+    height: 40px;
+    /* Adjusted height if needed */
 }
