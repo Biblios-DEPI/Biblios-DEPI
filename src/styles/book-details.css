@@ -68,7 +68,7 @@ header h1 {
 
 .container {
   max-width: 1200px;
-  margin: 1.5rem auto;    /* Removed the 2rem top margin */
+  margin: 2rem auto;    /* Removed the 2rem top margin */
   padding: 0 1rem;
   width: 100%;
 }
@@ -76,15 +76,15 @@ header h1 {
 /* 2. DETAIL CONTAINER (For Book Detail Page ONLY) */
 /* This keeps the look you want specifically for the single book view */
 .detail-container {
-  transform: scale(0.9);
+  transform: scale(1);
   max-width: 75% !important;
   max-height: fit-content;
-  margin: 2rem auto; /* Keeps the spacing you wanted here */
-  padding: 0 0.4rem;
-  -webkit-transform: scale(0.9);
-  -moz-transform: scale(0.9);
-  -ms-transform: scale(0.9);
-  -o-transform: scale(0.9);
+  margin: 2rem auto;
+  /*Keepsthespacingyouwantedhere*/padding: 0 0.4rem;
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
 }
 .book-detail {
   margin-top: 65px;
