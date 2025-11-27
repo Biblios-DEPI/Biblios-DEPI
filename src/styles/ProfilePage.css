@@ -63,7 +63,7 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--border-color);
     overflow: hidden;
-    margin-bottom: 1.5rem;
+    margin: 1.5rem 0;
     transition: box-shadow 0.3s ease;
 }
 
@@ -286,20 +286,18 @@
 
 .favorites-grid {
     display: grid;
+    grid-template-columns: repeat(5, 1fr);
     gap: 1.25rem;
     max-width: 100%;
-    justify-content: space-around;
 }
 
 .book-card {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     cursor: pointer;
     transition: all 0.3s ease;
     max-width: 100%;
-    min-width: 20%;
-    text-align: center;
+    min-width: 0;
 }
 
 .book-card:hover {
@@ -515,7 +513,7 @@
 
     .profile-card {
         border-radius: 0;
-        margin: 4rem 0rem;
+        margin: 3.5rem 0;
     }
 
     .cover-banner {
