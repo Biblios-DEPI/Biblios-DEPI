@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom'; // 1. Import useParams
+import { Link, useParams } from 'react-router-dom'; 
 import toast from 'react-hot-toast';
-import booksData from '../data/books.json'; // 2. Import the data source
+import booksData from '../data/books.json'; 
 import { useCart } from '../context/CartContext';
 import '../styles/book-details.css';
 
 const BookDetailsPage = () => {
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
+  
   // --- STATE FOR RATING ---
   const [rating, setRating] = useState(0); 
   const [hover, setHover] = useState(0);
 
   // --- TASK A: Make Dynamic ---
   const { id } = useParams();
-  // Use .find() to get the book, converting id from string to number
   const book = booksData.find((b) => b.id === parseInt(id)); 
-const [prevId, setPrevId] = useState(id);
+  const [prevId, setPrevId] = useState(id);
   
     if (id !== prevId) {
-      setPrevId(id);   // Update the tracker
-      setQuantity(1);  // Reset quantity immediately
-      setRating(0);    // Reset rating immediately
+      setPrevId(id);   
+      setQuantity(1);  
+      setRating(0);    
     }
 
   // Handle case where book is not found
@@ -36,17 +36,14 @@ const [prevId, setPrevId] = useState(id);
       </div>
     );
   }
-  // --- END TASK A ---
-
 
   const MIN_QUANTITY = 1;
   const PRIMARY_COLOR = '#006A8A'; 
   const NUMBER_COLOR = 'black'; 
   const DISABLED_COLOR = '#ccc';
+  
   const handleAddToCart = () => {
     addToCart(book, quantity);
-    // Optional: Navigate to cart immediately, or just show an alert
-    // navigate('/cart'); 
     toast.success(`${quantity} copy of "${book.title}" added to cart!`, {
       style: {
         border: '1px solid #006A8A',
@@ -60,7 +57,11 @@ const [prevId, setPrevId] = useState(id);
     });
   };
   
-
+  // Helper for related books cart action
+  const handleRelatedMoveToCart = (relatedBook) => {
+    addToCart(relatedBook, 1);
+    toast.success(`"${relatedBook.title}" moved to cart!`);
+  };
 
   const decrementQuantity = () => {
     setQuantity(prevQuantity => Math.max(MIN_QUANTITY, prevQuantity - 1));
@@ -74,17 +75,14 @@ const [prevId, setPrevId] = useState(id);
     <div className="container">
       <section className="book-detail">
         <div className="book-img">
-          {/* Use book.image dynamically */}
           <img src={book.image} alt={`${book.title} Book Cover`} /> 
         </div>
         
         <div className="book-info">
-          {/* Dynamic Content */}
           <h2 className="main-title">{book.title}</h2> 
           <p className="sub-text"><strong>By {book.author}</strong></p>
           
-          {/* --- FIXED INTERACTIVE RATING --- */}
-          {/* Note: In a real app, the default rating would be loaded from book.rating */}
+          {/* --- RATING --- */}
           <div className="rating-wrapper" style={{ display: 'flex', gap: '5px', marginBottom: '10px' }}>
             {[...Array(5)].map((star, index) => {
               const ratingValue = index + 1;
@@ -127,10 +125,8 @@ const [prevId, setPrevId] = useState(id);
           </div>
           {/* --- END RATING --- */}
 
-          {/* Dynamic Description */}
           <p className="sub-text">{book.description}</p>
           
-          {/* Dynamic Price */}
           <div className="price main-title">${book.price.toFixed(2)}</div> 
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -166,23 +162,55 @@ const [prevId, setPrevId] = useState(id);
         </div>
       </section>
 
-      {/* Note: Related Books section is still hardcoded. This could be made dynamic later */}
       <section className="related-books">
         <h3 className="main-title" style={{ fontSize: '36px' }}>Related Books in {book.category}</h3>
         <hr className="gradient-hr" />
+        
         <div className="related-grid">
-          {/* A simple filter to show related books from the same category */}
           {booksData
             .filter(b => b.category === book.category && b.id !== book.id)
-            .slice(0, 4) // Show only up to 4 related books
-            .map(relatedBook => (
-              <Link to={`/books/${relatedBook.id}`} key={relatedBook.id} className="related-item">
-                <img src={relatedBook.image}  alt={relatedBook.title} />
-                <h4 className="main-title">{relatedBook.title}</h4>
-                <p className="book-auth">{relatedBook.author}</p>
-                <p className="book-price">${relatedBook.price.toFixed(2)}</p>
-              </Link>
-          ))}
+            .slice(0, 5)  /* <--- CHANGED FROM 4 TO 5 HERE */
+            .map(relatedBook => {
+                const currentPrice = relatedBook.price;
+                const originalPrice = (currentPrice / 0.68).toFixed(2); 
+                const discountPercent = 32;
+
+              return (
+              <div key={relatedBook.id} className="wishlist-card">
+                <div className="book-cover-container">
+                    <img 
+                        src={relatedBook.image} 
+                        alt={relatedBook.title} 
+                        className="book-cover"
+                    />
+                    <div className="cover-overlay">
+                         <Link to={`/books/${relatedBook.id}`} className="quick-view-btn">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                             Quick View
+                         </Link>
+                    </div>
+                </div>
+                
+                <div className="book-details">
+                    <h4 className="book-title">{relatedBook.title}</h4>
+                    <p className="book-author">by {relatedBook.author}</p>
+                    
+                    <div className="price-section">
+                        <span className="current-price">${currentPrice.toFixed(2)}</span>
+                        <span className="original-price">${originalPrice}</span>
+                        <span className="discount-badge">{discountPercent}% OFF</span>
+                    </div>
+
+                    <button 
+                        className="move-to-cart-btn"
+                        onClick={() => handleRelatedMoveToCart(relatedBook)}
+                    >
+                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                         Move to Cart
+                    </button>
+                </div>
+              </div>
+            )})}
         </div>
       </section>
     </div>

@@ -1,3 +1,4 @@
+/* --- EXISTING CSS --- */
 * {
   margin: 0;
   padding: 0;
@@ -16,17 +17,15 @@
 .sub-text {
   font-family: "Merriweather", serif;
   font-optical-sizing: auto;
-  font-weight: 400; /* We chose the "Black" weight */
+  font-weight: 400;
   font-style: normal;
-  /* This setting is often included by default for variable fonts.
-            "wdth" 100 means the font is at its normal (100%) width. */
   font-variation-settings: "wdth" 100;
 }
 
 .book-auth {
   font-family: "Merriweather", serif;
   font-optical-sizing: auto;
-  font-weight: 100; /* We chose the "Black" weight */
+  font-weight: 100;
   font-style: normal;
   font-size: 15px;
   font-variation-settings: "wdth" 100;
@@ -73,21 +72,15 @@ header h1 {
   gap: 2rem;
   background: #fff;
   padding: 2rem;
-  /* CRITICAL FIX: Force vertical centering of content in the two columns */
   align-items: center !important; 
 }
 .book-detail img {
   width: 100%;
   border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
 }
 
 .book-detail .book-img {
     margin: 10%;
-
 }
 
 .book-detail img,
@@ -95,10 +88,9 @@ header h1 {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.book-detail img:hover,
-.related-item img:hover {
-  transform: scale(1.05); /* Makes the image 5% bigger */
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Adds a more prominent shadow */
+.book-detail img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .book-info {
@@ -107,7 +99,6 @@ header h1 {
 
 .book-info h2 {
   margin: 0;
-  /* font-size: 1.5rem; */
 }
 
 .book-info p {
@@ -148,8 +139,8 @@ header h1 {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
-  text-align: center; /* This is the correct property to center text */
-  box-sizing: border-box; /* Good practice when using width % and padding */
+  text-align: center;
+  box-sizing: border-box;
 }
 .related-books {
   margin-top: 3rem;
@@ -160,20 +151,16 @@ header h1 {
   text-align: center;
 }
 .r-hr {
-  border: none; /* Remove the default border */
-  height: 1px; /* Set a height for the line */
-  background-color: #2c839e; /* Set the color of the line */
+  border: none;
+  height: 1px;
+  background-color: #2c839e;
 }
 
 .gradient-hr {
-  border: 0; /* Remove default browser border */
-  height: 1px; /* Set the thickness */
-  margin: 20px 0; /* Add some spacing above and below */
-
-  /* The magic part: linear gradient from left to right */
+  border: 0;
+  height: 1px;
+  margin: 20px 0;
   background: linear-gradient(to right, transparent, #006a8a, transparent);
-
-  /* Optional: Make it semi-transparent generally */
   opacity: 0.8;
 }
 
@@ -183,29 +170,11 @@ header h1 {
   gap: 1.5rem;
 }
 
+/* --- DEPRECATED OLD CARD STYLE (Kept for safety, but unused now) --- */
 .related-item {
   background: #fff;
-  /* border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1); */
   padding: 1rem;
   text-align: center;
-}
-
-.related-item img {
-  width: 100%;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-}
-
-.related-item h4 {
-  margin: 0.5rem 0;
-  font-size: 1rem;
-}
-
-.related-item .book-price {
-  color: #0077b6;
-  font-weight: bold;
-  margin: 0.3rem 0;
 }
 
 footer {
@@ -220,4 +189,683 @@ footer {
   .book-detail {
     grid-template-columns: 1fr;
   }
+}
+
+/* =========================================
+   NEW RELATED BOOKS CARD STYLES (FROM WISHLIST)
+   ========================================= */
+
+:root {
+    --primary-color: #006A8AFF;
+    --elegant-black: #171A1FFF;
+    --text-gray: #6b7280;
+    --white: #ffffff;
+    --danger-red: #ef4444;
+}
+
+.wishlist-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: cardAppear 0.5s ease-out backwards;
+    display: block; /* Important for Link tag */
+    color: inherit; /* Inherit text color */
+}
+
+.wishlist-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.book-cover-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2/3;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.book-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.wishlist-card:hover .book-cover {
+    transform: scale(1.1);
+}
+
+.book-details {
+    text-align: center;
+}
+
+.book-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--elegant-black);
+    margin-bottom: 0.375rem;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.book-author {
+    color: var(--text-gray);
+    font-size: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.price-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.current-price {
+    font-size: 1.125rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* ... [KEEP YOUR EXISTING CSS ABOVE THIS LINE] ... */
+
+/* =========================================
+   NEW CARD STYLES (Based on Wishlist Image)
+   ========================================= */
+
+:root {
+    --primary-color: #006A8AFF;
+    --elegant-black: #171A1FFF;
+    --text-gray: #6b7280;
+    --white: #ffffff;
+    --danger-red: #ef4444;
+    --heart-red: #ff6b6b;
+    --success-green: #10b981;
+}
+
+.wishlist-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: cardAppear 0.5s ease-out backwards;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.wishlist-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes cardAppear {
+    from { opacity: 0; transform: translateY(30px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Image Area */
+.book-cover-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2/3;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.book-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.wishlist-card:hover .book-cover {
+    transform: scale(1.1);
+}
+
+/* Hover Overlay */
+.cover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.book-cover-container:hover .cover-overlay {
+    opacity: 1;
+}
+
+/* Quick View Button */
+.quick-view-btn {
+    background: var(--white);
+    color: var(--primary-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    text-decoration: none; /* Important for Link */
+    transition: all 0.3s ease;
+    transform: translateY(10px);
+}
+
+.cover-overlay:hover .quick-view-btn {
+    transform: translateY(0);
+}
+
+.quick-view-btn:hover {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+/* Book Details Text */
+.book-details {
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-title {
+    font-family: "Playfair Display", serif; /* Match your main font */
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--elegant-black);
+    margin-bottom: 0.375rem;
+    line-height: 1.3;
+    /* Truncate text after 2 lines */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.book-author {
+    font-family: "Merriweather", serif;
+    color: var(--text-gray);
+    font-size: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+/* Price Section */
+.price-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    margin-top: auto; /* Pushes price to bottom of details area */
+}
+
+.current-price {
+    font-size: 1.125rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Add to Cart Button (Bottom Blue Button) */
+.add-to-cart-btn {
+    width: 100%;
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.add-to-cart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 106, 138, 0.4);
+    background-color: #005a75; /* Slightly darker on hover */
+}
+
+/* ... [KEEP ALL YOUR EXISTING CSS ABOVE THIS LINE] ... */
+
+/* =========================================
+   EXACT CARD STYLES (MATCHING REFERENCE IMAGE)
+   ========================================= */
+
+:root {
+    --primary-color: #006A8AFF;
+    --elegant-black: #171A1FFF;
+    --text-gray: #8d929d; /* create-react-app default gray from your existing css */
+    --light-gray-bg: #f3f4f6;
+    --white: #ffffff;
+    --discount-red: #ff6b6b; /* The specific pinkish-red from the image */
+    --button-blue: #006A8A; /* Matching your existing primary color */
+}
+
+.wishlist-card {
+    background: var(--white);
+    border-radius: 16px; /* Slightly rounder corners per image */
+    padding: 1rem;
+    /* Subtle shadow per image */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); 
+    position: relative;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid transparent;
+}
+
+.wishlist-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    border-color: #e5e7eb;
+}
+
+/* 1. Close Button Style */
+.close-btn {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 32px;
+    height: 32px;
+    background-color: var(--light-gray-bg);
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-gray);
+    cursor: pointer;
+    z-index: 2; /* Ensure it's above image */
+    transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+    background-color: #e5e7eb;
+    color: var(--elegant-black);
+}
+
+/* 2. Image and Quick View */
+.book-cover-container {
+    position: relative;
+    width: 100%;
+    /* Aspect ratio to match the tall book cover in image */
+    aspect-ratio: 2/3; 
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    /* Subtle shadow on the book cover itself */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+.book-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Slightly darker overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.book-cover-container:hover .cover-overlay {
+    opacity: 1;
+}
+
+.quick-view-btn {
+    background: var(--button-blue); /* Blue button per image */
+    color: var(--white);
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    transform: translateY(20px);
+}
+
+.cover-overlay:hover .quick-view-btn {
+    transform: translateY(0);
+}
+
+
+/* 3. Typography */
+.book-details {
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.book-title {
+    font-family: "Playfair Display", serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--elegant-black);
+    margin-bottom: 0.25rem;
+    line-height: 1.2;
+    /* Truncate after 2 lines */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.book-author {
+    font-family: "Merriweather", serif;
+    color: var(--text-gray);
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+    font-style: italic; /* Match image style */
+}
+
+/* 4. Complex Price Section Styles */
+.price-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.current-price {
+    font-family: "Playfair Display", serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--button-blue);
+}
+
+.original-price {
+    font-family: "Merriweather", serif;
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    text-decoration: line-through;
+}
+
+.discount-badge {
+    background-color: var(--discount-red);
+    color: var(--white);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    border-radius: 20px; /* Pill shape */
+}
+
+/* 5. Timestamp Style */
+.added-date {
+    font-family: "Merriweather", serif;
+    color: var(--text-gray);
+    font-size: 0.75rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+/* 6. Move to Cart Button Style */
+.move-to-cart-btn {
+    width: 100%;
+    background: var(--button-blue);
+    color: var(--white);
+    border: none;
+    padding: 0.8rem;
+    border-radius: 8px; /* Slightly softer corners than the main book detail btn */
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+.move-to-cart-btn:hover {
+    background-color: #005068; /* Slightly darker blue on hover */
+}
+
+/* ... [KEEP ALL YOUR EXISTING CSS ABOVE THIS LINE] ... */
+
+/* =========================================
+   COMPACT CARD STYLES
+   ========================================= */
+
+:root {
+    --primary-color: #006A8AFF;
+    --elegant-black: #171A1FFF;
+    --text-gray: #8d929d;
+    --light-gray-bg: #f3f4f6;
+    --white: #ffffff;
+    --discount-red: #ff6b6b;
+    --button-blue: #006A8A;
+}
+
+/* OVERRIDE GRID FOR SMALLER CARDS */
+.related-grid {
+  display: grid;
+  /* Changed from 220px to 180px to allow cards to be smaller/narrower */
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.wishlist-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 0.8rem; /* Reduced padding for smaller size */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); 
+    position: relative;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid transparent;
+}
+
+.wishlist-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    border-color: #e5e7eb;
+}
+
+/* Image and Quick View */
+.book-cover-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2/3; 
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+.book-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.book-cover-container:hover .cover-overlay {
+    opacity: 1;
+}
+
+.quick-view-btn {
+    background: var(--button-blue);
+    color: var(--white);
+    border: none;
+    padding: 0.5rem 1rem; /* Slightly smaller padding */
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.75rem; /* Smaller font */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+    transform: translateY(20px);
+}
+
+.cover-overlay:hover .quick-view-btn {
+    transform: translateY(0);
+}
+
+/* Typography - Scaled down for smaller cards */
+.book-details {
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.book-title {
+    font-family: "Playfair Display", serif;
+    font-size: 1rem; /* Reduced from 1.1rem */
+    font-weight: 700;
+    color: var(--elegant-black);
+    margin-bottom: 0.2rem;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.book-author {
+    font-family: "Merriweather", serif;
+    color: var(--text-gray);
+    font-size: 0.75rem; /* Reduced from 0.8rem */
+    margin-bottom: 0.75rem;
+    font-style: italic;
+}
+
+/* Price Section Styles */
+.price-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.current-price {
+    font-family: "Playfair Display", serif;
+    font-size: 1.1rem; /* Reduced size */
+    font-weight: 700;
+    color: var(--button-blue);
+}
+
+.original-price {
+    font-family: "Merriweather", serif;
+    font-size: 0.75rem;
+    color: var(--text-gray);
+    text-decoration: line-through;
+}
+
+.discount-badge {
+    background-color: var(--discount-red);
+    color: var(--white);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.15rem 0.4rem;
+    border-radius: 20px;
+}
+
+/* Move to Cart Button Style */
+.move-to-cart-btn {
+    width: 100%;
+    background: var(--button-blue);
+    color: var(--white);
+    border: none;
+    padding: 0.6rem; /* Reduced padding */
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.8rem; /* Smaller font */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    transition: background-color 0.3s ease;
+    margin-top: auto; /* Push to bottom if details vary in height */
+}
+
+.move-to-cart-btn:hover {
+    background-color: #005068;
 }

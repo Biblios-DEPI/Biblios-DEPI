@@ -1,0 +1,161 @@
+--- Styling for the specific card in the image ---
+
+.book-card-container {
+    /* Main card container style */
+    background: #fff;
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 300px; /* Constrain the width for a card look */
+    padding: 10px;
+    position: relative; /* Needed for absolute positioning of the close button */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.book-card-close-btn {
+    /* Style for the 'X' button in the top left */
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.book-card-close-btn:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
+.book-card-content {
+    /* Grouping the main image and text details */
+    padding: 10px 10px 0 10px;
+    width: 100%;
+}
+
+.book-card-cover {
+    /* Style for the image wrapper to maintain aspect ratio and centering */
+    width: 100%;
+    /* Max width to keep the image proportional to the card */
+    max-width: 80%; 
+    margin: 0 auto 15px auto;
+    overflow: hidden;
+}
+
+.book-card-cover img {
+    /* Image style */
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+}
+
+.book-card-details {
+    /* Container for title and author */
+    margin-bottom: 15px;
+}
+
+.book-card-title {
+    /* Title style */
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    color: #333;
+    line-height: 1.2;
+}
+
+.book-card-author {
+    /* Author style */
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0 0 0;
+}
+
+.book-card-pricing {
+    /* Container for prices and discount tag */
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.book-card-price {
+    /* Final discounted price */
+    font-size: 20px;
+    font-weight: bold;
+    color: #006A8A; /* Primary brand color */
+}
+
+.book-card-original-price {
+    /* Original price, struck through */
+    font-size: 14px;
+    color: #999;
+    text-decoration: line-through;
+}
+
+.book-card-discount-tag {
+    /* Red 'OFF' tag */
+    background: #e74c3c;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 3px 6px;
+    border-radius: 4px;
+}
+
+.book-card-info-bottom {
+    /* Container for the date added */
+    width: 100%;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
+}
+
+.book-card-date-added {
+    /* 'Added Nov 10' text */
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+.book-card-date-added .book-card-icon {
+    /* Clock icon styling */
+    stroke: #666;
+}
+
+.book-card-action-btn {
+    /* The large 'Move to Cart' button */
+    width: 90%;
+    background: #006A8A; /* Primary brand color */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+}
+
+.book-card-action-btn:hover {
+    background: #004c64;
+}
