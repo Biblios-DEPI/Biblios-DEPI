@@ -2,7 +2,7 @@
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 
 // 1. IMPORT THE PROVIDER (Double check this path!)
-import { CartProvider } from './context/CartContext'; 
+import { CartProvider } from './context/CartContext';
 import { Toaster } from 'react-hot-toast';
 
 // Styles
@@ -41,34 +41,34 @@ function App() {
   return (
     // 2. WRAP THE ENTIRE ROUTER WITH CARTPROVIDER
     <CartProvider>
-       <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <Router>
         <div className="page">
           <Routes>
-           
-            
+
+
             {/* Pages with Header/Footer (These were crashing) */}
             <Route element={<MainLayout />}>
               <Route path="/about" element={<AboutPage />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/book-details/:id" element={<BookDetailsPage />} />
-              <Route path="/books/:id" element={<BookDetailsPage />} />  
+              <Route path="/books/:id" element={<BookDetailsPage />} />
               <Route path="/books" element={<BooksPage />} />
               <Route path="/categories" element={<BooksPage />} />
               {/* <Route path="/checkout" element={<CheckoutPage />} /> */}
               {/* <Route path="/contact" element={<ContactPage />} /> */}
-                <Route path="/books/:id" element={<BookDetailsPage />} />  
-                {/* <Route path="/categories" element={<CategoriesPage />} /> */}
-                <Route path="/books" element={<BooksPage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/wishlist" element={<WishlistPage />} />
+              <Route path="/books/:id" element={<BookDetailsPage />} />
+              {/* <Route path="/categories" element={<CategoriesPage />} /> */}
+              <Route path="/books" element={<BooksPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/wishlist" element={<WishlistPage />} />
 
 
             </Route>
 
             {/* Pages without Header/Footer (These were working) */}
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} /> 
+            <Route path="/register" element={<RegisterPage />} />
             <Route path="/" element={<HomePage />} />
 
           </Routes>

@@ -42,6 +42,29 @@ const HomePage = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: "0px 0px -100px 0px"
+    };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+        }
+      });
+    }, observerOptions);
+    const sections = document.querySelectorAll(".categories, .pros, .help, .homefooter");
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+    return () => {
+      sections.forEach((section) => {
+        observer.unobserve(section);
+      });
+    };
+  }, []);
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -64,7 +87,7 @@ const HomePage = () => {
 
           <ul className={`menu ${isMenuOpen ? "active" : ""}`}>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/"><span className="floating-shine">Home</span></Link>
             </li>
             <li>
               <Link to="/categories">Categories</Link>

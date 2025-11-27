@@ -60,13 +60,13 @@ export default function ProfilePage() {
             <div className="profile-header">
               <div className="profile-picture-wrapper">
                 <div className="profile-picture">
-                  <img 
-                    src="../../public/images/profile.jpg" 
+                  <img
+                    src="../../public/images/profile.jpg"
                     alt="Profile"
                   />
                 </div>
               </div>
-              
+
               <div className="profile-info">
                 <div className="profile-name-section">
                   <div className="name-bio">
@@ -131,7 +131,7 @@ export default function ProfilePage() {
               Favorite Books
             </h2>
           </div>
-          
+
           <div className="favorites-grid">
             {favoriteBooks.map(book => (
               <div key={book.id} className="book-card">
