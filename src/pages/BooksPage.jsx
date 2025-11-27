@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import toast from 'react-hot-toast'; // Import toast for feedback
+import toast from 'react-hot-toast'; 
 import booksData from '../data/books.json'; 
-import { useCart } from '../context/CartContext'; // Import Cart Hook
-import '../styles/book-details.css'; // Reusing the shared styles
+import { useCart } from '../context/CartContext'; 
+import '../styles/book-details.css'; 
 
-// Helper component for rendering a single book card
-// Now matches the exact "Wishlist/Related" card style
 const BookCard = ({ book }) => {
     const { addToCart } = useCart();
 
@@ -15,21 +13,39 @@ const BookCard = ({ book }) => {
         toast.success(`"${book.title}" added to cart!`);
     };
 
-    // Fake logic to match the visual style of the reference image
-    // (creating a fake original price and discount)
+    const handleAddToWishlist = () => {
+        toast.success(`"${book.title}" added to wishlist!`, {
+            icon: '❤️',
+            style: {
+                borderRadius: '10px',
+                background: '#333',
+                color: '#fff',
+            },
+        });
+    };
+
     const currentPrice = book.price;
     const originalPrice = (currentPrice / 0.68).toFixed(2); 
     const discountPercent = 32;
 
     return (
         <div className="wishlist-card">
-            {/* Image Container & Quick View */}
             <div className="book-cover-container">
                 <img 
                     src={book.image} 
                     alt={book.title} 
                     className="book-cover"
                 />
+                
+                {/* --- NEW WISHLIST BUTTON (Top Right) --- */}
+                <button 
+                    className="wishlist-icon-btn" 
+                    onClick={handleAddToWishlist}
+                    aria-label="Add to Wishlist"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                </button>
+
                 <div className="cover-overlay">
                      <Link to={`/books/${book.id}`} className="quick-view-btn">
                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -60,9 +76,7 @@ const BookCard = ({ book }) => {
     );
 };
 
-
 const BooksPage = () => {
-    // 1. Setup State & Params
     const [searchParams, setSearchParams] = useSearchParams();
     
     const currentCategory = searchParams.get('category') || 'All';
@@ -72,7 +86,6 @@ const BooksPage = () => {
     const PRIMARY_COLOR = '#006A8A'; 
     const lowerCaseQuery = searchQuery.toLowerCase();
 
-    // 2. The Filter Logic
     const filteredByCategory = currentCategory === 'All'
         ? booksData
         : booksData.filter((book) => book.category === currentCategory);
@@ -83,7 +96,6 @@ const BooksPage = () => {
                book.author.toLowerCase().includes(lowerCaseQuery);
     });
 
-    // Function to handle filter button click
     const handleCategoryChange = (category) => {
         const newParams = {};
         if (searchQuery) newParams.query = searchQuery;
@@ -91,11 +103,9 @@ const BooksPage = () => {
         setSearchParams(newParams);
     };
 
-    // Construct the display string
     let viewingText = `Currently viewing: **${currentCategory}** books`;
     if (searchQuery) viewingText += ` matching search: **"${searchQuery}"**`;
     viewingText += `. (${displayedBooks.length} results)`;
-
 
     return (
         <div className="container" style={{ padding: '40px 20px' }}>
@@ -106,7 +116,6 @@ const BooksPage = () => {
 
             <hr className="gradient-hr" />
 
-            {/* 3. The UI (Category Buttons) */}
             <div className="filters" style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center', marginBottom: '30px' }}>
                 {categories.map(cat => (
                     <button 
@@ -130,8 +139,6 @@ const BooksPage = () => {
                 ))}
             </div>
 
-            {/* 4. The Grid: Render the filtered books */}
-            {/* We use the "related-grid" class to inherit the exact grid layout from CSS */}
             <div className="related-grid">
                 {displayedBooks.map((book) => (
                     <BookCard key={book.id} book={book} />

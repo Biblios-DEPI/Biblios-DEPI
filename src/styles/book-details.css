@@ -869,3 +869,53 @@ footer {
 .move-to-cart-btn:hover {
     background-color: #005068;
 }
+
+/* ... [KEEP ALL EXISTING CSS] ... */
+
+/* =========================================
+   WISHLIST HOVER BUTTON
+   ========================================= */
+
+.wishlist-icon-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    
+    /* Animation Properties */
+    opacity: 0; 
+    transform: translateX(10px); /* Start slightly to the right */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy effect */
+    z-index: 5; /* Sit on top of overlay */
+    color: #ff6b6b; /* Default Heart Color */
+}
+
+/* Show on Hover */
+.book-cover-container:hover .wishlist-icon-btn {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Hover State for the button itself */
+.wishlist-icon-btn:hover {
+    background-color: #ff6b6b;
+    color: #ffffff;
+    transform: scale(1.1); /* Grow slightly */
+}
+
+.wishlist-icon-btn svg {
+    transition: fill 0.2s ease;
+}
+
+.wishlist-icon-btn:hover svg {
+    fill: #ffffff; /* Fill heart on hover */
+}
