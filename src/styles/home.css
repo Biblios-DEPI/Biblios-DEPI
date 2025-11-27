@@ -26,12 +26,12 @@ body::-webkit-scrollbar {
 }
 
 h1 {
-    font-size: 45px;
+    font-size: 55px;
     font-family: "Playfair";
 }
 
 h2 {
-    font-size: 25px;
+    font-size: 30px;
     font-family: "Playfair";
 }
 
@@ -212,23 +212,18 @@ nav {
     color: var(--background-color);
 }
 
-.hero .text h2 {
-    color: var(--background-color) !important;
-    font-size: 22px;
-}
-
 .books {
     display: grid;
 }
 
 .home-swiper {
     margin: initial;
-    width: 340px;
+    width: 360px;
 }
 
 .home-article,
 .home-img {
-    width: 245px;
+    width: 265px;
     filter: drop-shadow(0px 7px 12px #171a1f38);
     transition: scale 0.3s;
     scale: 0.75;

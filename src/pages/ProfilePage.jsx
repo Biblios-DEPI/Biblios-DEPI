@@ -11,15 +11,15 @@ export default function ProfilePage() {
     },
     {
       id: 2,
-      title: "Harry Potter and the prisoner of Azkaban",
-      author: "J.K. Rowling",
-      cover: "../../public/images/harryPotter.jpg"
-    },
-    {
-      id: 3,
       title: "A Clockwork Orange",
       author: "Anthony Burgess",
       cover: "../../public/images/AClockworkOrange.jpg"
+    },
+    {
+      id: 3,
+      title: "Harry Potter and the prisoner of Azkaban",
+      author: "J.K. Rowling",
+      cover: "../../public/images/harryPotter.jpg"
     },
     {
       id: 4,
