@@ -155,6 +155,10 @@ nav {
     color: var(--background-color);
 }
 
+.cart-container-home {
+    position: relative;
+}
+
 .cart-container-home img,
 .logo-container-home img {
     filter: brightness(0) invert(1);
@@ -1169,6 +1173,39 @@ nav {
 .profile-pic:hover {
     transform: scale(1.1) rotate(5deg);
     box-shadow: 0 4px 12px rgba(0, 106, 138, 0.3);
+}
+
+
+.cart-badge-home {
+    position: absolute;
+    top: -7px;
+    right: -8px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+/* 2. STATE A: Top of Page (Transparent Header) */
+/* Requirements: Transparent BG, White Border, White Text */
+.homenav .cart-badge-home {
+    background-color: rgba(0, 0, 0, 0.2);
+    /* Slight tint for readability */
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+}
+
+.shadow-header .cart-badge-home {
+    background-color: #e74c3c !important;
+    /* Original Red */
+    border: 1px solid #e74c3c !important;
+    color: #FFFFFF;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -4,6 +4,7 @@ import { Autoplay } from "swiper/modules";
 import { useEffect, useState, useRef } from "react";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
+import { useCart } from '../context/CartContext';
 
 // Import Styles
 import "swiper/css";
@@ -14,6 +15,8 @@ const HomePage = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const { cartCount } = useCart();
+  const badge = document.querySelector('.cart-badge-home');
 
   // ========== SHADOW HEADER EFFECT ==========
   useEffect(() => {
@@ -22,6 +25,9 @@ const HomePage = () => {
       if (!header) return;
       if (window.scrollY >= 50) {
         header.classList.add("shadow-header");
+        
+
+
       } else {
         header.classList.remove("shadow-header");
       }
@@ -111,6 +117,11 @@ const HomePage = () => {
 
             <Link className="cart-container-home" to="/cart">
               <img src="/images/shopping-cart.png" alt="cart" />
+              {cartCount > 0 && (
+                <span  className="cart-badge-home">
+                  {cartCount}
+                </span>
+              )}
             </Link>
 
             <Link to="/wishlist" className="wishlist-link">

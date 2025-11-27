@@ -11,6 +11,7 @@ import './styles/global.css';
 // Components
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -43,6 +44,7 @@ function App() {
     <CartProvider>
       <Toaster position="top-center" reverseOrder={false} />
       <Router>
+        <ScrollToTop />
         <div className="page">
           <Routes>
 

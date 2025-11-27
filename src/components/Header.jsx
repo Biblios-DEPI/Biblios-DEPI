@@ -1,5 +1,9 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; 
+// import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+
+import { auth } from '../firebase'; // 1. Import Auth
+import { signOut } from 'firebase/auth';
 import { useCart } from '../context/CartContext';
 import booksData from '../data/books.json'; // ⚠️ CRITICAL: Import the book data!
 import '../styles/global.css';
@@ -7,6 +11,10 @@ import '../styles/global.css';
 const Header = () => {
   const { cartCount } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const location = useLocation();
+  const isActive = (path) => location.pathname === path;
   const [searchQuery, setSearchQuery] = useState(''); 
   // State to hold suggested books
   const [suggestions, setSuggestions] = useState([]);
@@ -48,11 +56,31 @@ const Header = () => {
     setSearchQuery('');
     setSuggestions([]);
   };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsProfileDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // 5. Logout Logic
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setIsProfileDropdownOpen(false);
+      navigate("/login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
 
   return (
     <header id="header">
-      <nav id="navbar">
+      <nav id="navbar" className="shadow-header">
         <div className="logo-container">
           <Link to="/">
             <img src="/images/logo2.png" alt="Biblios Logo" />
@@ -60,9 +88,21 @@ const Header = () => {
         </div>
         
         <ul className={`menu ${isMenuOpen ? 'active' : ''}`}>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/categories">Categories</Link></li>
-          <li><Link to="/about">About Biblios</Link></li>
+          <li>
+            <Link to="/">
+                {isActive('/') ? <span className="floating-shine">Home</span> : 'Home'}
+            </Link>
+          </li>
+          <li>
+            <Link to="/categories">
+                {isActive('/categories') ? <span className="floating-shine">Categories</span> : 'Categories'}
+            </Link>
+          </li>
+          <li>
+            <Link to="/about">
+                {isActive('/about') ? <span className="floating-shine">About Biblios</span> : 'About Biblios'}
+            </Link>
+          </li>
         </ul>
 
         <div className="right">
@@ -125,8 +165,8 @@ const Header = () => {
             {cartCount > 0 && (
               <span style={{
                 position: 'absolute',
-                top: '7px',
-                right: '4px',
+                top: '-8px',
+                right: '-10px',
                 backgroundColor: '#e74c3c',
                 color: 'white',
                 borderRadius: '50%',
@@ -143,6 +183,49 @@ const Header = () => {
               </span>
             )}
           </Link>
+          <Link to="/wishlist" className="wishlist-link-global">
+            <i className="fa-regular fa-heart"></i>
+          </Link>
+
+          {/* --- NEW: Profile Dropdown --- */}
+          <div className="profile-dropdown-container-global" ref={dropdownRef}>
+            {auth.currentUser ? (
+              <>
+                <div
+                  className="profile-link-global"
+                  onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                >
+                  <img
+                    src={auth.currentUser.photoURL || "/images/profile.jpg"}
+                    alt="Profile"
+                    className="profile-pic"
+                  />
+                </div>
+
+                {isProfileDropdownOpen && (
+                  <div className="profile-dropdown-global">
+                    <Link
+                      to="/profile"
+                      className="dropdown-item-global profile-button-global"
+                      onClick={() => setIsProfileDropdownOpen(false)}
+                    >
+                      <i className="fa-solid fa-user"></i> Profile
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="dropdown-item-global logout-btn-global"
+                    >
+                      <i className="fa-solid fa-right-from-bracket"></i> Logout
+                    </button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <Link to="/login" className="profile-link-global">
+                <i className="fa-regular fa-user"></i>
+              </Link>
+            )}
+          </div>
         </div>
         
         <i 
