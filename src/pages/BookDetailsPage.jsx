@@ -84,7 +84,7 @@ const BookDetailsPage = () => {
   };
 
   return (
-    <div className="container">
+    <div className="detail-container">
       <section className="book-detail">
         <div className="book-img">
           <img src={book.image} alt={`${book.title} Book Cover`} />

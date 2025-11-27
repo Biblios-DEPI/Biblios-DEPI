@@ -67,17 +67,25 @@ header h1 {
 } */
 
 .container {
+  max-width: 1200px;
+  margin: 2rem auto;    /* Removed the 2rem top margin */
+  padding: 0 1rem;
+  width: 100%;
+}
+
+/* 2. DETAIL CONTAINER (For Book Detail Page ONLY) */
+/* This keeps the look you want specifically for the single book view */
+.detail-container {
   transform: scale(0.9);
   max-width: 75% !important;
   max-height: fit-content;
-  margin: 2rem auto;
+  margin: 2rem auto; /* Keeps the spacing you wanted here */
   padding: 0 0.4rem;
   -webkit-transform: scale(0.9);
   -moz-transform: scale(0.9);
   -ms-transform: scale(0.9);
   -o-transform: scale(0.9);
 }
-
 .book-detail {
   margin-top: 65px;
   display: grid;
@@ -867,6 +875,10 @@ footer {
     font-weight: 700;
     padding: 0.15rem 0.4rem;
     border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
 }
 
 /* Move to Cart Button Style */
@@ -964,13 +976,15 @@ footer {
    ========================================= */
 
 @media (max-width: 768px) {
-  .container{
+  .container, 
+  .detail-container {
       transform: scale(1);
       -webkit-transform: scale(1);
       -moz-transform: scale(1);
       -ms-transform: scale(1);
       -o-transform: scale(1);
-}
+      max-width: 95% !important;
+  }
   .related-grid {
     /* Force exactly 2 columns */
     grid-template-columns: repeat(2, 1fr) !important;
