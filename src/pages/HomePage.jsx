@@ -6,7 +6,8 @@ import { auth } from "../firebase";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { useCart } from '../context/CartContext';
 import booksData from '../data/books.json';
-import { getUserProfile, hasCustomProfile } from '../data/userProfiles'; // Add this import
+import { getUserProfile, hasCustomProfile } from '../data/userProfiles'; 
+import toast from 'react-hot-toast'; // 1. IMPORT TOAST
 
 import "swiper/css";
 import "../styles/home.css";
@@ -15,7 +16,7 @@ const HomePage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [profilePhoto, setProfilePhoto] = useState("/images/profile.jpg"); // Add this state
+  const [profilePhoto, setProfilePhoto] = useState("/images/profile.jpg"); 
   const [loading, setLoading] = useState(true);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
@@ -31,13 +32,11 @@ const HomePage = () => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
 
-      // Get profile photo from userProfiles if exists
       if (currentUser) {
         if (hasCustomProfile(currentUser.uid)) {
           const customProfile = getUserProfile(currentUser.uid);
           setProfilePhoto(customProfile.photoURL);
         } else {
-          // Default profile photo
           setProfilePhoto("../../public/images/profile.jpg");
         }
       }
@@ -47,8 +46,6 @@ const HomePage = () => {
 
     return () => unsubscribe();
   }, []);
-
-  // ... rest of your existing useEffects and functions remain the same ...
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -90,13 +87,20 @@ const HomePage = () => {
     setSuggestions([]);
   };
 
-  // Sync state with URL
+  // 2. NEW: Handle Wishlist Navigation (Auth Guard)
+  const handleWishlistNav = (e) => {
+    if (!user) {
+      e.preventDefault(); // Stop the link from navigating
+      toast.error("Please login to view your wishlist");
+      navigate('/login');
+    }
+  };
+
   useEffect(() => {
     const urlQuery = searchParams.get('query');
     setSearchQuery(urlQuery || '');
   }, [searchParams]);
 
-  // Shadow header effect
   useEffect(() => {
     const handleShadow = () => {
       const header = document.querySelector("#navbar");
@@ -111,7 +115,6 @@ const HomePage = () => {
     return () => window.removeEventListener("scroll", handleShadow);
   }, []);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -217,14 +220,20 @@ const HomePage = () => {
               <span className="cart-badge-mobile">{cartCount}</span>
             )}
           </Link>
+          
+          {/* 4. UPDATED MOBILE WISHLIST LINK */}
           <Link
             to="/wishlist"
             className="mobile-menu-action-btn"
-            onClick={() => setIsMenuOpen(false)}
+            onClick={(e) => {
+                handleWishlistNav(e); // Check auth
+                setIsMenuOpen(false); // Close menu
+            }}
           >
             <i className="fa-regular fa-heart"></i>
             Wishlist
           </Link>
+
           {user ? (
             <>
               <Link
@@ -325,7 +334,12 @@ const HomePage = () => {
               )}
             </Link>
 
-            <Link to="/wishlist" className="wishlist-link">
+            {/* 3. UPDATED DESKTOP WISHLIST LINK */}
+            <Link 
+                to="/wishlist" 
+                className="wishlist-link"
+                onClick={handleWishlistNav} // Check auth
+            >
               <i className="fa-regular fa-heart"></i>
             </Link>
 

@@ -1,15 +1,31 @@
 // src/pages/CartPage.jsx
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Added useNavigate
+import { auth } from '../firebase'; // Added auth import
 import { useCart } from '../context/CartContext';
+import toast from 'react-hot-toast'; // Added toast for feedback
 import '../styles/cart.css';
 
 const CartPage = () => {
   const { cartItems, removeFromCart, updateQuantity, cartSubtotal } = useCart();
+  const navigate = useNavigate();
 
   // Math Calculations
-  const taxRate = 0.08; // 8%
+  const taxRate = 0.08; 
   const taxAmount = cartSubtotal * taxRate;
   const totalAmount = cartSubtotal + taxAmount;
+
+  // --- NEW: CHECKOUT HANDLER ---
+  const handleCheckout = () => {
+    if (!auth.currentUser) {
+        toast.error("Please login to proceed to checkout");
+        navigate('/login');
+    } else {
+        // Since you don't have a checkout page yet, we will just toast for now
+        // OR if you create a CheckoutPage later, use: navigate('/checkout');
+        toast.success("Proceeding to secure checkout...");
+        // navigate('/checkout'); 
+    }
+  };
 
   if (cartItems.length === 0) {
     return (
@@ -27,7 +43,6 @@ const CartPage = () => {
         <h2>Your Cart</h2>
         <div className="main-container">
             <div className="products">
-                {/* DYNAMIC MAPPING */}
                 {cartItems.map((item) => (
                     <div className="cart-book card-prop" key={item.id}>
                         <div className="cover">
@@ -49,7 +64,7 @@ const CartPage = () => {
                                     <span className="number">{item.quantity}</span>
                                     
                                     <span 
-                                        className="more" // Using 'more' class for styling consistency
+                                        className="more" 
                                         onClick={() => updateQuantity(item.id, 'increase')}
                                         style={{cursor: 'pointer'}}
                                     >
@@ -70,7 +85,6 @@ const CartPage = () => {
                 ))}
             </div>
 
-            {/* DYNAMIC SUMMARY */}
             <div className="summary-container">
                 <div className="summary card-prop">
                     <h4>Order Summary</h4>
@@ -87,7 +101,8 @@ const CartPage = () => {
                         <span>Total</span>
                         <span>${totalAmount.toFixed(2)}</span>
                     </div>
-                    <button className="btn">Proceed to Checkout</button>
+                    {/* BUTTON NOW CALLS THE HANDLER */}
+                    <button className="btn" onClick={handleCheckout}>Proceed to Checkout</button>
                 </div>
             </div>
         </div>

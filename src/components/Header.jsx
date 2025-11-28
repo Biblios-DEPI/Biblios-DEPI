@@ -4,7 +4,8 @@ import { auth } from '../firebase';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { useCart } from '../context/CartContext';
 import booksData from '../data/books.json';
-import { getUserProfile, hasCustomProfile } from '../data/userProfiles'; // Add this import
+import { getUserProfile, hasCustomProfile } from '../data/userProfiles';
+import toast from 'react-hot-toast'; // 1. Import Toast
 import '../styles/global.css';
 
 const Header = () => {
@@ -12,7 +13,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [profilePhoto, setProfilePhoto] = useState("/images/profile.jpg"); // Add this state
+  const [profilePhoto, setProfilePhoto] = useState("/images/profile.jpg");
   const [loading, setLoading] = useState(true);
   const dropdownRef = useRef(null);
 
@@ -30,24 +31,20 @@ const Header = () => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
 
-      // Get profile photo from userProfiles if exists
       if (currentUser) {
         if (hasCustomProfile(currentUser.uid)) {
           const customProfile = getUserProfile(currentUser.uid);
           setProfilePhoto(customProfile.photoURL);
         } else {
-          // Default profile photo
-          setProfilePhoto("../../public/images/profile.jpg");
+          setProfilePhoto("/images/profile.jpg");
         }
       }
-
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
-  // Keep input in sync with URL changes
   useEffect(() => {
     const urlQuery = searchParams.get('query');
     setSearchQuery(urlQuery || '');
@@ -69,18 +66,12 @@ const Header = () => {
 
     if (isSearchablePage) {
       const newParams = {};
-
       const currentCategory = searchParams.get('category');
       if (currentCategory) newParams.category = currentCategory;
-
-      if (query.trim().length > 0) {
-        newParams.query = query;
-      }
-
+      if (query.trim().length > 0) newParams.query = query;
       setSearchParams(newParams);
     }
 
-    // Suggestions Logic
     if (query.trim().length > 0) {
       const lowerCaseQuery = query.toLowerCase();
       const matchingBooks = booksData.filter(book =>
@@ -99,7 +90,16 @@ const Header = () => {
     setSuggestions([]);
   };
 
-  // Close dropdown on click outside
+  // 2. NEW: Handle Wishlist Navigation
+  const handleWishlistNav = (e) => {
+    if (!user) {
+      e.preventDefault(); // Stop the link from working
+      toast.error("Please login to view your wishlist");
+      navigate('/login');
+    }
+    // If user exists, do nothing (let the Link work normally)
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -181,7 +181,14 @@ const Header = () => {
             )}
           </Link>
 
-          <Link to="/wishlist" className="wishlist-link-global"><i className="fa-regular fa-heart"></i></Link>
+          {/* 3. UPDATED: Connected the handler here */}
+          <Link 
+            to="/wishlist" 
+            className="wishlist-link-global" 
+            onClick={handleWishlistNav}
+          >
+            <i className="fa-regular fa-heart"></i>
+          </Link>
 
           <div className="profile-dropdown-container-global" ref={dropdownRef}>
             {user ? (
