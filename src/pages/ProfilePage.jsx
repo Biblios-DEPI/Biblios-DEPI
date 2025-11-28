@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { getUserProfile, hasCustomProfile } from '../data/userProfiles';
 import '../styles/ProfilePage.css';
@@ -9,27 +10,63 @@ export default function ProfilePage() {
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [dataSource, setDataSource] = useState(''); // Track where data came from
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
 
-        // Check if user has a custom hardcoded profile
+        // PRIORITY 1: Check if user has custom hardcoded profile in userProfiles.js
         if (hasCustomProfile(currentUser.uid)) {
           const customProfile = getUserProfile(currentUser.uid);
           setProfile(customProfile);
-        } else {
-          // Default profile (your original data)
+          setDataSource('userProfiles.js');
+          setLoading(false);
+          return; // Stop here, don't check Firestore
+        }
+
+        // PRIORITY 2: If no custom profile, check Firestore
+        try {
+          const userDocRef = doc(db, 'users', currentUser.uid);
+          const userDocSnap = await getDoc(userDocRef);
+
+          if (userDocSnap.exists()) {
+            // User has profile data in Firestore
+            setProfile(userDocSnap.data());
+            setDataSource('Firestore');
+          } else {
+            // PRIORITY 3: Fallback to default profile with profile0.jpg
+            setProfile({
+              displayName: currentUser.displayName || "Unknown User",
+              username: "@Anonymous",
+              bio: '"I don\'t even have a bio yet"',
+              email: currentUser.email,
+              joinedDate: "Recently",
+              location: "The Earth",
+              photoURL: "/images/profile0.jpg",
+              stats: {
+                booksRead: 0,
+                reviews: 0,
+                following: 0,
+                followers: 0
+              },
+              favoriteBooks: []
+            });
+            setDataSource('Default');
+          }
+        } catch (error) {
+          console.error("Error fetching profile:", error);
+          // Set default profile on error
           setProfile({
             displayName: "Unknown User",
             username: "@Anonymous",
-            bio: '"I Don\'t even have a bio yet"',
-            email: "anonymous@biblios.com",
-            joinedDate: "didn't join yet",
+            bio: '"I don\'t even have a bio yet"',
+            email: currentUser.email,
+            joinedDate: "Recently",
             location: "The Earth",
-            photoURL: "../../public/images/profile0.jpg",
+            photoURL: "/images/profile0.jpg",
             stats: {
               booksRead: 0,
               reviews: 0,
@@ -38,7 +75,9 @@ export default function ProfilePage() {
             },
             favoriteBooks: []
           });
+          setDataSource('Error Fallback');
         }
+
         setLoading(false);
       } else {
         navigate('/login');
@@ -101,8 +140,11 @@ export default function ProfilePage() {
               <div className="profile-picture-wrapper">
                 <div className="profile-picture">
                   <img
-                    src={profile.photoURL}
+                    src={profile.photoURL || '/images/profile0.jpg'}
                     alt="Profile"
+                    onError={(e) => {
+                      e.target.src = '/images/profile0.jpg';
+                    }}
                   />
                 </div>
               </div>
@@ -112,9 +154,6 @@ export default function ProfilePage() {
                     <h1 className="display-name">{profile.displayName}</h1>
                     <p className="username">{profile.username}</p>
                   </div>
-                  <button className="edit-button">
-                    Edit Profile
-                  </button>
                 </div>
               </div>
             </div>
@@ -143,19 +182,19 @@ export default function ProfilePage() {
             {/* Stats */}
             <div className="stats">
               <div className="stat-item">
-                <div className="stat-number">{profile.stats.booksRead}</div>
+                <div className="stat-number">{profile.stats?.booksRead || 0}</div>
                 <div className="stat-label">Books Read</div>
               </div>
               <div className="stat-item">
-                <div className="stat-number">{profile.stats.reviews}</div>
+                <div className="stat-number">{profile.stats?.reviews || 0}</div>
                 <div className="stat-label">Reviews</div>
               </div>
               <div className="stat-item">
-                <div className="stat-number">{profile.stats.following}</div>
+                <div className="stat-number">{profile.stats?.following || 0}</div>
                 <div className="stat-label">Following</div>
               </div>
               <div className="stat-item">
-                <div className="stat-number">{profile.stats.followers}</div>
+                <div className="stat-number">{profile.stats?.followers || 0}</div>
                 <div className="stat-label">Followers</div>
               </div>
             </div>
@@ -192,12 +231,16 @@ export default function ProfilePage() {
                     <strong>User UID:</strong> {user?.uid}
                   </p>
                   <p style={{
-                    color: hasCustomProfile(user?.uid) ? '#10b981' : '#f59e0b',
-                    fontSize: '0.7rem'
+                    color: dataSource === 'userProfiles.js' ? '#8b5cf6' :
+                      dataSource === 'Firestore' ? '#10b981' :
+                        '#f59e0b',
+                    fontSize: '0.7rem',
+                    marginTop: '0.5rem'
                   }}>
-                    {hasCustomProfile(user?.uid)
-                      ? '✓ Custom profile loaded from userProfiles.js'
-                      : '⚠ Using default profile (add this UID to userProfiles.js for custom data)'}
+                    {dataSource === 'userProfiles.js' && '👑 Custom profile loaded from userProfiles.js'}
+                    {dataSource === 'Firestore' && '✓ Profile loaded from Firestore database'}
+                    {dataSource === 'Default' && '⚠ Using default mock profile with profile0.jpg'}
+                    {dataSource === 'Error Fallback' && '❌ Error loading profile, using fallback'}
                   </p>
                 </div>
               </details>

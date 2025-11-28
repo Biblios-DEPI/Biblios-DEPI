@@ -3,17 +3,37 @@
 
 /* Specific Styles for Register Page */
 .register-card {
-    max-width: 480px;
-    /* Wider card to fit side-by-side inputs */
+    max-width: 520px;
+    padding: 20px 30px;
+    /* Reduced padding */
+}
+
+/* Make the logo smaller */
+.register-card .card-logo img {
+    max-width: 50px;
+    /* Smaller logo */
+    margin-bottom: 8px;
+}
+
+/* Smaller heading */
+.register-card h2 {
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+}
+
+.register-card p {
+    font-size: 0.85rem;
+    margin-bottom: 12px;
 }
 
 /* The Row Container */
 .form-row {
     display: flex;
     justify-content: space-between;
-    gap: 16px;
-    /* Space between the two inputs */
-    margin-bottom: 12px;
+    gap: 12px;
+    /* Reduced gap */
+    margin-bottom: 8px;
+    /* Reduced margin */
 }
 
 /* The Two Containers (Columns) */
@@ -22,10 +42,46 @@
     /* Force them to be equal dimensions */
 }
 
-/* Make inputs slightly more compact for registration */
-.form-col input {
-    padding: 8px;
-    font-size: 10px;
+/* Compact form groups */
+.form-col .form-group,
+.form-col {
+    margin-bottom: 0;
+}
+
+/* Compact labels */
+.form-col label {
+    font-size: 0.8rem;
+    margin-bottom: 3px;
+    display: block;
+}
+
+/* Make inputs more compact for registration */
+.form-col input,
+.form-col textarea {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    height: auto;
+}
+
+/* Specific height for regular inputs */
+.form-col input[type="text"],
+.form-col input[type="email"],
+.form-col input[type="password"] {
+    height: 34px;
+}
+
+/* Compact textarea */
+.form-col textarea {
+    min-height: 60px;
+    max-height: 60px;
+    line-height: 1.3;
+}
+
+/* Small helper text */
+.form-col small {
+    font-size: 0.7rem;
+    margin-top: 2px;
+    display: block;
 }
 
 /* Password Wrapper to hold the input and the eye icon */
@@ -49,7 +105,7 @@
     transform: translateY(-50%);
     cursor: pointer;
     color: #888;
-    font-size: 11px;
+    font-size: 0.9rem;
     border: none;
     background: none;
     padding: 0;
@@ -61,15 +117,67 @@
     color: var(--primary-color);
 }
 
+/* Compact submit button */
+.register-card .login-btn {
+    padding: 10px;
+    font-size: 0.9rem;
+    margin-top: 12px;
+}
+
+/* Compact register link section */
+.register-card .register-link {
+    margin-top: 12px;
+    font-size: 0.85rem;
+}
+
+/* Compact back to home link */
+.register-card form>p {
+    margin-top: 10px;
+    font-size: 0.75rem;
+}
+
+/* Error message styling */
+.register-card>div[style*="color: red"] {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+}
+
 /* Responsive: On mobile, stack them back to 1 column */
 @media (max-width: 768px) {
     .form-row {
         flex-direction: column;
-        gap: 0;
-        margin-bottom: 0;
+        gap: 8px;
+        margin-bottom: 8px;
     }
 
     .form-col {
         width: 100%;
+    }
+
+    .register-card {
+        max-width: 100%;
+        padding: 15px 20px;
+    }
+}
+
+/* Fix for very small screens */
+@media (max-height: 800px) {
+    .register-card {
+        padding: 15px 25px;
+    }
+
+    .register-card h2 {
+        font-size: 1.3rem;
+    }
+
+    .form-row {
+        margin-bottom: 6px;
+    }
+
+    .form-col input,
+    .form-col textarea {
+        padding: 5px 8px;
+        font-size: 0.8rem;
     }
 }
