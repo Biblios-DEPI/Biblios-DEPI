@@ -16,7 +16,7 @@ export default function WishlistPage() {
         author: "Homer",
         price: 18.99,
         originalPrice: 28.99,
-        image: "/images/TheOdyssey.jpg", // Changed 'cover' to 'image' to match logic
+        image: "/images/TheOdyssey.jpg", 
         addedDate: "2024-11-15",
         inStock: false, 
     };
@@ -89,25 +89,16 @@ export default function WishlistPage() {
 
     // --- NEW FUNCTION: ADD ALL ---
     const addAllToCart = () => {
-        // 1. Get all normalized data
         const normalizedItems = displayItems.map(getDisplayData);
-        
-        // 2. Filter only In-Stock items
         const itemsToAdd = normalizedItems.filter(item => item.inStock !== false);
 
         if (itemsToAdd.length === 0) {
-            toast.error("No in-stock items to move!", {
-                icon: '🚫'
-            });
+            toast.error("No in-stock items to move!", { icon: '🚫' });
             return;
         }
 
-        // 3. Process each item
         itemsToAdd.forEach(item => {
-            // Add to Cart
             addToCart(item, 1);
-
-            // Remove from Wishlist (Immediate visual update, no animation for bulk action)
             if (item.id === 'static-odyssey') {
                 setShowStaticItem(false);
             } else {
@@ -115,7 +106,6 @@ export default function WishlistPage() {
             }
         });
 
-        // 4. Success Message
         toast.success(`Moved ${itemsToAdd.length} items to cart!`, {
             style: {
                 border: '1px solid #006A8A',
@@ -202,14 +192,16 @@ export default function WishlistPage() {
                                                 alt={item.title}
                                                 className="book-cover"
                                             />
+                                            {/* --- UPDATED QUICK VIEW LINK --- */}
                                             <div className="cover-overlay">
-                                                <button
+                                                <Link 
+                                                    to={`/books/${item.id}`} 
                                                     className="quick-view-btn"
-                                                    onClick={() => toast('Quick View coming soon!', { icon: '👀' })}
+                                                    style={{ textDecoration: 'none' }}
                                                 >
                                                     <i className="fas fa-eye"></i>
                                                     Quick View
-                                                </button>
+                                                </Link>
                                             </div>
                                         </div>
 
@@ -269,10 +261,9 @@ export default function WishlistPage() {
                                     </span>
                                 </div>
                                 
-                                {/* --- UPDATED ADD ALL BUTTON --- */}
                                 <button 
                                     className="add-all-btn"
-                                    onClick={addAllToCart} // Connected the function here
+                                    onClick={addAllToCart} 
                                 >
                                     <i className="fas fa-cart-plus"></i>
                                     Add All to Cart
