@@ -1,60 +1,67 @@
 import React, { useState } from "react";
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom'; // Added Link for Browse button
+import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext'; 
-import { useWishlist } from '../context/WishlistContext'; // 1. Import Wishlist Hook
+import { useWishlist } from '../context/WishlistContext'; 
 import "../styles/WishlistPage.css";
 
 export default function WishlistPage() {
     const { addToCart } = useCart();
-    // 2. Get real data and remove function from Context
     const { wishlist, removeFromWishlist: removeContextItem } = useWishlist(); 
 
-    // 3. Define the STATIC "Out of Stock" item for demo purposes
+    // --- STATIC DEMO ITEM (Out of Stock) ---
     const staticItem = {
-        id: 'static-odyssey', // Unique ID to prevent conflict
+        id: 'static-odyssey', 
         title: "The Odyssey",
         author: "Homer",
         price: 18.99,
         originalPrice: 28.99,
-        cover: "/images/TheOdyssey.jpg",
+        image: "/images/TheOdyssey.jpg", // Changed 'cover' to 'image' to match logic
         addedDate: "2024-11-15",
-        inStock: false, // The important part
+        inStock: false, 
     };
 
-    // State to handle the local removal of the static item
     const [showStaticItem, setShowStaticItem] = useState(true);
     const [removingId, setRemovingId] = useState(null);
 
-    // 4. Combine Real Wishlist + Static Item
+    // Combine Real Wishlist + Static Item
     const displayItems = [...wishlist];
     if (showStaticItem) {
         displayItems.push(staticItem);
     }
 
-    // Handle Removal (Visual animation + Data Removal)
+    // --- HELPER TO NORMALIZE DATA ---
+    const getDisplayData = (item) => {
+        const price = item.price || 0;
+        const originalPrice = item.originalPrice || (price / 0.68);
+        
+        return {
+            ...item,
+            image: item.image || item.cover, 
+            originalPrice: originalPrice,
+            addedDate: item.dateAdded || item.addedDate || new Date().toISOString(),
+            inStock: item.inStock !== undefined ? item.inStock : true 
+        };
+    };
+
+    // --- ACTIONS ---
+
     const handleRemove = (id) => {
         setRemovingId(id);
-        
         setTimeout(() => {
             if (id === 'static-odyssey') {
-                // If it's the static item, just hide it locally
                 setShowStaticItem(false);
                 toast.error("Removed from wishlist", { position: 'bottom-center' });
             } else {
-                // If it's a real item, remove from Context (Toast handled by Context)
                 removeContextItem(id);
             }
             setRemovingId(null);
-        }, 500); // Match animation duration
+        }, 500); 
     };
 
     const moveToCart = (item) => {
-        if (item.inStock !== false) { // Allow if inStock is true or undefined
-            // 1. Add to Cart
+        if (item.inStock !== false) { 
             addToCart(item, 1);
-
-            // 2. Animate Removal
             setRemovingId(item.id);
             
             setTimeout(() => {
@@ -65,7 +72,6 @@ export default function WishlistPage() {
                 }
                 setRemovingId(null);
                 
-                // 3. Success Toast
                 toast.success(`"${item.title}" moved to cart!`, {
                     style: {
                       border: '1px solid #006A8A',
@@ -81,19 +87,47 @@ export default function WishlistPage() {
         }
     };
 
-    // Helper to normalize data (since JSON books don't have originalPrice/addedDate)
-    const getDisplayData = (item) => {
-        const price = item.price || 0;
-        // Calculate original price if missing (Mock logic: Price / 0.68)
-        const originalPrice = item.originalPrice || (price / 0.68);
+    // --- NEW FUNCTION: ADD ALL ---
+    const addAllToCart = () => {
+        // 1. Get all normalized data
+        const normalizedItems = displayItems.map(getDisplayData);
         
-        return {
-            ...item,
-            image: item.image || item.cover, // Handle property mismatch
-            originalPrice: originalPrice,
-            addedDate: item.dateAdded || item.addedDate || new Date().toISOString(),
-            inStock: item.inStock !== undefined ? item.inStock : true // Default to true
-        };
+        // 2. Filter only In-Stock items
+        const itemsToAdd = normalizedItems.filter(item => item.inStock !== false);
+
+        if (itemsToAdd.length === 0) {
+            toast.error("No in-stock items to move!", {
+                icon: '🚫'
+            });
+            return;
+        }
+
+        // 3. Process each item
+        itemsToAdd.forEach(item => {
+            // Add to Cart
+            addToCart(item, 1);
+
+            // Remove from Wishlist (Immediate visual update, no animation for bulk action)
+            if (item.id === 'static-odyssey') {
+                setShowStaticItem(false);
+            } else {
+                removeContextItem(item.id);
+            }
+        });
+
+        // 4. Success Message
+        toast.success(`Moved ${itemsToAdd.length} items to cart!`, {
+            style: {
+                border: '1px solid #006A8A',
+                padding: '16px',
+                color: '#006A8A',
+                fontWeight: 'bold'
+            },
+            iconTheme: {
+                primary: '#006A8A',
+                secondary: '#FFFAEE',
+            },
+        });
     };
 
     const calculateSavings = () => {
@@ -107,8 +141,6 @@ export default function WishlistPage() {
 
     return (
         <div className="wishlist-page">
-            {/* Header matches MainLayout, so internal header removed to avoid duplication if using Router Layout */}
-            
             <div className="wishlist-container">
                 <div className="wishlist-header">
                     <div className="title-section">
@@ -236,9 +268,11 @@ export default function WishlistPage() {
                                         ${calculateSavings()}
                                     </span>
                                 </div>
+                                
+                                {/* --- UPDATED ADD ALL BUTTON --- */}
                                 <button 
                                     className="add-all-btn"
-                                    onClick={() => toast.success("Feature coming soon!")}
+                                    onClick={addAllToCart} // Connected the function here
                                 >
                                     <i className="fas fa-cart-plus"></i>
                                     Add All to Cart
