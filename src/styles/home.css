@@ -227,6 +227,8 @@ nav {
 .home-swiper {
     margin: initial;
     width: 360px;
+    animation: slideInRight 1.5s ease-in-out;
+    -webkit-animation: slideInRight 1.5s ease-in-out;
 }
 
 .home-article,
