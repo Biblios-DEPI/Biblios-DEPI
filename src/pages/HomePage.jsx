@@ -384,8 +384,7 @@ const HomePage = () => {
             <div className="text">
               <h1>Biblios</h1>
               <h2>Stories in Every Form.</h2>
-              <button className="cta-btn">Explore Books</button>
-            </div>
+              <button className="cta-btn" onClick={() => navigate('/books')}>Explore Books</button>            </div>
             <div className="books">
               <Swiper
                 modules={[Autoplay]}
