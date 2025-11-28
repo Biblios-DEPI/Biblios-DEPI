@@ -65,10 +65,22 @@
 }
 
 .page {
+    display: flex;
+    flex-direction: column;
     width: 100%;
+    min-height: 100vh;
     background-color: #fafafbff !important;
     font-family: "Playfair", serif;
 
+}
+
+.page main,
+.main-cart,
+.aboutmain,
+.wishlist-page {
+    flex: 1;
+    /* This pushes the footer down */
+    width: 100%;
 }
 
 .page nav {
@@ -272,6 +284,19 @@
     transform-origin: top right;
 }
 
+.form-global input:focus {
+    outline: var(--primary-color) auto 2px;
+}
+
+.form-global textarea:focus {
+    outline: var(--primary-color) auto 2px;
+}
+
+.right form:focus-within {
+    box-shadow: 0 2px 8px rgba(0, 106, 138, 0.2);
+    transform: scale(1.02);
+}
+
 /* Dropdown Items */
 .dropdown-item-global {
     display: flex;
@@ -429,6 +454,7 @@
     /* Press down slightly */
     box-shadow: 0 3px 10px rgba(0, 106, 138, 0.3);
 }
+
 
 /* Keyframes */
 @keyframes navFloat {

@@ -128,7 +128,7 @@ const Header = () => {
 
         <div className="right">
           <div style={{ position: 'relative' }}>
-            <form onSubmit={handleSearchSubmit}>
+            <form className='form-global' onSubmit={handleSearchSubmit}>
               <label htmlFor="search-book"><i className="fa-solid fa-magnifying-glass"></i></label>
               <input
                 type="search"

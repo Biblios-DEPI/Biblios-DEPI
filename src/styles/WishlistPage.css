@@ -112,7 +112,7 @@
 /* Wishlist Container */
 .wishlist-container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 15px auto;
     padding: 3rem 1.5rem;
 }
 
@@ -347,6 +347,7 @@
         transform: scale(0.8) rotateZ(10deg) translateX(100px);
     }
 }
+
 .remove-btn {
     border: none;
     width: 36px;
@@ -726,6 +727,10 @@
 }
 
 @media (max-width: 480px) {
+    .wishlist-container {
+        margin: 26px auto;
+    }
+
     .header-content {
         flex-direction: column;
         gap: 1rem;

@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom
 
 // 1. IMPORT THE PROVIDER (Double check this path!)
 import { CartProvider } from './context/CartContext';
+import { WishlistProvider } from './context/WishlistContext';
 import { Toaster } from 'react-hot-toast';
+
 
 // Styles
 import './styles/global.css';
@@ -27,6 +29,7 @@ import CategoriesPage from './pages/CategoriesPage';
 import BooksPage from './pages/BooksPage';
 import RegisterPage from './pages/RegisterPage';
 
+
 // Layout Component
 const MainLayout = () => {
   return (
@@ -42,6 +45,7 @@ function App() {
   return (
     // 2. WRAP THE ENTIRE ROUTER WITH CARTPROVIDER
     <CartProvider>
+      <WishlistProvider>
       <Toaster position="top-center" reverseOrder={false} />
       <Router>
         <ScrollToTop />
@@ -76,6 +80,7 @@ function App() {
           </Routes>
         </div>
       </Router>
+      </WishlistProvider>
     </CartProvider>
   );
 }
