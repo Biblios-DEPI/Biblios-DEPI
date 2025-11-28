@@ -1,32 +1,39 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom'; // 1. useSearchParams imported
-
-import { auth } from '../firebase'; 
-import { signOut } from 'firebase/auth';
+import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
+import { auth } from '../firebase';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { useCart } from '../context/CartContext';
-import booksData from '../data/books.json'; 
+import booksData from '../data/books.json';
 import '../styles/global.css';
 
 const Header = () => {
   const { cartCount } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const dropdownRef = useRef(null);
-  
+
   const location = useLocation();
   const navigate = useNavigate();
-  
-  // 2. Initialize search params to control the URL
-  const [searchParams, setSearchParams] = useSearchParams();
 
+  const [searchParams, setSearchParams] = useSearchParams();
   const isActive = (path) => location.pathname === path;
 
-  // 3. Sync state with URL (so if you refresh, the text remains)
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('query') || ''); 
-  
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('query') || '');
   const [suggestions, setSuggestions] = useState([]);
 
-  // Keep input in sync with URL changes (e.g. back button)
+  // Auth state listener
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  // Keep input in sync with URL changes
   useEffect(() => {
     const urlQuery = searchParams.get('query');
     setSearchQuery(urlQuery || '');
@@ -35,9 +42,8 @@ const Header = () => {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // If pressing Enter, force navigation to /books
       navigate(`/books?query=${searchQuery.trim()}`);
-      setSuggestions([]); 
+      setSuggestions([]);
     }
   };
 
@@ -45,38 +51,31 @@ const Header = () => {
     const query = e.target.value;
     setSearchQuery(query);
 
-    // --- LIVE SEARCH LOGIC START ---
-    // ⚠️ CRITICAL FIX: Allow live search on BOTH '/books' AND '/categories'
-    // We use .includes() to match '/books', '/books/', '/categories', etc.
     const isSearchablePage = location.pathname.includes('/books') || location.pathname.includes('/categories');
 
     if (isSearchablePage) {
-        const newParams = {};
-        
-        // Preserve current category if it exists
-        const currentCategory = searchParams.get('category');
-        if (currentCategory) newParams.category = currentCategory;
+      const newParams = {};
 
-        // Only add query if it's not empty
-        if (query.trim().length > 0) {
-            newParams.query = query;
-        }
+      const currentCategory = searchParams.get('category');
+      if (currentCategory) newParams.category = currentCategory;
 
-        // This updates the URL, which triggers the page to filter
-        setSearchParams(newParams);
+      if (query.trim().length > 0) {
+        newParams.query = query;
+      }
+
+      setSearchParams(newParams);
     }
-    // --- LIVE SEARCH LOGIC END ---
 
-    // Suggestions Logic (Dropdown)
+    // Suggestions Logic
     if (query.trim().length > 0) {
       const lowerCaseQuery = query.toLowerCase();
-      const matchingBooks = booksData.filter(book => 
+      const matchingBooks = booksData.filter(book =>
         book.title.toLowerCase().startsWith(lowerCaseQuery) ||
         book.author.toLowerCase().startsWith(lowerCaseQuery)
-      ).slice(0, 5); 
+      ).slice(0, 5);
       setSuggestions(matchingBooks);
     } else {
-      setSuggestions([]); 
+      setSuggestions([]);
     }
   };
 
@@ -100,12 +99,17 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      setUser(null);
       setIsProfileDropdownOpen(false);
       navigate("/login");
     } catch (error) {
       console.error("Error logging out:", error);
     }
   };
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <header id="header">
@@ -115,7 +119,7 @@ const Header = () => {
             <img src="/images/logo2.png" alt="Biblios Logo" />
           </Link>
         </div>
-        
+
         <ul className={`menu ${isMenuOpen ? 'active' : ''}`}>
           <li><Link to="/">{isActive('/') ? <span className="floating-shine">Home</span> : 'Home'}</Link></li>
           <li><Link to="/categories">{isActive('/categories') ? <span className="floating-shine">Categories</span> : 'Categories'}</Link></li>
@@ -126,49 +130,50 @@ const Header = () => {
           <div style={{ position: 'relative' }}>
             <form onSubmit={handleSearchSubmit}>
               <label htmlFor="search-book"><i className="fa-solid fa-magnifying-glass"></i></label>
-              <input 
-                type="search" 
-                placeholder="Search for books..." 
-                id="search-book" 
+              <input
+                type="search"
+                placeholder="Search for books..."
+                id="search-book"
                 value={searchQuery}
-                onChange={handleInputChange} 
+                onChange={handleInputChange}
               />
             </form>
-            
+
             {suggestions.length > 0 && (
-                <ul className="suggestions-list" style={{
-                    position: 'absolute', top: '100%', left: '0', zIndex: 100, backgroundColor: 'white', 
-                    border: '1px solid #ddd', borderRadius: '4px', width: '100%', maxHeight: '200px', 
-                    overflowY: 'auto', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', listStyle: 'none', padding: '0', margin: '0'
-                }}>
-                    {suggestions.map((book) => (
-                        <li 
-                            key={book.id} 
-                            onClick={() => handleSuggestionClick(book)}
-                            style={{ padding: '10px', cursor: 'pointer', borderBottom: '1px solid #eee', fontSize: '14px', color: '#333' }}
-                            onMouseOver={e => e.currentTarget.style.backgroundColor = '#f4f4f4'}
-                            onMouseOut={e => e.currentTarget.style.backgroundColor = 'white'}
-                        >
-                            <strong>{book.title}</strong> by {book.author}
-                        </li>
-                    ))}
-                </ul>
+              <ul className="suggestions-list" style={{
+                position: 'absolute', top: '100%', left: '0', zIndex: 100, backgroundColor: 'white',
+                border: '1px solid #ddd', borderRadius: '4px', width: '100%', maxHeight: '200px',
+                overflowY: 'auto', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', listStyle: 'none', padding: '0', margin: '0'
+              }}>
+                {suggestions.map((book) => (
+                  <li
+                    key={book.id}
+                    onClick={() => handleSuggestionClick(book)}
+                    style={{ padding: '10px', cursor: 'pointer', borderBottom: '1px solid #eee', fontSize: '14px', color: '#333' }}
+                    onMouseOver={e => e.currentTarget.style.backgroundColor = '#f4f4f4'}
+                    onMouseOut={e => e.currentTarget.style.backgroundColor = 'white'}
+                  >
+                    <strong>{book.title}</strong> by {book.author}
+                  </li>
+                ))}
+              </ul>
             )}
           </div>
-          
+
           <Link className="cart-container" to="/cart">
             <img src="/images/shopping-cart.png" alt="cart" />
             {cartCount > 0 && (
-              <span style={{ position: 'absolute', top: '-8px', right: '-10px', backgroundColor: '#e74c3c', color: 'white', borderRadius: '50%', width: '16px', height: '16px', display: 'flex', justifyContent: 'center', alignItems: 'center',fontFamily: 'Arial, sans-serif', fontSize: '11px', fontWeight: 'bold' }}>{cartCount}</span>
+              <span style={{ position: 'absolute', top: '-8px', right: '-10px', backgroundColor: '#e74c3c', color: 'white', borderRadius: '50%', width: '16px', height: '16px', display: 'flex', justifyContent: 'center', alignItems: 'center', fontFamily: 'Arial, sans-serif', fontSize: '11px', fontWeight: 'bold' }}>{cartCount}</span>
             )}
           </Link>
+
           <Link to="/wishlist" className="wishlist-link-global"><i className="fa-regular fa-heart"></i></Link>
 
           <div className="profile-dropdown-container-global" ref={dropdownRef}>
-            {auth.currentUser ? (
+            {user ? (
               <>
                 <div className="profile-link-global" onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}>
-                  <img src={auth.currentUser.photoURL || "/images/profile.jpg"} alt="Profile" className="profile-pic" />
+                  <img src={user.photoURL || "/images/profile.jpg"} alt="Profile" className="profile-pic" />
                 </div>
                 {isProfileDropdownOpen && (
                   <div className="profile-dropdown-global">
@@ -186,8 +191,8 @@ const Header = () => {
             )}
           </div>
         </div>
-        
-        <i className="fa-solid fa-bars bars" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{cursor: 'pointer'}}></i>
+
+        <i className="fa-solid fa-bars bars" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer' }}></i>
       </nav>
     </header>
   );

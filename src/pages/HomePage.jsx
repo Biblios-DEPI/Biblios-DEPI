@@ -3,26 +3,36 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { useEffect, useState, useRef } from "react";
 import { auth } from "../firebase";
-import { signOut } from "firebase/auth";
+import { signOut, onAuthStateChanged } from "firebase/auth";
 import { useCart } from '../context/CartContext';
-import booksData from '../data/books.json'; // Imported for search suggestions
+import booksData from '../data/books.json';
 
-// Import Styles
 import "swiper/css";
 import "../styles/home.css";
 
 const HomePage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  // const [loading, setLoading] = useState(true);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
-  const location = useLocation(); // Added location
+  const location = useLocation();
   const { cartCount } = useCart();
 
-  // ========== SEARCH LOGIC START (Added) ==========
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(searchParams.get('query') || '');
   const [suggestions, setSuggestions] = useState([]);
+
+  // Auth state listener
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      // setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   // Sync state with URL
   useEffect(() => {
@@ -43,9 +53,7 @@ const HomePage = () => {
     const query = e.target.value;
     setSearchQuery(query);
 
-    // Live Search Logic for /books and /categories pages
     const isSearchablePage = location.pathname.includes('/books') || location.pathname.includes('/categories');
-
     if (isSearchablePage) {
       const newParams = {};
       const currentCategory = searchParams.get('category');
@@ -54,7 +62,6 @@ const HomePage = () => {
       setSearchParams(newParams);
     }
 
-    // Suggestions Logic
     if (query.trim().length > 0) {
       const lowerCaseQuery = query.toLowerCase();
       const matchingBooks = booksData.filter(book =>
@@ -72,9 +79,8 @@ const HomePage = () => {
     setSearchQuery('');
     setSuggestions([]);
   };
-  // ========== SEARCH LOGIC END ==========
 
-  // ========== SHADOW HEADER EFFECT ==========
+  // Shadow header effect
   useEffect(() => {
     const handleShadow = () => {
       const header = document.querySelector("#navbar");
@@ -126,6 +132,7 @@ const HomePage = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      setUser(null);
       setIsProfileDropdownOpen(false);
       navigate("/login");
     } catch (error) {
@@ -146,7 +153,6 @@ const HomePage = () => {
         <button className="mobile-menu-close" onClick={() => setIsMenuOpen(false)}>
           <i className="fa-solid fa-times"></i>
         </button>
-
         <ul>
           <li>
             <Link to="/" onClick={() => setIsMenuOpen(false)}>
@@ -168,7 +174,6 @@ const HomePage = () => {
           </li>
         </ul>
 
-        {/* UPDATED: Mobile Search Connected to Logic */}
         <div className="mobile-menu-search">
           <form onSubmit={handleSearchSubmit}>
             <label htmlFor="mobile-search">
@@ -196,7 +201,6 @@ const HomePage = () => {
               <span className="cart-badge-mobile">{cartCount}</span>
             )}
           </Link>
-
           <Link
             to="/wishlist"
             className="mobile-menu-action-btn"
@@ -205,8 +209,7 @@ const HomePage = () => {
             <i className="fa-regular fa-heart"></i>
             Wishlist
           </Link>
-
-          {auth.currentUser ? (
+          {user ? (
             <>
               <Link
                 to="/profile"
@@ -248,6 +251,7 @@ const HomePage = () => {
               <img src="/images/logo2.png" alt="Biblios Logo" />
             </Link>
           </div>
+
           <ul className={`menu ${isMenuOpen ? "active" : ""}`}>
             <li>
               <Link to="/"><span className="floating-shine">Home</span></Link>
@@ -261,7 +265,6 @@ const HomePage = () => {
           </ul>
 
           <div className="right-home">
-            {/* UPDATED: Desktop Search with Logic & Suggestions */}
             <div style={{ position: 'relative' }}>
               <form onSubmit={handleSearchSubmit}>
                 <label htmlFor="search-book">
@@ -276,7 +279,6 @@ const HomePage = () => {
                 />
               </form>
 
-              {/* Search Suggestions Dropdown */}
               {suggestions.length > 0 && (
                 <ul className="suggestions-list" style={{
                   position: 'absolute', top: '120%', left: '0', zIndex: 100, backgroundColor: 'white',
@@ -297,7 +299,6 @@ const HomePage = () => {
                 </ul>
               )}
             </div>
-            {/* End of Search Update */}
 
             <Link className="cart-container-home" to="/cart">
               <img src="/images/shopping-cart.png" alt="cart" />
@@ -307,19 +308,20 @@ const HomePage = () => {
                 </span>
               )}
             </Link>
+
             <Link to="/wishlist" className="wishlist-link">
               <i className="fa-regular fa-heart"></i>
             </Link>
-            {/* Profile Picture with Dropdown */}
+
             <div className="profile-dropdown-container" ref={dropdownRef}>
-              {auth.currentUser ? (
+              {user ? (
                 <>
                   <div
                     className="profile-link"
                     onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
                   >
                     <img
-                      src={auth.currentUser.photoURL || "/images/profile.jpg"}
+                      src={user.photoURL || "/images/profile.jpg"}
                       alt="Profile"
                       className="profile-pic"
                     />
@@ -349,6 +351,7 @@ const HomePage = () => {
               )}
             </div>
           </div>
+
           <i
             className="fa-solid fa-bars bars"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -356,6 +359,7 @@ const HomePage = () => {
           ></i>
         </nav>
       </header>
+
       <main>
         {/* HERO SECTION */}
         <div className="hero-container">
@@ -366,7 +370,6 @@ const HomePage = () => {
               <button className="cta-btn">Explore Books</button>
             </div>
             <div className="books">
-              {/* ========== REACT SWIPER ========== */}
               <Swiper
                 modules={[Autoplay]}
                 loop={true}
@@ -410,6 +413,7 @@ const HomePage = () => {
             </div>
           </div>
         </div>
+
         {/* CATEGORIES SECTION */}
         <div className="categories">
           <h2>Featured Categories</h2>
@@ -444,10 +448,10 @@ const HomePage = () => {
             </div>
           </div>
         </div>
+
         {/* PROS SECTION */}
         <div className="pros">
           <div className="pattern-container">
-            {/* ACTION: Save your SVG code into public/images/pattern.svg */}
           </div>
           <h2>Why Choose Biblios?</h2>
           <div className="advantage-container">
@@ -474,6 +478,7 @@ const HomePage = () => {
             </div>
           </div>
         </div>
+
         {/* HELP FORM */}
         <div className="help">
           <div className="text">
@@ -483,7 +488,6 @@ const HomePage = () => {
               continual improvement.
             </p>
           </div>
-          {/* React handles form submission differently, added preventDefault for now */}
           <form className="home-form" onSubmit={(e) => e.preventDefault()}>
             <input
               type="email"
@@ -500,6 +504,7 @@ const HomePage = () => {
           </form>
         </div>
       </main>
+
       <footer className="homefooter">
         <ul>
           <li>
@@ -513,7 +518,6 @@ const HomePage = () => {
           </li>
         </ul>
         <ul className="social-home">
-          {/* Ensure these exist in public/images/ */}
           <li>
             <a href="#">
               <img src="/images/facebook.png" alt="facebook" />
