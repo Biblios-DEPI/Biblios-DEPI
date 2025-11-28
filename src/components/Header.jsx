@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
+import { doc, getDoc } from 'firebase/firestore';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { useCart } from '../context/CartContext';
 import booksData from '../data/books.json';
@@ -28,20 +29,33 @@ const Header = () => {
 
   // Auth state listener
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
-
       if (currentUser) {
+        // PRIORITY 1: Check userProfiles.js
         if (hasCustomProfile(currentUser.uid)) {
           const customProfile = getUserProfile(currentUser.uid);
           setProfilePhoto(customProfile.photoURL);
         } else {
-          setProfilePhoto("/images/profile.jpg");
+          // PRIORITY 2: Check Firestore
+          try {
+            const userDocRef = doc(db, 'users', currentUser.uid);
+            const userDocSnap = await getDoc(userDocRef);
+
+            if (userDocSnap.exists() && userDocSnap.data().photoURL) {
+              setProfilePhoto(userDocSnap.data().photoURL);
+            } else {
+              // PRIORITY 3: Default profile picture
+              setProfilePhoto("/images/profile0.jpg");
+            }
+          } catch (error) {
+            console.error("Error fetching profile photo:", error);
+            setProfilePhoto("/images/profile0.jpg");
+          }
         }
       }
       setLoading(false);
     });
-
     return () => unsubscribe();
   }, []);
 
@@ -184,13 +198,13 @@ const Header = () => {
               <span className="cart-badge-mobile">{cartCount}</span>
             )}
           </Link>
-          
+
           <Link
             to="/wishlist"
             className="mobile-menu-action-btn"
             onClick={(e) => {
-                handleWishlistNav(e); // Check auth
-                setIsMenuOpen(false); // Close menu
+              handleWishlistNav(e); // Check auth
+              setIsMenuOpen(false); // Close menu
             }}
           >
             <i className="fa-regular fa-heart"></i>
@@ -288,9 +302,9 @@ const Header = () => {
               )}
             </Link>
 
-            <Link 
-              to="/wishlist" 
-              className="wishlist-link-global" 
+            <Link
+              to="/wishlist"
+              className="wishlist-link-global"
               onClick={handleWishlistNav}
             >
               <i className="fa-regular fa-heart"></i>

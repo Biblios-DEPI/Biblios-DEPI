@@ -2,7 +2,8 @@ import { Link, useNavigate, useLocation, useSearchParams } from "react-router-do
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { useEffect, useState, useRef } from "react";
-import { auth } from "../firebase";
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from "../firebase";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { useCart } from '../context/CartContext';
 import booksData from '../data/books.json';
@@ -27,14 +28,29 @@ const HomePage = () => {
 
   // Auth state listener
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
+        // PRIORITY 1: Check userProfiles.js
         if (hasCustomProfile(currentUser.uid)) {
           const customProfile = getUserProfile(currentUser.uid);
           setProfilePhoto(customProfile.photoURL);
         } else {
-          setProfilePhoto("../../public/images/profile.jpg");
+          // PRIORITY 2: Check Firestore
+          try {
+            const userDocRef = doc(db, 'users', currentUser.uid);
+            const userDocSnap = await getDoc(userDocRef);
+
+            if (userDocSnap.exists() && userDocSnap.data().photoURL) {
+              setProfilePhoto(userDocSnap.data().photoURL);
+            } else {
+              // PRIORITY 3: Default profile picture
+              setProfilePhoto("/images/profile0.jpg");
+            }
+          } catch (error) {
+            console.error("Error fetching profile photo:", error);
+            setProfilePhoto("/images/profile0.jpg");
+          }
         }
       }
       setLoading(false);
