@@ -58,10 +58,7 @@ const BookDetailsPage = () => {
 
   const handleAddToCart = () => {
     addToCart(book, quantity);
-    toast.success(`${quantity} copy of "${book.title}" added to cart!`, {
-      style: { border: '1px solid #006A8A', padding: '16px', color: '#006A8A' },
-      iconTheme: { primary: '#006A8A', secondary: '#FFFAEE' },
-    });
+   toast.success(`${quantity} copy of "${book.title}" added to cart!`);
   };
 
   const handleRelatedMoveToCart = (relatedBook) => {
