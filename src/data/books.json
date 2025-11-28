@@ -407,19 +407,7 @@
     "pages": 655,
     "isbn": "9780765350381"
   },
-  {
-    "id": 31,
-    "title": "The Fifth Season",
-    "author": "N. K. Jemisin",
-    "price": 24.38,
-    "image": "https://covers.openlibrary.org/b/id/14614853-L.jpg",
-    "rating": 5,
-    "category": "Dystopian",
-    "description": "A compelling read by N. K. Jemisin.",
-    "year": 2015,
-    "pages": 512,
-    "isbn": "9780316229296"
-  },
+  
   {
     "id": 32,
     "title": "A Game of Thrones",
