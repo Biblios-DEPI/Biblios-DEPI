@@ -36,9 +36,9 @@ const userProfiles = {
             },
             {
                 id: 4,
-                title: "Metamorphosis",
-                author: "franz Kafka",
-                cover: "../../public/images/metamorphosis.jpg"
+                title: "Harry Potter and the prisoner of azkaban",
+                author: "J.K. Rowling",
+                cover: "../../public/images/harryPotter.jpg"
             },
             {
                 id: 5,

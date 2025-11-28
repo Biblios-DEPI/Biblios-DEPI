@@ -23,51 +23,20 @@ export default function ProfilePage() {
         } else {
           // Default profile (your original data)
           setProfile({
-            displayName: "Beshoy Fomail",
-            username: "@beshoy-13",
-            bio: '"I think therefore I am"',
-            email: "beshoyfomail@biblios.com",
-            joinedDate: "November 2024",
-            location: "Cairo, Egypt",
-            photoURL: "../../public/images/profile.jpg",
+            displayName: "Unknown User",
+            username: "@Anonymous",
+            bio: '"I Don\'t even have a bio yet"',
+            email: "anonymous@biblios.com",
+            joinedDate: "didn't join yet",
+            location: "The Earth",
+            photoURL: "../../public/images/profile0.jpg",
             stats: {
-              booksRead: 42,
-              reviews: 18,
-              following: 127,
-              followers: 89
+              booksRead: 0,
+              reviews: 0,
+              following: 0,
+              followers: 0
             },
-            favoriteBooks: [
-              {
-                id: 1,
-                title: "Metamorphosis",
-                author: "Franz Kafka",
-                cover: "../../public/images/metamorphosis.jpg"
-              },
-              {
-                id: 2,
-                title: "A Clockwork Orange",
-                author: "Anthony Burgess",
-                cover: "../../public/images/AClockworkOrange.jpg"
-              },
-              {
-                id: 3,
-                title: "Harry Potter and the prisoner of Azkaban",
-                author: "J.K. Rowling",
-                cover: "../../public/images/harryPotter.jpg"
-              },
-              {
-                id: 4,
-                title: "Hunger Games",
-                author: "Suzanne Collins",
-                cover: "../../public/images/hungerGames.jpg"
-              },
-              {
-                id: 5,
-                title: "1984",
-                author: "george orwell",
-                cover: "../../public/images/1984.jpg"
-              }
-            ]
+            favoriteBooks: []
           });
         }
         setLoading(false);
@@ -245,17 +214,37 @@ export default function ProfilePage() {
             </h2>
           </div>
           <div className="favorites-grid">
-            {profile.favoriteBooks.map(book => (
-              <div key={book.id} className="book-card">
-                <div className="book-cover">
-                  <img src={book.cover} alt={book.title} />
+            {profile.favoriteBooks && profile.favoriteBooks.length > 0 ? (
+              profile.favoriteBooks.map(book => (
+                <div key={book.id} className="book-card">
+                  <div className="book-cover">
+                    <img src={book.cover} alt={book.title} />
+                  </div>
+                  <div className="book-info">
+                    <h3 className="book-title">{book.title}</h3>
+                    <p className="book-author">{book.author}</p>
+                  </div>
                 </div>
-                <div className="book-info">
-                  <h3 className="book-title">{book.title}</h3>
-                  <p className="book-author">{book.author}</p>
+              ))
+            ) : (
+              <div style={{
+                gridColumn: '1 / -1',
+                textAlign: 'center',
+                padding: '3rem 1rem',
+                color: '#6B7280',
+                fontSize: '1.125rem'
+              }}>
+                <div>
+                  <i className="fas fa-book" style={{
+                    fontSize: '3rem',
+                    marginBottom: '1rem',
+                    opacity: 0.3,
+                    display: 'block'
+                  }}></i>
+                  <p style={{ margin: 0 }}>No favourite books yet!</p>
                 </div>
               </div>
-            ))}
+            )}
           </div>
         </div>
       </div>
