@@ -184,8 +184,16 @@ const BookDetailsPage = () => {
             .slice(0, 5)
             .map(relatedBook => {
               const currentPrice = relatedBook.price;
-              const originalPrice = (currentPrice / 0.68).toFixed(2);
-              const discountPercent = 32;
+              
+              // --- UPDATED LOGIC START ---
+              // Only calculate discount if originalPrice exists and is higher than current price
+              const originalPrice = relatedBook.originalPrice;
+              const hasDiscount = originalPrice && originalPrice > currentPrice;
+              
+              const discountPercent = hasDiscount 
+                ? Math.round(((originalPrice - currentPrice) / originalPrice) * 100) 
+                : 0;
+              // --- UPDATED LOGIC END ---
 
               return (
                 <div key={relatedBook.id} className="wishlist-card">
@@ -196,8 +204,6 @@ const BookDetailsPage = () => {
                       className="book-cover"
                     />
                     
-                    {/* --- MATCHING STRUCTURE: WISHLIST BUTTON (Top Right) --- */}
-                    {/* This matches the BookCard structure where the button is independent of the overlay */}
                     <button 
                         className="wishlist-icon-btn" 
                         onClick={() => handleRelatedWishlist(relatedBook)}
@@ -205,7 +211,6 @@ const BookDetailsPage = () => {
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                     </button>
-                    {/* ------------------------------------------------------- */}
 
                     <div className="cover-overlay">
                       <Link to={`/books/${relatedBook.id}`} className="quick-view-btn">
@@ -221,8 +226,16 @@ const BookDetailsPage = () => {
 
                     <div className="price-section">
                       <span className="current-price">${currentPrice.toFixed(2)}</span>
-                      <span className="original-price">${originalPrice}</span>
-                      <span className="discount-badge">{discountPercent}% OFF</span>
+                      
+                      {/* --- CONDITIONAL RENDER START --- */}
+                      {/* Only show badge and original price if hasDiscount is true */}
+                      {hasDiscount && (
+                        <>
+                            <span className="original-price">${originalPrice.toFixed(2)}</span>
+                            <span className="discount-badge">{discountPercent}% OFF</span>
+                        </>
+                      )}
+                      {/* --- CONDITIONAL RENDER END --- */}
                     </div>
 
                     <button
