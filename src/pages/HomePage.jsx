@@ -6,6 +6,7 @@ import { auth } from "../firebase";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { useCart } from '../context/CartContext';
 import booksData from '../data/books.json';
+import { getUserProfile, hasCustomProfile } from '../data/userProfiles'; // Add this import
 
 import "swiper/css";
 import "../styles/home.css";
@@ -14,7 +15,8 @@ const HomePage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [user, setUser] = useState(null);
-  // const [loading, setLoading] = useState(true);
+  const [profilePhoto, setProfilePhoto] = useState("/images/profile.jpg"); // Add this state
+  const [loading, setLoading] = useState(true);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,17 +30,25 @@ const HomePage = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      // setLoading(false);
+
+      // Get profile photo from userProfiles if exists
+      if (currentUser) {
+        if (hasCustomProfile(currentUser.uid)) {
+          const customProfile = getUserProfile(currentUser.uid);
+          setProfilePhoto(customProfile.photoURL);
+        } else {
+          // Default profile photo
+          setProfilePhoto("../../public/images/profile.jpg");
+        }
+      }
+
+      setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
-  // Sync state with URL
-  useEffect(() => {
-    const urlQuery = searchParams.get('query');
-    setSearchQuery(urlQuery || '');
-  }, [searchParams]);
+  // ... rest of your existing useEffects and functions remain the same ...
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -79,6 +89,12 @@ const HomePage = () => {
     setSearchQuery('');
     setSuggestions([]);
   };
+
+  // Sync state with URL
+  useEffect(() => {
+    const urlQuery = searchParams.get('query');
+    setSearchQuery(urlQuery || '');
+  }, [searchParams]);
 
   // Shadow header effect
   useEffect(() => {
@@ -321,7 +337,7 @@ const HomePage = () => {
                     onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
                   >
                     <img
-                      src={user.photoURL || "/images/profile.jpg"}
+                      src={profilePhoto}
                       alt="Profile"
                       className="profile-pic"
                     />
@@ -360,6 +376,7 @@ const HomePage = () => {
         </nav>
       </header>
 
+      {/* Rest of your HomePage content remains exactly the same */}
       <main>
         {/* HERO SECTION */}
         <div className="hero-container">

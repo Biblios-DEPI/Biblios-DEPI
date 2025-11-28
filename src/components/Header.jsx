@@ -4,6 +4,7 @@ import { auth } from '../firebase';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { useCart } from '../context/CartContext';
 import booksData from '../data/books.json';
+import { getUserProfile, hasCustomProfile } from '../data/userProfiles'; // Add this import
 import '../styles/global.css';
 
 const Header = () => {
@@ -11,6 +12,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [profilePhoto, setProfilePhoto] = useState("/images/profile.jpg"); // Add this state
   const [loading, setLoading] = useState(true);
   const dropdownRef = useRef(null);
 
@@ -27,6 +29,18 @@ const Header = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+
+      // Get profile photo from userProfiles if exists
+      if (currentUser) {
+        if (hasCustomProfile(currentUser.uid)) {
+          const customProfile = getUserProfile(currentUser.uid);
+          setProfilePhoto(customProfile.photoURL);
+        } else {
+          // Default profile photo
+          setProfilePhoto("../../public/images/profile.jpg");
+        }
+      }
+
       setLoading(false);
     });
 
@@ -128,7 +142,7 @@ const Header = () => {
 
         <div className="right">
           <div style={{ position: 'relative' }}>
-            <form className='form-global' onSubmit={handleSearchSubmit}>
+            <form onSubmit={handleSearchSubmit}>
               <label htmlFor="search-book"><i className="fa-solid fa-magnifying-glass"></i></label>
               <input
                 type="search"
@@ -173,7 +187,7 @@ const Header = () => {
             {user ? (
               <>
                 <div className="profile-link-global" onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}>
-                  <img src={user.photoURL || "/images/profile.jpg"} alt="Profile" className="profile-pic" />
+                  <img src={profilePhoto} alt="Profile" className="profile-pic" />
                 </div>
                 {isProfileDropdownOpen && (
                   <div className="profile-dropdown-global">

@@ -1080,13 +1080,13 @@
   },
   {
     "id": 84,
-    "title": "Atomic Habits",
-    "author": "James Clear",
+    "title": "A Clockwork Orange",
+    "author": "James S. Brown",
     "price": 15.62,
-    "image": "../../public/images/AtomicHabits.jpg",
+    "image": "../../public/images/AClockworkOrange.jpg",
     "rating": 4,
     "category": "Fiction",
-    "description": "A compelling read by the author.",
+    "description": "A compelling read by James S. Brown.",
     "year": 2017,
     "pages": 440,
     "isbn": "9780735211292"
