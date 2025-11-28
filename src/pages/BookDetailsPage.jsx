@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { Link, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import booksData from '../data/books.json';
 import { useCart } from '../context/CartContext';
+// 1. IMPORT WISHLIST CONTEXT
+import { useWishlist } from '../context/WishlistContext';
 import '../styles/book-details.css';
 
 const BookDetailsPage = () => {
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
+  
+  // 2. USE WISHLIST HOOK
+  const { toggleWishlist, isInWishlist } = useWishlist();
 
   // --- STATE FOR RATING ---
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
 
-  // --- TASK A: Make Dynamic ---
   const { id } = useParams();
   const book = booksData.find((b) => b.id === parseInt(id));
   const [prevId, setPrevId] = useState(id);
@@ -42,6 +46,9 @@ const BookDetailsPage = () => {
   const NUMBER_COLOR = 'black';
   const DISABLED_COLOR = '#ccc';
 
+  // 3. CHECK IF MAIN BOOK IS LIKED
+  const isMainBookLiked = isInWishlist(book.id);
+
   const handleAddToCart = () => {
     addToCart(book, quantity);
     toast.success(`${quantity} copy of "${book.title}" added to cart!`, {
@@ -61,18 +68,6 @@ const BookDetailsPage = () => {
   const handleRelatedMoveToCart = (relatedBook) => {
     addToCart(relatedBook, 1);
     toast.success(`"${relatedBook.title}" moved to cart!`);
-  };
-
-  // Helper for related books wishlist action
-  const handleRelatedWishlist = (relatedBook) => {
-    toast.success(`"${relatedBook.title}" added to wishlist!`, {
-        icon: '❤️',
-        style: {
-            borderRadius: '10px',
-            background: '#333',
-            color: '#fff',
-        },
-    });
   };
 
   const decrementQuantity = () => {
@@ -141,7 +136,8 @@ const BookDetailsPage = () => {
 
           <div className="price main-title">${book.price.toFixed(2)}</div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+            {/* Quantity Controls */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
               <button
                 style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0' }}
@@ -163,12 +159,45 @@ const BookDetailsPage = () => {
               </button>
             </div>
 
+            {/* Add to Cart Button */}
             <button
               onClick={handleAddToCart}
               className="btn sub-text"
               style={{ cursor: 'pointer', border: 'none' }}
             >
               Add to Cart
+            </button>
+
+            {/* 4. NEW WISHLIST BUTTON FOR MAIN BOOK */}
+            <button
+                onClick={() => toggleWishlist(book)}
+                style={{
+                    background: 'none',
+                    border: `1px solid ${isMainBookLiked ? '#ff6b6b' : '#ccc'}`,
+                    borderRadius: '50%',
+                    width: '40px',
+                    height: '40px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
+                }}
+                title={isMainBookLiked ? "Remove from Wishlist" : "Add to Wishlist"}
+            >
+                 <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    width="20" 
+                    height="20" 
+                    viewBox="0 0 24 24" 
+                    fill={isMainBookLiked ? "#ff6b6b" : "none"} 
+                    stroke={isMainBookLiked ? "#ff6b6b" : "currentColor"} 
+                    strokeWidth="2" 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round"
+                >
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
             </button>
           </div>
         </div>
@@ -184,16 +213,14 @@ const BookDetailsPage = () => {
             .slice(0, 5)
             .map(relatedBook => {
               const currentPrice = relatedBook.price;
-              
-              // --- UPDATED LOGIC START ---
-              // Only calculate discount if originalPrice exists and is higher than current price
               const originalPrice = relatedBook.originalPrice;
               const hasDiscount = originalPrice && originalPrice > currentPrice;
-              
               const discountPercent = hasDiscount 
                 ? Math.round(((originalPrice - currentPrice) / originalPrice) * 100) 
                 : 0;
-              // --- UPDATED LOGIC END ---
+              
+              // 5. CHECK IF RELATED BOOK IS LIKED
+              const isRelatedLiked = isInWishlist(relatedBook.id);
 
               return (
                 <div key={relatedBook.id} className="wishlist-card">
@@ -204,12 +231,25 @@ const BookDetailsPage = () => {
                       className="book-cover"
                     />
                     
+                    {/* 6. FIXED RELATED WISHLIST BUTTON */}
                     <button 
                         className="wishlist-icon-btn" 
-                        onClick={() => handleRelatedWishlist(relatedBook)}
+                        onClick={() => toggleWishlist(relatedBook)}
                         aria-label="Add to Wishlist"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            width="18" 
+                            height="18" 
+                            viewBox="0 0 24 24" 
+                            fill={isRelatedLiked ? "#ff6b6b" : "none"} 
+                            stroke="currentColor" 
+                            strokeWidth="2" 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round"
+                        >
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
                     </button>
 
                     <div className="cover-overlay">
@@ -226,16 +266,12 @@ const BookDetailsPage = () => {
 
                     <div className="price-section">
                       <span className="current-price">${currentPrice.toFixed(2)}</span>
-                      
-                      {/* --- CONDITIONAL RENDER START --- */}
-                      {/* Only show badge and original price if hasDiscount is true */}
                       {hasDiscount && (
                         <>
                             <span className="original-price">${originalPrice.toFixed(2)}</span>
                             <span className="discount-badge">{discountPercent}% OFF</span>
                         </>
                       )}
-                      {/* --- CONDITIONAL RENDER END --- */}
                     </div>
 
                     <button
