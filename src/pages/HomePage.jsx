@@ -259,7 +259,7 @@ const HomePage = () => {
               <Link to="/about">About Biblios</Link>
             </li>
           </ul>
-          
+
           <div className="right-home">
             {/* UPDATED: Desktop Search with Logic & Suggestions */}
             <div style={{ position: 'relative' }}>
@@ -275,7 +275,7 @@ const HomePage = () => {
                   onChange={handleInputChange}
                 />
               </form>
-              
+
               {/* Search Suggestions Dropdown */}
               {suggestions.length > 0 && (
                 <ul className="suggestions-list" style={{
