@@ -73,15 +73,6 @@ export default function WishlistPage() {
                 setRemovingId(null);
                 
                 toast.success(`"${item.title}" moved to cart!`, {
-                    style: {
-                      border: '1px solid #006A8A',
-                      padding: '16px',
-                      color: '#006A8A',
-                    },
-                    iconTheme: {
-                      primary: '#006A8A',
-                      secondary: '#FFFAEE',
-                    },
                 });
             }, 600);
         }

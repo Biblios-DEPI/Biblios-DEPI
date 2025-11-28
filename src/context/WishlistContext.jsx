@@ -13,17 +13,14 @@ export const WishlistProvider = ({ children }) => {
   const [userId, setUserId] = useState(null); 
   const [loading, setLoading] = useState(true);
   
-  // Ref to track if we have finished the initial load
   const isInitialized = useRef(false);
 
   // 1. CONSOLIDATED EFFECT: Handle Auth AND Initial Load together
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      // 1. Determine User ID
       const newUserId = user ? user.uid : 'guest';
       setUserId(newUserId);
 
-      // 2. Load Wishlist Immediately
       const storageKey = `biblios_wishlist_${newUserId}`;
       const saved = localStorage.getItem(storageKey);
       
@@ -33,7 +30,6 @@ export const WishlistProvider = ({ children }) => {
         setWishlist([]);
       }
 
-      // 3. Mark as ready
       isInitialized.current = true;
       setLoading(false);
     });
@@ -41,7 +37,7 @@ export const WishlistProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  // 2. SAVE EFFECT: Only runs when wishlist changes (and app is initialized)
+  // 2. SAVE EFFECT
   useEffect(() => {
     if (isInitialized.current && userId) {
       const storageKey = `biblios_wishlist_${userId}`;
@@ -56,13 +52,13 @@ export const WishlistProvider = ({ children }) => {
 
     if (exists) {
       setWishlist(prev => prev.filter(item => item.id !== book.id));
-      toast.error('Removed from Wishlist', { duration: 2000 });
+      toast.error('Removed from Wishlist');
     } else {
       setWishlist(prev => [...prev, { ...book, dateAdded: new Date().toISOString() }]);
-      toast.success('Added to Wishlist!', {
-        icon: '❤️',
-        style: { borderRadius: '10px', background: '#333', color: '#fff' },
-      });
+      
+      // --- UPDATED: Removed the manual dark styling ---
+      // Now it will use the white style from App.jsx automatically
+      toast.success('Added to Wishlist!');
     }
   };
 
