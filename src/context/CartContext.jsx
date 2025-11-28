@@ -1,59 +1,84 @@
-// src/context/CartContext.jsx
-import { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext, useEffect, useRef } from 'react';
+import { auth } from '../firebase'; 
+import { onAuthStateChanged } from 'firebase/auth';
 
 const CartContext = createContext();
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
-  // Load cart from localStorage if available, otherwise empty array
-  const [cartItems, setCartItems] = useState(() => {
-    const localData = localStorage.getItem('biblios_cart');
-    return localData ? JSON.parse(localData) : [];
-  });
+  const [cartItems, setCartItems] = useState([]);
+  const [userId, setUserId] = useState(null); 
+  const [loading, setLoading] = useState(true);
+  
+  // Ref to track if we have finished the initial load
+  const isInitialized = useRef(false);
 
-  // Save to localStorage whenever cart changes
+  // 1. CONSOLIDATED EFFECT: Handle Auth AND Initial Load together
   useEffect(() => {
-    localStorage.setItem('biblios_cart', JSON.stringify(cartItems));
-  }, [cartItems]);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      // 1. Determine User ID
+      const newUserId = user ? user.uid : 'guest';
+      setUserId(newUserId);
 
-  // 1. Add to Cart
+      // 2. Load Cart Immediately (No separate effect needed)
+      const storageKey = `biblios_cart_${newUserId}`;
+      const saved = localStorage.getItem(storageKey);
+      
+      if (saved) {
+        setCartItems(JSON.parse(saved));
+      } else {
+        setCartItems([]);
+      }
+
+      // 3. Mark as ready
+      isInitialized.current = true;
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  // 2. SAVE EFFECT: Only runs when cart changes (and app is initialized)
+  useEffect(() => {
+    if (isInitialized.current && userId) {
+      const storageKey = `biblios_cart_${userId}`;
+      localStorage.setItem(storageKey, JSON.stringify(cartItems));
+    }
+  }, [cartItems, userId]);
+
+  // --- Cart Actions ---
+
   const addToCart = (book, quantity) => {
     setCartItems(prevItems => {
       const existingItem = prevItems.find(item => item.id === book.id);
-      
       if (existingItem) {
-        // If book exists, just update quantity
         return prevItems.map(item =>
           item.id === book.id 
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
       } else {
-        // Add new book with selected quantity
         return [...prevItems, { ...book, quantity }];
       }
     });
   };
 
-  // 2. Remove from Cart
   const removeFromCart = (id) => {
     setCartItems(prevItems => prevItems.filter(item => item.id !== id));
   };
 
-  // 3. Update Quantity (Increment/Decrement in Cart Page)
   const updateQuantity = (id, type) => {
     setCartItems(prevItems => prevItems.map(item => {
       if (item.id === id) {
         const newQuantity = type === 'increase' ? item.quantity + 1 : item.quantity - 1;
-        // Prevent going below 1
         return { ...item, quantity: Math.max(1, newQuantity) };
       }
       return item;
     }));
   };
 
-  // 4. Calculate Totals
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const cartSubtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
@@ -66,7 +91,7 @@ export const CartProvider = ({ children }) => {
       cartCount,
       cartSubtotal
     }}>
-      {children}
+      {!loading && children}
     </CartContext.Provider>
   );
 };
