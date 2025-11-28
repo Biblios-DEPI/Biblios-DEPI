@@ -1,5 +1,4 @@
 /* src/styles/login.css */
-
 .login-container {
     /* margin-top: 70px; */
     display: flex;
@@ -7,7 +6,7 @@
     align-items: center;
     height: 80vh;
     background-color: #fafafbff;
-    padding: 20px;
+    padding: 16px;
     /* background:
         url('/images/greek_patern.png') repeat-x fixed center top / 25%,
         url('/images/greek_patern.png') repeat-x fixed center bottom / 25%; */
@@ -16,85 +15,193 @@
 
 .login-form-card {
     background: white;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    border-radius: 6px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px;
+    max-width: 320px;
     text-align: center;
     border: 1px solid #eee;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Favicon/Logo at top of card */
+.card-logo {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 16px;
+    animation: dropFromTop 0.8s ease-out 0.3s both;
+}
+
+.card-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes dropFromTop {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateY(5px);
+    }
+
+    80% {
+        transform: translateY(-2px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .login-form-card h2 {
     font-family: "Playfair Display", serif;
     color: var(--primary-color);
-    margin-bottom: 10px;
-    font-size: 32px;
+    margin-bottom: 8px;
+    font-size: 26px;
+    animation: fadeIn 0.8s ease-out 0.5s both;
 }
 
 .login-form-card p {
     font-family: "Merriweather", serif;
     color: #666;
-    margin-bottom: 30px;
-    font-size: 14px;
+    margin-bottom: 24px;
+    font-size: 11px;
+    animation: fadeIn 0.8s ease-out 0.6s both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     text-align: left;
+    animation: slideInLeft 0.5s ease-out both;
+}
+
+.form-group:nth-child(1) {
+    animation-delay: 0.7s;
+}
+
+.form-group:nth-child(2) {
+    animation-delay: 0.8s;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .form-group label {
     display: block;
     font-family: "Merriweather", serif;
-    font-size: 14px;
-    margin-bottom: 8px;
+    font-size: 11px;
+    margin-bottom: 6px;
     color: #333;
     font-weight: bold;
 }
 
 .form-group input {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 3px;
     font-family: "Merriweather", sans-serif;
-    font-size: 14px;
+    font-size: 11px;
 }
 
 .form-group input:focus {
     outline: 2px solid var(--primary-color);
     border-color: transparent;
+    animation: inputGlow 0.3s ease-out;
+}
+
+@keyframes inputGlow {
+    0% {
+        box-shadow: 0 0 0 rgba(0, 106, 138, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 8px rgba(0, 106, 138, 0.3);
+    }
+
+    100% {
+        box-shadow: 0 0 0 rgba(0, 106, 138, 0);
+    }
 }
 
 /* Error message style */
 .error-msg {
     color: #d32f2f;
-    font-size: 13px;
-    margin-bottom: 15px;
+    font-size: 10px;
+    margin-bottom: 12px;
     display: block;
     font-family: sans-serif;
     background-color: #ffebee;
-    padding: 8px;
-    border-radius: 4px;
+    padding: 6px;
+    border-radius: 3px;
 }
 
 /* Login Button */
 .login-btn {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: fadeIn 0.8s ease-out 0.9s both;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 106, 138, 0.3);
+}
+
+.login-btn:active {
+    transform: translateY(0);
 }
 
 /* Forgot Password Link */
 .forgot-pass {
     text-align: left;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .forgot-pass a {
     color: #565D6D;
     font-family: "Merriweather", serif;
-    font-size: 13px;
+    font-size: 10px;
     text-decoration: none;
     transition: color 0.3s;
 }
@@ -106,9 +213,9 @@
 
 /* Register Section */
 .register-link {
-    margin-top: 25px;
+    margin-top: 20px;
     font-family: "Merriweather", serif;
-    font-size: 14px;
+    font-size: 11px;
     color: #333;
 }
 
@@ -116,7 +223,7 @@
     color: var(--primary-color);
     font-weight: 700;
     text-decoration: none;
-    margin-left: 5px;
+    margin-left: 4px;
 }
 
 .register-link a:hover {
@@ -131,18 +238,18 @@
 
 .password-wrapper input {
     width: 100%;
-    padding-right: 40px;
+    padding-right: 32px;
     /* Make room for the icon */
 }
 
 .password-toggle-icon {
     position: absolute;
-    right: 10px;
+    right: 8px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
     color: #888;
-    font-size: 14px;
+    font-size: 11px;
     border: none;
     background: none;
     padding: 0;

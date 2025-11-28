@@ -2,9 +2,8 @@
 @import './login.css';
 
 /* Specific Styles for Register Page */
-
 .register-card {
-    max-width: 600px;
+    max-width: 480px;
     /* Wider card to fit side-by-side inputs */
 }
 
@@ -12,9 +11,9 @@
 .form-row {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
+    gap: 16px;
     /* Space between the two inputs */
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 /* The Two Containers (Columns) */
@@ -25,8 +24,8 @@
 
 /* Make inputs slightly more compact for registration */
 .form-col input {
-    padding: 10px;
-    font-size: 13px;
+    padding: 8px;
+    font-size: 10px;
 }
 
 /* Password Wrapper to hold the input and the eye icon */
@@ -38,19 +37,19 @@
 /* The input itself needs space for the icon so text doesn't overlap */
 .password-wrapper input {
     width: 100%;
-    padding-right: 40px;
+    padding-right: 32px;
     /* Make room for the icon */
 }
 
 /* The Eye Icon Positioning */
 .password-toggle-icon {
     position: absolute;
-    right: 10px;
+    right: 8px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
     color: #888;
-    font-size: 14px;
+    font-size: 11px;
     border: none;
     background: none;
     padding: 0;

@@ -20,7 +20,7 @@ const userProfiles = {
                 id: 1,
                 title: "Inferno",
                 author: "Dante Alighieri",
-                cover: "../../public/images/book4.jpg"
+                cover: "../../public/images/Inferno.jpg"
             },
             {
                 id: 2,

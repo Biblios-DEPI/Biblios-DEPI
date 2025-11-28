@@ -14,19 +14,16 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
     try {
       // 1. Attempt to Sign In
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log("Logged in:", userCredential.user);
-
       // 2. Redirect to Home on success
-      navigate('/'); 
-
+      navigate('/');
     } catch (err) {
       console.error(err.code);
       // 3. Handle Login Errors
-      if (err.code === 'auth/invalid-credential') { 
+      if (err.code === 'auth/invalid-credential') {
         // Note: Firebase recently changed generic errors to 'invalid-credential' for security
         setError("Incorrect email or password.");
       } else {
@@ -42,33 +39,38 @@ const LoginPage = () => {
   return (
     <div className="login-container">
       <div className="login-form-card">
+        {/* Favicon/Logo at top */}
+        <div className="card-logo">
+          <img src="../../public/images/transparenticon.png" alt="Biblios Logo" />
+        </div>
+
         <h2>Welcome Back</h2>
         <p>Please login to continue your journey</p>
-        
+
         {/* Error Message Display */}
-        {error && <div style={{color: 'red', marginBottom: '10px', fontSize: '14px', textAlign: 'center'}}>{error}</div>}
+        {error && <div style={{ color: 'red', marginBottom: '10px', fontSize: '14px', textAlign: 'center' }}>{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Email Address</label>
-            <input 
-              type="email" 
+            <input
+              type="email"
               placeholder="name@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required 
+              required
             />
           </div>
 
           <div className="form-group">
             <label>Password</label>
             <div className="password-wrapper" style={{ position: 'relative' }}>
-              <input 
-                type={showPassword ? "text" : "password"} 
+              <input
+                type={showPassword ? "text" : "password"}
                 placeholder="********"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                required 
+                required
                 style={{ paddingRight: '40px', width: '100%' }}
               />
               <button
@@ -95,13 +97,13 @@ const LoginPage = () => {
           </div>
 
           <button type="submit" className="btn login-btn">Login</button>
-          
+
           <div style={{ marginTop: '20px', fontSize: '14px', color: '#333' }}>
             Don't have an account? <Link to="/register" style={{ color: '#006A8A', fontWeight: 'bold', textDecoration: 'none' }}>Create new account</Link>
           </div>
 
-          <p style={{marginTop: '20px'}}>
-            <Link to="/" style={{color: '#006A8A', textDecoration: 'none'}}>Back to Home</Link>
+          <p style={{ marginTop: '20px' }}>
+            <Link to="/" style={{ color: '#006A8A', textDecoration: 'none' }}>Back to Home</Link>
           </p>
         </form>
       </div>

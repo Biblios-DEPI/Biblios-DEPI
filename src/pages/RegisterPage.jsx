@@ -6,6 +6,7 @@ import '../styles/register.css';
 
 const RegisterPage = () => {
   const navigate = useNavigate(); // Hook for redirection
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -41,7 +42,6 @@ const RegisterPage = () => {
         formData.email,
         formData.password
       );
-
       const user = userCredential.user;
 
       // 3. Update the user's "Display Name" (since Firebase auth only takes email/pass by default)
@@ -53,7 +53,6 @@ const RegisterPage = () => {
 
       // 4. Redirect to Home Page (or Login Page)
       navigate('/');
-
     } catch (err) {
       // 5. Handle Errors (Interview Tip: Always handle errors gracefully)
       console.error(err.code);
@@ -74,6 +73,11 @@ const RegisterPage = () => {
   return (
     <div className="login-container">
       <div className="login-form-card register-card">
+        {/* Favicon/Logo at top */}
+        <div className="card-logo">
+          <img src="../../public/images/transparenticon.png" alt="Biblios Logo" />
+        </div>
+
         <h2>Create Account</h2>
         <p>Join Biblios to start your reading journey</p>
 
@@ -81,10 +85,6 @@ const RegisterPage = () => {
         {error && <div style={{ color: 'red', marginBottom: '10px', fontSize: '14px' }}>{error}</div>}
 
         <form onSubmit={handleSubmit}>
-          {/* ... KEEP YOUR EXISTING INPUTS EXACTLY AS THEY WERE ... */}
-          {/* I am omitting the inputs here to save space, but keep your Row 1 and Row 2 code exactly the same */}
-
-          {/* Just ensure the inputs use the handleChange and values defined above */}
           <div className="form-row">
             <div className="form-group form-col">
               <label>Full Name</label>

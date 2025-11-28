@@ -6,9 +6,8 @@ import { auth } from "../firebase";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { useCart } from '../context/CartContext';
 import booksData from '../data/books.json';
-import { getUserProfile, hasCustomProfile } from '../data/userProfiles'; 
-import toast from 'react-hot-toast'; // 1. IMPORT TOAST
-
+import { getUserProfile, hasCustomProfile } from '../data/userProfiles';
+import toast from 'react-hot-toast';
 import "swiper/css";
 import "../styles/home.css";
 
@@ -16,13 +15,12 @@ const HomePage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [profilePhoto, setProfilePhoto] = useState("/images/profile.jpg"); 
+  const [profilePhoto, setProfilePhoto] = useState("/images/profile.jpg");
   const [loading, setLoading] = useState(true);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { cartCount } = useCart();
-
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(searchParams.get('query') || '');
   const [suggestions, setSuggestions] = useState([]);
@@ -31,7 +29,6 @@ const HomePage = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-
       if (currentUser) {
         if (hasCustomProfile(currentUser.uid)) {
           const customProfile = getUserProfile(currentUser.uid);
@@ -40,10 +37,8 @@ const HomePage = () => {
           setProfilePhoto("../../public/images/profile.jpg");
         }
       }
-
       setLoading(false);
     });
-
     return () => unsubscribe();
   }, []);
 
@@ -59,7 +54,6 @@ const HomePage = () => {
   const handleInputChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-
     const isSearchablePage = location.pathname.includes('/books') || location.pathname.includes('/categories');
     if (isSearchablePage) {
       const newParams = {};
@@ -68,7 +62,6 @@ const HomePage = () => {
       if (query.trim().length > 0) newParams.query = query;
       setSearchParams(newParams);
     }
-
     if (query.trim().length > 0) {
       const lowerCaseQuery = query.toLowerCase();
       const matchingBooks = booksData.filter(book =>
@@ -87,10 +80,9 @@ const HomePage = () => {
     setSuggestions([]);
   };
 
-  // 2. NEW: Handle Wishlist Navigation (Auth Guard)
   const handleWishlistNav = (e) => {
     if (!user) {
-      e.preventDefault(); // Stop the link from navigating
+      e.preventDefault();
       toast.error("Please login to view your wishlist");
       navigate('/login');
     }
@@ -125,22 +117,34 @@ const HomePage = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Scroll animations with Intersection Observer
   useEffect(() => {
     const observerOptions = {
       threshold: 0.15,
       rootMargin: "0px 0px -100px 0px"
     };
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("in-view");
+
+          // Add stagger effect to children
+          const children = entry.target.querySelectorAll('.category, .advantage');
+          children.forEach((child, index) => {
+            setTimeout(() => {
+              child.classList.add('in-view');
+            }, index * 150);
+          });
         }
       });
     }, observerOptions);
-    const sections = document.querySelectorAll(".categories, .pros, .help, .homefooter");
+
+    const sections = document.querySelectorAll(".categories, .pros, .help");
     sections.forEach((section) => {
       observer.observe(section);
     });
+
     return () => {
       sections.forEach((section) => {
         observer.unobserve(section);
@@ -192,7 +196,6 @@ const HomePage = () => {
             </Link>
           </li>
         </ul>
-
         <div className="mobile-menu-search">
           <form onSubmit={handleSearchSubmit}>
             <label htmlFor="mobile-search">
@@ -207,7 +210,6 @@ const HomePage = () => {
             />
           </form>
         </div>
-
         <div className="mobile-menu-actions">
           <Link
             to="/cart"
@@ -220,20 +222,18 @@ const HomePage = () => {
               <span className="cart-badge-mobile">{cartCount}</span>
             )}
           </Link>
-          
-          {/* 4. UPDATED MOBILE WISHLIST LINK */}
+
           <Link
             to="/wishlist"
             className="mobile-menu-action-btn"
             onClick={(e) => {
-                handleWishlistNav(e); // Check auth
-                setIsMenuOpen(false); // Close menu
+              handleWishlistNav(e);
+              setIsMenuOpen(false);
             }}
           >
             <i className="fa-regular fa-heart"></i>
             Wishlist
           </Link>
-
           {user ? (
             <>
               <Link
@@ -276,7 +276,6 @@ const HomePage = () => {
               <img src="/images/logo2.png" alt="Biblios Logo" />
             </Link>
           </div>
-
           <ul className={`menu ${isMenuOpen ? "active" : ""}`}>
             <li>
               <Link to="/"><span className="floating-shine">Home</span></Link>
@@ -288,7 +287,6 @@ const HomePage = () => {
               <Link to="/about">About Biblios</Link>
             </li>
           </ul>
-
           <div className="right-home">
             <div style={{ position: 'relative' }}>
               <form onSubmit={handleSearchSubmit}>
@@ -303,7 +301,6 @@ const HomePage = () => {
                   onChange={handleInputChange}
                 />
               </form>
-
               {suggestions.length > 0 && (
                 <ul className="suggestions-list" style={{
                   position: 'absolute', top: '120%', left: '0', zIndex: 100, backgroundColor: 'white',
@@ -324,7 +321,6 @@ const HomePage = () => {
                 </ul>
               )}
             </div>
-
             <Link className="cart-container-home" to="/cart">
               <img src="/images/shopping-cart.png" alt="cart" />
               {cartCount > 0 && (
@@ -333,16 +329,13 @@ const HomePage = () => {
                 </span>
               )}
             </Link>
-
-            {/* 3. UPDATED DESKTOP WISHLIST LINK */}
-            <Link 
-                to="/wishlist" 
-                className="wishlist-link"
-                onClick={handleWishlistNav} // Check auth
+            <Link
+              to="/wishlist"
+              className="wishlist-link"
+              onClick={handleWishlistNav}
             >
               <i className="fa-regular fa-heart"></i>
             </Link>
-
             <div className="profile-dropdown-container" ref={dropdownRef}>
               {user ? (
                 <>
@@ -381,7 +374,6 @@ const HomePage = () => {
               )}
             </div>
           </div>
-
           <i
             className="fa-solid fa-bars bars"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -390,7 +382,6 @@ const HomePage = () => {
         </nav>
       </header>
 
-      {/* Rest of your HomePage content remains exactly the same */}
       <main>
         {/* HERO SECTION */}
         <div className="hero-container">
@@ -398,7 +389,8 @@ const HomePage = () => {
             <div className="text">
               <h1>Biblios</h1>
               <h2>Stories in Every Form.</h2>
-              <button className="cta-btn" onClick={() => navigate('/books')}>Explore Books</button>            </div>
+              <button className="cta-btn" onClick={() => navigate('/books')}>Explore Books</button>
+            </div>
             <div className="books">
               <Swiper
                 modules={[Autoplay]}
@@ -445,13 +437,12 @@ const HomePage = () => {
         </div>
 
         {/* CATEGORIES SECTION */}
-<div className="categories">
+        <div className="categories">
           <h2>Featured Categories</h2>
           <div className="category-container">
-            {/* 1. Classical Literature -> Redirects to ?category=Classics */}
-            <div 
-              className="category" 
-              onClick={() => navigate('/books?category=Classics')} 
+            <div
+              className="category"
+              onClick={() => navigate('/books?category=Classics')}
               style={{ cursor: 'pointer' }}
             >
               <div className="icon-container">
@@ -460,11 +451,9 @@ const HomePage = () => {
               <h4>Classical Literature</h4>
               <p>Timeless works from ancient Greece and Rome.</p>
             </div>
-
-            {/* 2. Audiobooks -> Redirects to main /books page */}
-            <div 
-              className="category" 
-              onClick={() => navigate('/books')} 
+            <div
+              className="category"
+              onClick={() => navigate('/books')}
               style={{ cursor: 'pointer' }}
             >
               <div className="icon-container">
@@ -473,9 +462,7 @@ const HomePage = () => {
               <h4>Audiobooks</h4>
               <p>Listen to your favorite stories on the go.</p>
             </div>
-
-            {/* 3. Philosophy -> Added redirect for consistency */}
-            <div 
+            <div
               className="category"
               onClick={() => navigate('/books?category=Philosophy')}
               style={{ cursor: 'pointer' }}
@@ -486,9 +473,7 @@ const HomePage = () => {
               <h4>Philosophy</h4>
               <p>Delve into profound thoughts and ideas.</p>
             </div>
-
-            {/* 4. Modern Fiction -> Added redirect for consistency */}
-            <div 
+            <div
               className="category"
               onClick={() => navigate('/books?category=Fiction')}
               style={{ cursor: 'pointer' }}
@@ -501,10 +486,10 @@ const HomePage = () => {
             </div>
           </div>
         </div>
+
         {/* PROS SECTION */}
         <div className="pros">
-          <div className="pattern-container">
-          </div>
+          <div className="pattern-container"></div>
           <h2>Why Choose Biblios?</h2>
           <div className="advantage-container">
             <div className="advantage">
