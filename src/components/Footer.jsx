@@ -2,13 +2,13 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer>
+    <footer className="homefooter">
       <ul>
         <li><Link to="#">Explore</Link></li>
         <li><Link to="#">Company</Link></li>
         <li><Link to="#">Legal</Link></li>
       </ul>
-      <ul className="social">
+      <ul className="social-home">
         {/* Ensure these exist in public/images/ */}
         <li><a href="#"><img src="/images/facebook.png" alt="facebook" /></a></li>
         <li><a href="#"><img src="/images/twitter.png" alt="x" /></a></li>

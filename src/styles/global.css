@@ -65,10 +65,22 @@
 }
 
 .page {
+    display: flex;
+    flex-direction: column;
     width: 100%;
+    min-height: 100vh;
     background-color: #fafafbff !important;
     font-family: "Playfair", serif;
 
+}
+
+.page main,
+.main-cart,
+.aboutmain,
+.wishlist-page {
+    flex: 1;
+    /* This pushes the footer down */
+    width: 100%;
 }
 
 .page nav {
