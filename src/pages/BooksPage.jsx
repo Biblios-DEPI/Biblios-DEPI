@@ -16,14 +16,25 @@ const BookCard = ({ book }) => {
         toast.success(`"${book.title}" added to cart!`);
     };
 
-   const handleHeartClick = (e) => {
+    const handleHeartClick = (e) => {
         e.preventDefault(); // Prevent clicking the Link (opening details)
         toggleWishlist(book);
     };
 
     const currentPrice = book.price;
-    const originalPrice = (currentPrice / 0.68).toFixed(2); 
-    const discountPercent = 32;
+    
+    // --- UPDATED DISCOUNT LOGIC START ---
+    // 1. Get the real original price from JSON
+    const originalPrice = book.originalPrice;
+    
+    // 2. Check if a discount actually exists
+    const hasDiscount = originalPrice && originalPrice > currentPrice;
+
+    // 3. Calculate the percentage only if there is a discount
+    const discountPercent = hasDiscount 
+        ? Math.round(((originalPrice - currentPrice) / originalPrice) * 100) 
+        : 0;
+    // --- UPDATED DISCOUNT LOGIC END ---
 
     return (
         <div className="wishlist-card">
@@ -34,7 +45,7 @@ const BookCard = ({ book }) => {
                     className="book-cover"
                 />
                 
-                {/* --- NEW WISHLIST BUTTON (Top Right) --- */}
+                {/* --- WISHLIST BUTTON (Top Right) --- */}
                 <button 
                     className="wishlist-icon-btn" 
                     onClick={handleHeartClick}
@@ -57,16 +68,24 @@ const BookCard = ({ book }) => {
                 
                 <div className="price-section">
                     <span className="current-price">${currentPrice.toFixed(2)}</span>
-                    <span className="original-price">${originalPrice}</span>
-                    <span className="discount-badge">{discountPercent}% OFF</span>
+                    
+                    {/* --- CONDITIONAL RENDER START --- */}
+                    {/* Only show badge and original price if hasDiscount is true */}
+                    {hasDiscount && (
+                        <>
+                            <span className="original-price">${originalPrice.toFixed(2)}</span>
+                            <span className="discount-badge">{discountPercent}% OFF</span>
+                        </>
+                    )}
+                    {/* --- CONDITIONAL RENDER END --- */}
                 </div>
 
                 <button 
                     className="move-to-cart-btn"
                     onClick={handleAddToCart}
                 >
-                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                     Add to Cart
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                      Add to Cart
                 </button>
             </div>
         </div>

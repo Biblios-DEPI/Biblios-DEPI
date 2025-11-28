@@ -245,6 +245,7 @@ nav {
 }
 
 .cta-btn {
+    cursor: pointer;
     outline: none;
     background-color: var(--primary-color);
     color: #FFF;

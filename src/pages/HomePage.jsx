@@ -384,8 +384,7 @@ const HomePage = () => {
             <div className="text">
               <h1>Biblios</h1>
               <h2>Stories in Every Form.</h2>
-              <button className="cta-btn">Explore Books</button>
-            </div>
+              <button className="cta-btn" onClick={() => navigate('/books')}>Explore Books</button>            </div>
             <div className="books">
               <Swiper
                 modules={[Autoplay]}
@@ -432,31 +431,54 @@ const HomePage = () => {
         </div>
 
         {/* CATEGORIES SECTION */}
-        <div className="categories">
+<div className="categories">
           <h2>Featured Categories</h2>
           <div className="category-container">
-            <div className="category">
+            {/* 1. Classical Literature -> Redirects to ?category=Classics */}
+            <div 
+              className="category" 
+              onClick={() => navigate('/books?category=Classics')} 
+              style={{ cursor: 'pointer' }}
+            >
               <div className="icon-container">
                 <i className="fa-solid fa-book"></i>
               </div>
               <h4>Classical Literature</h4>
               <p>Timeless works from ancient Greece and Rome.</p>
             </div>
-            <div className="category">
+
+            {/* 2. Audiobooks -> Redirects to main /books page */}
+            <div 
+              className="category" 
+              onClick={() => navigate('/books')} 
+              style={{ cursor: 'pointer' }}
+            >
               <div className="icon-container">
                 <i className="fa-solid fa-headphones"></i>
               </div>
               <h4>Audiobooks</h4>
               <p>Listen to your favorite stories on the go.</p>
             </div>
-            <div className="category">
+
+            {/* 3. Philosophy -> Added redirect for consistency */}
+            <div 
+              className="category"
+              onClick={() => navigate('/books?category=Philosophy')}
+              style={{ cursor: 'pointer' }}
+            >
               <div className="icon-container">
                 <i className="fa-solid fa-question"></i>
               </div>
               <h4>Philosophy</h4>
               <p>Delve into profound thoughts and ideas.</p>
             </div>
-            <div className="category">
+
+            {/* 4. Modern Fiction -> Added redirect for consistency */}
+            <div 
+              className="category"
+              onClick={() => navigate('/books?category=Fiction')}
+              style={{ cursor: 'pointer' }}
+            >
               <div className="icon-container">
                 <i className="fa-solid fa-lightbulb"></i>
               </div>
@@ -465,7 +487,6 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-
         {/* PROS SECTION */}
         <div className="pros">
           <div className="pattern-container">
