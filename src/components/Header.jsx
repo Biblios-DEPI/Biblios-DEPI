@@ -5,7 +5,7 @@ import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { useCart } from '../context/CartContext';
 import booksData from '../data/books.json';
 import { getUserProfile, hasCustomProfile } from '../data/userProfiles';
-import toast from 'react-hot-toast'; // 1. Import Toast
+import toast from 'react-hot-toast';
 import '../styles/global.css';
 
 const Header = () => {
@@ -55,6 +55,7 @@ const Header = () => {
     if (searchQuery.trim()) {
       navigate(`/books?query=${searchQuery.trim()}`);
       setSuggestions([]);
+      setIsMenuOpen(false); // Close menu on search
     }
   };
 
@@ -88,16 +89,16 @@ const Header = () => {
     navigate(`/books/${book.id}`);
     setSearchQuery('');
     setSuggestions([]);
+    setIsMenuOpen(false); // Close menu on selection
   };
 
-  // 2. NEW: Handle Wishlist Navigation
+  // Handle Wishlist Navigation (Auth Guard)
   const handleWishlistNav = (e) => {
     if (!user) {
-      e.preventDefault(); // Stop the link from working
+      e.preventDefault();
       toast.error("Please login to view your wishlist");
       navigate('/login');
     }
-    // If user exists, do nothing (let the Link work normally)
   };
 
   useEffect(() => {
@@ -126,96 +127,202 @@ const Header = () => {
   }
 
   return (
-    <header id="header">
-      <nav id="navbar" className="shadow-header">
-        <div className="logo-container">
-          <Link to="/">
-            <img src="/images/logo2.png" alt="Biblios Logo" />
-          </Link>
-        </div>
+    <>
+      {/* --- 1. NEW: Mobile Menu Overlay --- */}
+      <div
+        className={`mobile-menu-overlay ${isMenuOpen ? "active" : ""}`}
+        onClick={() => setIsMenuOpen(false)}
+      ></div>
 
-        <ul className={`menu ${isMenuOpen ? 'active' : ''}`}>
-          <li><Link to="/">{isActive('/') ? <span className="floating-shine">Home</span> : 'Home'}</Link></li>
-          <li><Link to="/categories">{isActive('/categories') ? <span className="floating-shine">Categories</span> : 'Categories'}</Link></li>
-          <li><Link to="/about">{isActive('/about') ? <span className="floating-shine">About Biblios</span> : 'About Biblios'}</Link></li>
+      {/* --- 2. NEW: Mobile Menu Side Panel --- */}
+      <div className={`mobile-menu ${isMenuOpen ? "active" : ""}`}>
+        <button className="mobile-menu-close" onClick={() => setIsMenuOpen(false)}>
+          <i className="fa-solid fa-times"></i>
+        </button>
+        <ul>
+          <li>
+            <Link to="/" onClick={() => setIsMenuOpen(false)}>
+              <i className="fa-solid fa-home"></i> Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/categories" onClick={() => setIsMenuOpen(false)}>
+              <i className="fa-solid fa-th"></i> Categories
+            </Link>
+          </li>
+          <li>
+            <Link to="/about" onClick={() => setIsMenuOpen(false)}>
+              <i className="fa-solid fa-info-circle"></i> About Biblios
+            </Link>
+          </li>
         </ul>
 
-        <div className="right">
-          <div style={{ position: 'relative' }}>
-            <form onSubmit={handleSearchSubmit}>
-              <label htmlFor="search-book"><i className="fa-solid fa-magnifying-glass"></i></label>
-              <input
-                type="search"
-                placeholder="Search for books..."
-                id="search-book"
-                value={searchQuery}
-                onChange={handleInputChange}
-              />
-            </form>
-
-            {suggestions.length > 0 && (
-              <ul className="suggestions-list" style={{
-                position: 'absolute', top: '100%', left: '0', zIndex: 100, backgroundColor: 'white',
-                border: '1px solid #ddd', borderRadius: '4px', width: '100%', maxHeight: '200px',
-                overflowY: 'auto', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', listStyle: 'none', padding: '0', margin: '0'
-              }}>
-                {suggestions.map((book) => (
-                  <li
-                    key={book.id}
-                    onClick={() => handleSuggestionClick(book)}
-                    style={{ padding: '10px', cursor: 'pointer', borderBottom: '1px solid #eee', fontSize: '14px', color: '#333' }}
-                    onMouseOver={e => e.currentTarget.style.backgroundColor = '#f4f4f4'}
-                    onMouseOut={e => e.currentTarget.style.backgroundColor = 'white'}
-                  >
-                    <strong>{book.title}</strong> by {book.author}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-
-          <Link className="cart-container" to="/cart">
-            <img src="/images/shopping-cart.png" alt="cart" />
-            {cartCount > 0 && (
-              <span style={{ position: 'absolute', top: '-8px', right: '-10px', backgroundColor: '#e74c3c', color: 'white', borderRadius: '50%', width: '16px', height: '16px', display: 'flex', justifyContent: 'center', alignItems: 'center', fontFamily: 'Arial, sans-serif', fontSize: '11px', fontWeight: 'bold' }}>{cartCount}</span>
-            )}
-          </Link>
-
-          {/* 3. UPDATED: Connected the handler here */}
-          <Link 
-            to="/wishlist" 
-            className="wishlist-link-global" 
-            onClick={handleWishlistNav}
-          >
-            <i className="fa-regular fa-heart"></i>
-          </Link>
-
-          <div className="profile-dropdown-container-global" ref={dropdownRef}>
-            {user ? (
-              <>
-                <div className="profile-link-global" onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}>
-                  <img src={profilePhoto} alt="Profile" className="profile-pic" />
-                </div>
-                {isProfileDropdownOpen && (
-                  <div className="profile-dropdown-global">
-                    <Link to="/profile" className="dropdown-item-global profile-button-global" onClick={() => setIsProfileDropdownOpen(false)}>
-                      <i className="fa-solid fa-user"></i> Profile
-                    </Link>
-                    <button onClick={handleLogout} className="dropdown-item-global logout-btn-global">
-                      <i className="fa-solid fa-right-from-bracket"></i> Logout
-                    </button>
-                  </div>
-                )}
-              </>
-            ) : (
-              <Link to="/login" className="profile-link-global"><i className="fa-regular fa-user"></i></Link>
-            )}
-          </div>
+        <div className="mobile-menu-search">
+          <form onSubmit={handleSearchSubmit}>
+            <label htmlFor="mobile-search-header">
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </label>
+            <input
+              type="search"
+              placeholder="Search for books..."
+              id="mobile-search-header"
+              value={searchQuery}
+              onChange={handleInputChange}
+            />
+          </form>
         </div>
 
-        <i className="fa-solid fa-bars bars" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer' }}></i>
-      </nav>
-    </header>
+        <div className="mobile-menu-actions">
+          <Link
+            to="/cart"
+            className="mobile-menu-action-btn"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <i className="fa-solid fa-shopping-cart"></i>
+            Cart
+            {cartCount > 0 && (
+              <span className="cart-badge-mobile">{cartCount}</span>
+            )}
+          </Link>
+          
+          <Link
+            to="/wishlist"
+            className="mobile-menu-action-btn"
+            onClick={(e) => {
+                handleWishlistNav(e); // Check auth
+                setIsMenuOpen(false); // Close menu
+            }}
+          >
+            <i className="fa-regular fa-heart"></i>
+            Wishlist
+          </Link>
+
+          {user ? (
+            <>
+              <Link
+                to="/profile"
+                className="mobile-menu-action-btn"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <i className="fa-solid fa-user"></i>
+                Profile
+              </Link>
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setIsMenuOpen(false);
+                }}
+                className="mobile-menu-action-btn"
+                style={{ border: '1px solid #d32f2f', color: '#d32f2f' }}
+              >
+                <i className="fa-solid fa-right-from-bracket"></i>
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link
+              to="/login"
+              className="mobile-menu-action-btn"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <i className="fa-regular fa-user"></i>
+              Login
+            </Link>
+          )}
+        </div>
+      </div>
+
+      {/* --- STANDARD HEADER (Navigation Bar) --- */}
+      <header id="header">
+        <nav id="navbar" className="shadow-header">
+          <div className="logo-container">
+            <Link to="/">
+              <img src="/images/logo2.png" alt="Biblios Logo" />
+            </Link>
+          </div>
+
+          <ul className={`menu ${isMenuOpen ? 'active' : ''}`}>
+            <li><Link to="/">{isActive('/') ? <span className="floating-shine">Home</span> : 'Home'}</Link></li>
+            <li><Link to="/categories">{isActive('/categories') ? <span className="floating-shine">Categories</span> : 'Categories'}</Link></li>
+            <li><Link to="/about">{isActive('/about') ? <span className="floating-shine">About Biblios</span> : 'About Biblios'}</Link></li>
+          </ul>
+
+          <div className="right">
+            <div style={{ position: 'relative' }}>
+              <form onSubmit={handleSearchSubmit}>
+                <label htmlFor="search-book"><i className="fa-solid fa-magnifying-glass"></i></label>
+                <input
+                  type="search"
+                  placeholder="Search for books..."
+                  id="search-book"
+                  value={searchQuery}
+                  onChange={handleInputChange}
+                />
+              </form>
+
+              {suggestions.length > 0 && (
+                <ul className="suggestions-list" style={{
+                  position: 'absolute', top: '100%', left: '0', zIndex: 100, backgroundColor: 'white',
+                  border: '1px solid #ddd', borderRadius: '4px', width: '100%', maxHeight: '200px',
+                  overflowY: 'auto', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', listStyle: 'none', padding: '0', margin: '0'
+                }}>
+                  {suggestions.map((book) => (
+                    <li
+                      key={book.id}
+                      onClick={() => handleSuggestionClick(book)}
+                      style={{ padding: '10px', cursor: 'pointer', borderBottom: '1px solid #eee', fontSize: '14px', color: '#333' }}
+                      onMouseOver={e => e.currentTarget.style.backgroundColor = '#f4f4f4'}
+                      onMouseOut={e => e.currentTarget.style.backgroundColor = 'white'}
+                    >
+                      <strong>{book.title}</strong> by {book.author}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            <Link className="cart-container" to="/cart">
+              <img src="/images/shopping-cart.png" alt="cart" />
+              {cartCount > 0 && (
+                <span style={{ position: 'absolute', top: '-8px', right: '-10px', backgroundColor: '#e74c3c', color: 'white', borderRadius: '50%', width: '16px', height: '16px', display: 'flex', justifyContent: 'center', alignItems: 'center', fontFamily: 'Arial, sans-serif', fontSize: '11px', fontWeight: 'bold' }}>{cartCount}</span>
+              )}
+            </Link>
+
+            <Link 
+              to="/wishlist" 
+              className="wishlist-link-global" 
+              onClick={handleWishlistNav}
+            >
+              <i className="fa-regular fa-heart"></i>
+            </Link>
+
+            <div className="profile-dropdown-container-global" ref={dropdownRef}>
+              {user ? (
+                <>
+                  <div className="profile-link-global" onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}>
+                    <img src={profilePhoto} alt="Profile" className="profile-pic" />
+                  </div>
+                  {isProfileDropdownOpen && (
+                    <div className="profile-dropdown-global">
+                      <Link to="/profile" className="dropdown-item-global profile-button-global" onClick={() => setIsProfileDropdownOpen(false)}>
+                        <i className="fa-solid fa-user"></i> Profile
+                      </Link>
+                      <button onClick={handleLogout} className="dropdown-item-global logout-btn-global">
+                        <i className="fa-solid fa-right-from-bracket"></i> Logout
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <Link to="/login" className="profile-link-global"><i className="fa-regular fa-user"></i></Link>
+              )}
+            </div>
+          </div>
+
+          <i className="fa-solid fa-bars bars" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ cursor: 'pointer' }}></i>
+        </nav>
+      </header>
+    </>
   );
 };
 
