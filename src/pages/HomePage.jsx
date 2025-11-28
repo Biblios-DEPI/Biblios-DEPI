@@ -1,10 +1,12 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { useEffect, useState, useRef } from "react";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useCart } from '../context/CartContext';
+import booksData from '../data/books.json'; // Imported for search suggestions
+
 // Import Styles
 import "swiper/css";
 import "../styles/home.css";
@@ -14,7 +16,63 @@ const HomePage = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation(); // Added location
   const { cartCount } = useCart();
+
+  // ========== SEARCH LOGIC START (Added) ==========
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('query') || '');
+  const [suggestions, setSuggestions] = useState([]);
+
+  // Sync state with URL
+  useEffect(() => {
+    const urlQuery = searchParams.get('query');
+    setSearchQuery(urlQuery || '');
+  }, [searchParams]);
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/books?query=${searchQuery.trim()}`);
+      setSuggestions([]);
+      setIsMenuOpen(false);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    // Live Search Logic for /books and /categories pages
+    const isSearchablePage = location.pathname.includes('/books') || location.pathname.includes('/categories');
+
+    if (isSearchablePage) {
+      const newParams = {};
+      const currentCategory = searchParams.get('category');
+      if (currentCategory) newParams.category = currentCategory;
+      if (query.trim().length > 0) newParams.query = query;
+      setSearchParams(newParams);
+    }
+
+    // Suggestions Logic
+    if (query.trim().length > 0) {
+      const lowerCaseQuery = query.toLowerCase();
+      const matchingBooks = booksData.filter(book =>
+        book.title.toLowerCase().startsWith(lowerCaseQuery) ||
+        book.author.toLowerCase().startsWith(lowerCaseQuery)
+      ).slice(0, 5);
+      setSuggestions(matchingBooks);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSuggestionClick = (book) => {
+    navigate(`/books/${book.id}`);
+    setSearchQuery('');
+    setSuggestions([]);
+  };
+  // ========== SEARCH LOGIC END ==========
 
   // ========== SHADOW HEADER EFFECT ==========
   useEffect(() => {
@@ -110,8 +168,9 @@ const HomePage = () => {
           </li>
         </ul>
 
+        {/* UPDATED: Mobile Search Connected to Logic */}
         <div className="mobile-menu-search">
-          <form action="" onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={handleSearchSubmit}>
             <label htmlFor="mobile-search">
               <i className="fa-solid fa-magnifying-glass"></i>
             </label>
@@ -119,6 +178,8 @@ const HomePage = () => {
               type="search"
               placeholder="Search for books..."
               id="mobile-search"
+              value={searchQuery}
+              onChange={handleInputChange}
             />
           </form>
         </div>
@@ -198,17 +259,46 @@ const HomePage = () => {
               <Link to="/about">About Biblios</Link>
             </li>
           </ul>
+          
           <div className="right-home">
-            <form action="">
-              <label htmlFor="search-book">
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </label>
-              <input
-                type="search"
-                placeholder="Search for books..."
-                id="search-book"
-              />
-            </form>
+            {/* UPDATED: Desktop Search with Logic & Suggestions */}
+            <div style={{ position: 'relative' }}>
+              <form onSubmit={handleSearchSubmit}>
+                <label htmlFor="search-book">
+                  <i className="fa-solid fa-magnifying-glass"></i>
+                </label>
+                <input
+                  type="search"
+                  placeholder="Search for books..."
+                  id="search-book"
+                  value={searchQuery}
+                  onChange={handleInputChange}
+                />
+              </form>
+              
+              {/* Search Suggestions Dropdown */}
+              {suggestions.length > 0 && (
+                <ul className="suggestions-list" style={{
+                  position: 'absolute', top: '120%', left: '0', zIndex: 100, backgroundColor: 'white',
+                  border: '1px solid #ddd', borderRadius: '4px', width: '100%', maxHeight: '200px',
+                  overflowY: 'auto', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', listStyle: 'none', padding: '0', margin: '0', textAlign: 'left'
+                }}>
+                  {suggestions.map((book) => (
+                    <li
+                      key={book.id}
+                      onClick={() => handleSuggestionClick(book)}
+                      style={{ padding: '10px', cursor: 'pointer', borderBottom: '1px solid #eee', fontSize: '11px', color: '#333', fontFamily: 'Merri' }}
+                      onMouseOver={e => e.currentTarget.style.backgroundColor = '#f4f4f4'}
+                      onMouseOut={e => e.currentTarget.style.backgroundColor = 'white'}
+                    >
+                      <strong>{book.title}</strong> by {book.author}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            {/* End of Search Update */}
+
             <Link className="cart-container-home" to="/cart">
               <img src="/images/shopping-cart.png" alt="cart" />
               {cartCount > 0 && (
