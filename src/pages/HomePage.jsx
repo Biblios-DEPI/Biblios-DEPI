@@ -467,9 +467,10 @@ const HomePage = () => {
               <h4>Classical Literature</h4>
               <p>Timeless works from ancient Greece and Rome.</p>
             </div>
-            <div
-              className="category"
-              onClick={() => navigate('/books')}
+          
+            <div 
+              className="category" 
+              onClick={() => toast('Audiobooks feature coming soon!', { icon: '🎧' })} 
               style={{ cursor: 'pointer' }}
             >
               <div className="icon-container">
