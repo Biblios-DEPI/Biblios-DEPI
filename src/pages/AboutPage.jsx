@@ -1,7 +1,38 @@
+import { useEffect } from 'react'; // 1. Import useEffect
 import '../styles/global.css';
 import '../styles/about.css'; 
 
 const AboutPage = () => {
+  
+  // 2. Add the Scroll Animation Logic
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.15, // Trigger when 15% of the element is visible
+      rootMargin: "0px 0px -100px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+        }
+      });
+    }, observerOptions);
+
+    // 3. Target the specific sections in About Page
+    const sections = document.querySelectorAll(".story, .phiso, .exp, .journey");
+    
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+
+    return () => {
+      sections.forEach((section) => {
+        observer.unobserve(section);
+      });
+    };
+  }, []);
+
   return (
     <>
       <header>

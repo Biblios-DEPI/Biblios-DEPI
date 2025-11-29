@@ -192,6 +192,22 @@ header {
     /* Adjusted height if needed */
 }
 
+/* Add this to about.css if the animation isn't working yet */
+
+.template {
+    opacity: 0;
+    transform: translateY(50px);
+    /* Start slightly lower */
+    transition: all 0.8s ease-out;
+    /* Smooth transition */
+}
+
+.template.in-view {
+    opacity: 1;
+    transform: translateY(0);
+    /* Move to original position */
+}
+
 @media screen and (max-width: 850px) {
 
     /* Shrink the huge header text */
