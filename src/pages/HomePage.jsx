@@ -444,28 +444,28 @@ const HomePage = () => {
               >
                 <SwiperSlide className="home-article">
                   <img
-                    src="../../public/images/NotesFromUnderground.jpeg"
+                    src="/images/NotesFromUnderground.jpeg"
                     alt="notes from underground"
                     className="home-img"
                   />
                 </SwiperSlide>
                 <SwiperSlide className="home-article">
                   <img
-                    src="../../public/images/CrimeAndPunishment.jpeg"
+                    src="/images/CrimeAndPunishment.jpeg"
                     alt="crime and punishment"
                     className="home-img"
                   />
                 </SwiperSlide>
                 <SwiperSlide className="home-article">
                   <img
-                    src="../../public/images/TheIdiot.jpeg"
+                    src="/images/TheIdiot.jpeg"
                     alt="the myth of sisyphus"
                     className="home-img"
                   />
                 </SwiperSlide>
                 <SwiperSlide className="home-article">
                   <img
-                    src="../../public/images/TheDoubleAndTheGambler.jpeg"
+                    src="/images/TheDoubleAndTheGambler.jpeg"
                     alt="the fall"
                     className="home-img"
                   />

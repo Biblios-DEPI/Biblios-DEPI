@@ -41,7 +41,7 @@ const LoginPage = () => {
       <div className="login-form-card">
         {/* Favicon/Logo at top */}
         <div className="card-logo">
-          <img src="../../public/images/transparenticon.png" alt="Biblios Logo" />
+          <img src="/images/transparenticon.png" alt="Biblios Logo" />
         </div>
 
         <h2>Welcome Back</h2>
