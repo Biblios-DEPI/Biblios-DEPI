@@ -189,10 +189,10 @@ header {
     display: flex;
     margin: auto;
     height: 40px;
-    /* Adjusted height if needed */
+
 }
 
-/* Add this to about.css if the animation isn't working yet */
+
 
 .template {
     opacity: 0;

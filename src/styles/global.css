@@ -329,6 +329,24 @@
     color: #006A8AFF;
 }
 
+/* Ensure dropdown hover only changes text/icon color, not background */
+.profile-dropdown .dropdown-item:hover,
+.profile-dropdown-global .dropdown-item:hover,
+.profile-dropdown .dropdown-item.logout-btn:hover,
+.profile-dropdown-global .dropdown-item.logout-btn:hover {
+    background: transparent;
+    color: #006A8A !important;
+    /* blue text on hover */
+    transition: color 0.18s ease;
+}
+
+.profile-dropdown .dropdown-item:hover i,
+.profile-dropdown-global .dropdown-item:hover i,
+.profile-dropdown .dropdown-item.logout-btn:hover i,
+.profile-dropdown-global .dropdown-item.logout-btn:hover i {
+    color: #006A8A !important;
+}
+
 /* Logout Specifics */
 .logout-btn-global {
     border-top: 1px solid #f0f0f0;

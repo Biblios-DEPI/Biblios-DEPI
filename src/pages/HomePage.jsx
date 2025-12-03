@@ -18,6 +18,7 @@ const HomePage = () => {
   const [user, setUser] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState("/images/profile.jpg");
   const [loading, setLoading] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -179,6 +180,25 @@ const HomePage = () => {
     }
   };
 
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY >= window.innerHeight);
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const scrolledDropdownStyle = isScrolled
+    ? {
+        background: "#FFFFFF",
+        border: "1px solid #eee",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+      }
+    : {
+        background: "rgba(255,255,255,0.06)",
+        backdropFilter: "blur(6px)",
+        border: "1px solid rgba(255,255,255,0.08)",
+      };
+
   return (
     <>
       {/* Mobile Menu Overlay */}
@@ -286,9 +306,9 @@ const HomePage = () => {
       </div>
 
       <header id="header">
-        <nav id="navbar" className="homenav">
+        <nav id="navbar" className={`homenav ${isScrolled ? 'shadow-header' : ''}`}>
           <div className="logo-container-home">
-            <Link to="/">
+            <Link to="/" onClick={() => window.scrollTo(0, 0)}>
               <img src="/images/logo2.png" alt="Biblios Logo" />
             </Link>
           </div>
@@ -366,7 +386,10 @@ const HomePage = () => {
                     />
                   </div>
                   {isProfileDropdownOpen && (
-                    <div className="profile-dropdown">
+                    <div
+                      className={`profile-dropdown ${isScrolled ? "profile-dropdown-global" : ""}`}
+                      style={scrolledDropdownStyle}
+                    >
                       <Link
                         to="/profile"
                         className="dropdown-item profile-button"
