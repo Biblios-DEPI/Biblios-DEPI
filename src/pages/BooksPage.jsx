@@ -115,13 +115,13 @@ const BooksPage = () => {
     return (
         <div className="container" style={{ padding: '40px 20px' }}>
             <h2 className="main-title" style={{ fontSize: '40px', textAlign: 'center', marginBottom: '10px' }}>
-                The Book Shop
+                Shelves
             </h2>
             <p className="sub-text" style={{ textAlign: 'center', marginBottom: '30px' }} dangerouslySetInnerHTML={{ __html: viewingText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
 
             <hr className="gradient-hr" />
 
-            <div className="filters" style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center', marginBottom: '30px' }}>
+            <div className="filters" style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center', marginBottom: '30px'}}>
                 {categories.map(cat => (
                     <button 
                         key={cat} 
@@ -136,7 +136,8 @@ const BooksPage = () => {
                             fontWeight: 'bold',
                             cursor: 'pointer',
                             transition: 'all 0.2s',
-                            fontSize: '16px'
+                            fontSize: '16px',
+                            fontFamily: 'playsfair, serif',
                         }}
                     >
                         {cat}
