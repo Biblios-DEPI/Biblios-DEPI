@@ -202,7 +202,7 @@ nav {
 
 .hero-container {
     padding: 35px 18px 13px;
-    background: #FFF url('../images/background.png') no-repeat center/cover;
+    background: #FFF url('/images/background.png') no-repeat center/cover;
 }
 
 .hero {

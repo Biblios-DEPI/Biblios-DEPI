@@ -20,31 +20,31 @@ const userProfiles = {
                 id: 1,
                 title: "Inferno",
                 author: "Dante Alighieri",
-                cover: "../../public/images/Inferno.jpg"
+                cover: "/images/Inferno.jpg"
             },
             {
                 id: 2,
                 title: "Hamlet",
                 author: "William Shakespeare",
-                cover: "../../public/images/Hamlet.jpg"
+                cover: "/images/Hamlet.jpg"
             },
             {
                 id: 3,
                 title: "Those Spoke Zarathustra",
                 author: "Friedrich Nietzsche",
-                cover: "../../public/images/ThoseSpokeZarathustra.jpg"
+                cover: "/images/ThoseSpokeZarathustra.jpg"
             },
             {
                 id: 4,
                 title: "Harry Potter and the prisoner of azkaban",
                 author: "J.K. Rowling",
-                cover: "../../public/images/harryPotter.jpg"
+                cover: "/images/harryPotter.jpg"
             },
             {
                 id: 5,
                 title: "White Nights",
                 author: "Fyodor Dostoevsky",
-                cover: "../../public/images/WhiteNights.jpg"
+                cover: "/images/WhiteNights.jpg"
             }
         ]
     },
@@ -68,31 +68,31 @@ const userProfiles = {
                 id: 1,
                 title: "1984",
                 author: "George Orwell",
-                cover: "../../public/images/1984.jpg"
+                cover: "/images/1984.jpg"
             },
             {
                 id: 2,
                 title: "Great Expectations",
                 author: "Charles Dickens",
-                cover: "../../public/images/GreatExpectations.jpg"
+                cover: "/images/GreatExpectations.jpg"
             },
             {
                 id: 3,
                 title: "A Clockwork Orange",
                 author: "Anthony Burgess",
-                cover: "../../public/images/AClockworkOrange.jpg"
+                cover: "/images/AClockworkOrange.jpg"
             },
             {
                 id: 4,
                 title: "The Art of War",
                 author: "Sun Tzu",
-                cover: "../../public/images/TheArtOfWar.jpeg"
+                cover: "/images/TheArtOfWar.jpeg"
             },
             {
                 id: 5,
                 title: "The myth of Sisyphus",
                 author: "Albert Camus",
-                cover: "../../public/images/TheMythOfSisyphus.jpeg"
+                cover: "/images/TheMythOfSisyphus.jpeg"
             }
         ]
     },
@@ -116,31 +116,31 @@ const userProfiles = {
                 id: 1,
                 title: "1984",
                 author: "George Orwell",
-                cover: "../../public/images/1984.jpg"
+                cover: "/images/1984.jpg"
             },
             {
                 id: 2,
                 title: "Great Expectations",
                 author: "Charles Dickens",
-                cover: "../../public/images/GreatExpectations.jpg"
+                cover: "/images/GreatExpectations.jpg"
             },
             {
                 id: 3,
                 title: "A Clockwork Orange",
                 author: "Anthony Burgess",
-                cover: "../../public/images/AClockworkOrange.jpg"
+                cover: "/images/AClockworkOrange.jpg"
             },
             {
                 id: 4,
                 title: "The Art of War",
                 author: "Sun Tzu",
-                cover: "../../public/images/TheArtOfWar.jpeg"
+                cover: "/images/TheArtOfWar.jpeg"
             },
             {
                 id: 5,
                 title: "The myth of Sisyphus",
                 author: "Albert Camus",
-                cover: "../../public/images/TheMythOfSisyphus.jpeg"
+                cover: "/images/TheMythOfSisyphus.jpeg"
             }
         ]
     }
