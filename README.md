@@ -4,13 +4,13 @@
 
 # 📚 Biblios
 
-### *From the Greek **Biblion** — meaning book.*
+
 #### A modern e-commerce platform where heritage meets the digital reading experience.
 
 <br/>
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Visit_Biblios-c9a84c?style=for-the-badge&labelColor=1a1a2e)](https://lnkd.in/g2GAg4ie)
-[![Playwright Tests](https://img.shields.io/github/actions/workflow/status/Biblios-DEPI/Biblios-DEPI/playwright.yml?branch=main&style=for-the-badge&label=E2E%20Tests&labelColor=1a1a2e&color=2ecc71)](https://github.com/Biblios-DEPI/Biblios-DEPI/actions/workflows/playwright.yml?query=branch%3Amain)
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Visit_Biblios-c9a84c?style=for-the-badge&labelColor=1a1a2e)](https://lnkd.in/g2GAg4ie)&nbsp;&nbsp;
+[![Playwright Tests](https://img.shields.io/badge/Playwright_Tests-E2E_Ready-2ecc71?style=for-the-badge&labelColor=1a1a2e)](https://github.com/Biblios-DEPI/Biblios-DEPI/actions/workflows/playwright.yml?query=branch%3Amain)&nbsp;&nbsp;
 [![Manual QA](https://img.shields.io/badge/📋_Manual_QA-View_Report-3498db?style=for-the-badge&labelColor=1a1a2e)](https://docs.google.com/spreadsheets/d/1dN1oieAIJMsv4eJQ32pApGuFKSRkH0Un/edit?usp=sharing&ouid=102782543615384713755&rtpof=true&sd=true)
 
 <br/>
@@ -29,7 +29,7 @@ Built with **React + Vite** on the frontend and powered by **Firebase** for auth
 
 ---
 
-## ✦ Features
+## Features
 
 <table>
 <tr>
@@ -58,7 +58,7 @@ Built with **React + Vite** on the frontend and powered by **Firebase** for auth
 
 ---
 
-## ✦ Tech Stack
+## Tech Stack
 
 <div align="center">
 
@@ -78,7 +78,7 @@ Built with **React + Vite** on the frontend and powered by **Firebase** for auth
 
 ---
 
-## ✦ Getting Started
+## Getting Started
 
 ### Prerequisites
 - Node.js `>= 18`
@@ -102,7 +102,7 @@ npm run dev
 
 ---
 
-## ✦ Live Demo
+## Live Demo
 
 > **[→ Open Biblios](https://lnkd.in/g2GAg4ie)**
 
@@ -121,7 +121,7 @@ Create your own account to explore the full experience, or use the trial credent
 
 ---
 
-## ✦ Testing
+## Testing
 
 Biblios is validated through a two-layer QA strategy covering all critical user journeys end-to-end.
 
@@ -188,7 +188,7 @@ See the **[Actions tab](https://github.com/Biblios-DEPI/Biblios-DEPI/actions)** 
 
 ---
 
-## ✦ Team
+## Team
 
 <div align="center">
 
