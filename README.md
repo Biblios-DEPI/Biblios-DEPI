@@ -194,7 +194,7 @@ See the **[Actions tab](https://github.com/Biblios-DEPI/Biblios-DEPI/actions)** 
 
 Built with care by three collaborators who share a belief that great software can bring people back to reading.
 
-**Ebrahem Hassan · Beshoy · Kareem Hossam Ghorab**
+**Ebrahem Hassan · Beshoy Fomail Labib · Kareem Hossam Ghorab**
 
 </div>
 
