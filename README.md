@@ -1,6 +1,6 @@
 # Biblios-DEPI 📚
 
-[![Playwright Tests](https://github.com/Biblios-DEPI/Biblios-DEPI/actions/workflows/playwright.yml/badge.svg)](https://github.com/Biblios-DEPI/Biblios-DEPI/actions/workflows/playwright.yml)
+[![Playwright Tests](https://github.com/Biblios-DEPI/Biblios-DEPI/actions/workflows/playwright.yml/badge.svg?branch=main)](https://github.com/Biblios-DEPI/Biblios-DEPI/actions/workflows/playwright.yml?query=branch%3Amain)
 
 **Biblios-DEPI** is a modern book e-commerce platform built with **React** and **Vite**, powered by **Firebase** for backend services.  
 This project was developed as part of the **Digital Egyptian Pioneers Initiative (DEPI)** to showcase scalable, maintainable full-stack web development.
