@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="public/logo.png" alt="Biblios Logo" width="80" />
+<img src="public/images/logo.png" alt="Biblios Logo" width="80" />
 
 # 📚 Biblios
 
